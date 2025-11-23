@@ -37,7 +37,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${LIBRARY_NAME}/
 CPMAddPackage("gh:tomasmark79/PackageProject.cmake@1.13.0")
 
 # find_package(fmt QUIET) # Disabled to always use CPM to avoid conflicts
-if(NOT fmt_FOUND)
+if(NOT TARGET fmt::fmt)
     CPMAddPackage(
         GITHUB_REPOSITORY fmtlib/fmt
         GIT_TAG 12.1.0
@@ -45,7 +45,7 @@ if(NOT fmt_FOUND)
 endif()
 
 # find_package(nlohmann_json QUIET) # Disabled to always use CPM to avoid conflicts
-if(NOT nlohmann_json_FOUND)
+if(NOT TARGET nlohmann_json::nlohmann_json)
     CPMAddPackage("gh:nlohmann/json@3.12.0")
     install(TARGETS nlohmann_json EXPORT ${LIBRARY_NAME}Targets)
 endif()
