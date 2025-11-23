@@ -58,7 +58,8 @@ CPMAddPackage(
     GITHUB_REPOSITORY tomasmark79/Emojies
     GIT_TAG main
     OPTIONS "BUILD_LIBRARY ON" "BUILD_STANDALONE OFF")
-file(COPY ${Emojies_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
+file(COPY ${Emojies_SOURCE_DIR}/assets/emoji-test.txt
+     DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/assets)
 
 find_package(tinyxml2 REQUIRED)
 find_package(ZLIB REQUIRED)
