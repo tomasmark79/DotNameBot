@@ -45,7 +45,7 @@ if(NOT TARGET fmt::fmt)
 endif()
 
 # find_package(nlohmann_json QUIET) # Disabled to always use CPM to avoid conflicts
-if(NOT TARGET nlohmann_json::nlohmann_json)
+if(NOT TARGET nlohmann_json AND NOT TARGET nlohmann_json::nlohmann_json)
     CPMAddPackage("gh:nlohmann/json@3.12.0")
     install(TARGETS nlohmann_json EXPORT ${LIBRARY_NAME}Targets)
 endif()
