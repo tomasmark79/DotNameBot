@@ -1,6 +1,12 @@
 {
     "strings": [
         {
+            "id": "dotnamebot.token",
+            "data": {
+                "path": "/home/tomas/.ssh/dotnamebot.token"
+            }
+        },
+        {
             "id": "Author",
             "data": {
                 "en": "Tomas Mark",
