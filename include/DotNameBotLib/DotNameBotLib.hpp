@@ -8,13 +8,15 @@
 #include <string>
 #include <memory>
 
+#include <EmojiesLib/EmojiesLib.hpp>
+
 namespace dotnamecpp::v1 {
   class DotNameBotLib {
 
   public:
     // Constructor
     DotNameBotLib (std::shared_ptr<logging::ILogger> logger,
-                std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager)
+                   std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager)
       : logger_ (logger ? std::move (logger) : std::make_shared<dotnamecpp::logging::NullLogger> ())
       , assetManager_ (std::move (assetManager)) {
 
@@ -29,6 +31,9 @@ namespace dotnamecpp::v1 {
       } else {
         logger_->errorStream () << "Invalid or missing asset manager";
       }
+      // Welcome message with random emoji
+      dotname::EmojiesLib emojies (assetManager_->getAssetsPath ().string ());
+      logger_->infoStream () << "Random emoji: " << emojies.getRandomEmoji ();
     }
 
     // Destructor
@@ -45,10 +50,11 @@ namespace dotnamecpp::v1 {
     DotNameBotLib& operator= (const DotNameBotLib& other) = delete;
 
     // Move is allowed
-    DotNameBotLib (DotNameBotLib&& other) noexcept : logger_ (std::move (other.logger_)),
-                                               assetManager_ (std::move (other.assetManager_)),
-                                               assetsPath_ (std::move (other.assetsPath_)),
-                                               isInitialized_ (other.isInitialized_) {
+    DotNameBotLib (DotNameBotLib&& other) noexcept
+      : logger_ (std::move (other.logger_)),
+        assetManager_ (std::move (other.assetManager_)),
+        assetsPath_ (std::move (other.assetsPath_)),
+        isInitialized_ (other.isInitialized_) {
       other.isInitialized_ = false;
       if (logger_) {
         logger_->infoStream () << libName_ << " move constructed";

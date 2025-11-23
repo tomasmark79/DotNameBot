@@ -49,6 +49,36 @@ if(NOT nlohmann_json_FOUND)
     install(TARGETS nlohmann_json EXPORT ${LIBRARY_NAME}Targets)
 endif()
 
+# Emojies
+CPMAddPackage(
+    NAME Emojies
+    GITHUB_REPOSITORY tomasmark79/Emojies
+    GIT_TAG main
+    OPTIONS "BUILD_LIBRARY ON" "BUILD_STANDALONE OFF")
+file(COPY ${Emojies_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
+
+find_package(tinyxml2 REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(Opus REQUIRED)
+find_package(CURL REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(cpr REQUIRED)
+
+# ccache help lots with dpp brainboxdotcc/DPP
+# https://github.com/brainboxdotcc/DPP/blob/master/CMakeLists.txt important "CONAN_EXPORTED ON" has
+# to be used together with Conan
+CPMAddPackage(
+    NAME dpp
+    GITHUB_REPOSITORY brainboxdotcc/DPP
+    GIT_TAG v10.1.3
+    OPTIONS "BUILD_SHARED_LIBS ON" "DPP_BUILD_TEST OFF" "DPP_INSTALL OFF" "DPP_NO_CORO OFF"
+            "CONAN_EXPORTED ON")
+# equivalent to: "DPP_INSTALL ON" in CPM for DPP Target - kept for example
+if(TARGET dpp)
+    install(TARGETS dpp EXPORT ${LIBRARY_NAME}Targets)
+    target_compile_options(dpp INTERFACE -Wno-unused-parameter -Wno-unused-variable)
+endif()
+
 CPMAddPackage("gh:tomasmark79/CPMLicenses.cmake@0.0.7")
 cpm_licenses_create_disclaimer_target(
     write-licenses-${LIBRARY_NAME} "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}_third_party.txt"
@@ -103,7 +133,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 target_link_libraries(
     ${LIBRARY_NAME}
     PUBLIC fmt::fmt
-    PUBLIC nlohmann_json::nlohmann_json)
+    PUBLIC nlohmann_json::nlohmann_json
+    PUBLIC cpr::cpr
+    PRIVATE Opus::opus
+    PRIVATE OpenSSL::SSL
+    PRIVATE OpenSSL::Crypto
+    PUBLIC tinyxml2::tinyxml2
+    PUBLIC CURL::libcurl
+    PUBLIC EmojiesLib
+    PUBLIC dpp)
 
 # ==============================================================================
 # Package configuration
@@ -115,7 +153,7 @@ packageProject(
     INCLUDE_DIR "/include"
     INCLUDE_DESTINATION "include"
     INCLUDE_HEADER_PATTERN "*.h;*.hpp;*.hh;*.hxx"
-    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7"
+    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7;dpp#10.1.3;Emojies@main"
     VERSION_HEADER "${LIBRARY_NAME}/version.h"
     EXPORT_HEADER "${LIBRARY_NAME}/export.h"
     NAMESPACE ${LIBRARY_NAMESPACE}
