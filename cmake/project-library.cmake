@@ -47,10 +47,12 @@ endif()
 # find_package(nlohmann_json QUIET) # Disabled to always use CPM to avoid conflicts
 if(NOT TARGET nlohmann_json AND NOT TARGET nlohmann_json::nlohmann_json)
     CPMAddPackage("gh:nlohmann/json@3.12.0")
-    install(TARGETS nlohmann_json EXPORT ${LIBRARY_NAME}Targets)
+    if(TARGET nlohmann_json)
+        install(TARGETS nlohmann_json EXPORT ${LIBRARY_NAME}Targets)
+    endif()
 endif()
 
-# Emojies
+# Emojies - will reuse nlohmann_json from above if needed
 CPMAddPackage(
     NAME Emojies
     GITHUB_REPOSITORY tomasmark79/Emojies
