@@ -52,12 +52,13 @@ int main (int argc, char** argv) {
 
     logger->infoStream () << "Assets initialized: " << assetManager->getAssetsPath ();
 
+    // Run application logic
+    logger->infoStream () << appName << " running...";
+
     // Initialize library
     auto library = std::make_unique<v1::DotNameBotLib> (logger, assetManager);
     logger->infoStream () << "Library initialized successfully";
 
-    // Run application logic
-    logger->infoStream () << appName << " running...";
     logger->infoStream () << appName << " shutting down";
     return EXIT_SUCCESS;
 
