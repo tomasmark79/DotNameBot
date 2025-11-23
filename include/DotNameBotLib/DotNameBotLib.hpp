@@ -1,14 +1,19 @@
 #pragma once
 
 #include <DotNameBotLib/version.h> // first configuration will create this file
-#include <Utils/Logger/ILogger.hpp>
-#include <Utils/Logger/NullLogger.hpp>
-#include <Utils/Assets/IAssetManager.hpp>
+
+#include <Utils/UtilsFactory.hpp>
+
+#include <ServiceContainer/ServiceContainer.hpp>
+
+#include <BotOrchestrator/BotOrchestrator.hpp>
+#include <DiscordBot/DiscordBot.hpp>
+
+#include <EmojiesLib/EmojiesLib.hpp>
+
 #include <filesystem>
 #include <string>
 #include <memory>
-
-#include <EmojiesLib/EmojiesLib.hpp>
 
 namespace dotnamecpp::v1 {
   class DotNameBotLib {
@@ -34,6 +39,36 @@ namespace dotnamecpp::v1 {
       // Welcome message with random emoji
       dotname::EmojiesLib emojies (assetManager_->getAssetsPath ().string ());
       logger_->infoStream () << "Random emoji: " << emojies.getRandomEmoji ();
+
+      // Services
+      services_ = std::make_unique<ServiceContainer> ();
+
+      // Orchestrator
+      orchestrator_ = std::make_unique<BotOrchestrator> (*services_);
+      auto customStrings =
+        dotnamecpp::utils::UtilsFactory::createCustomStringsLoader (assetManager_);
+      auto discordBot = std::make_unique<DiscordBot> (logger_, assetManager_, customStrings);
+      orchestrator_->registerBot (std::move (discordBot));
+
+      // Start
+      try {
+        orchestrator_->startAll ();
+        logger_->infoStream () << libName_ << " started all bots successfully";
+
+      } catch (const std::exception& e) {
+        logger_->errorStream () << "Error starting " << libName_ << ": " << e.what ();
+      }
+
+      // 30 seconds debug stopgap
+      std::this_thread::sleep_for (std::chrono::seconds (30));
+
+      // Stop
+      try {
+        orchestrator_->stopAll ();
+        logger_->infoStream () << libName_ << " stopped all bots successfully";
+      } catch (const std::exception& e) {
+        logger_->errorStream () << "Error stopping " << libName_ << ": " << e.what ();
+      }
     }
 
     // Destructor
@@ -97,12 +132,29 @@ namespace dotnamecpp::v1 {
       return assetsPath_;
     }
 
+    /**
+     * @brief Setup bots
+     * 
+     */
+    void setupBots () {
+      // Example: Setup a DotName bot
+      logger_->infoStream () << "Setting up DotName bot...";
+
+      // Bot setup logic goes here
+
+      isInitialized_ = true;
+      logger_->infoStream () << "DotName bot setup complete.";
+    }
+
   private:
     const std::string libName_ = "DotNameBotLib v." DOTNAMEBOTLIB_VERSION;
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
     std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
     std::filesystem::path assetsPath_;
     bool isInitialized_ = false;
+
+    std::unique_ptr<ServiceContainer> services_;
+    std::unique_ptr<BotOrchestrator> orchestrator_;
   };
 
 } // namespace dotnamecpp::v1
