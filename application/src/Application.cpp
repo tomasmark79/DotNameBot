@@ -3,17 +3,19 @@
 #include <cxxopts.hpp>
 #include <iostream>
 
-// Application application using DotNameBotLib
+// Application application using DotNameLib
 // All components initialized via UtilsFactory
 
 int main (int argc, char** argv) {
+  // appname
+  const std::string appName = "DotNameBot";
   using namespace dotnamecpp;
   using namespace dotnamecpp::logging;
   using namespace dotnamecpp::utils;
 
   try {
     // Parse command-line options
-    cxxopts::Options options ("DotNameBot", "DotName C++ Application");
+    cxxopts::Options options (appName, "DotName C++ Application");
     options.add_options () ("h,help", "Print usage");
     options.add_options () ("w,write2file", "Write output to file",
                             cxxopts::value<bool> ()->default_value ("false"));
@@ -36,12 +38,12 @@ int main (int argc, char** argv) {
     LoggerConfig loggerConfig{ .level = Level::LOG_INFO,
                                .enableFileLogging = result["write2file"].as<bool> (),
                                .logFilePath = "application.log",
-                               .colorOutput = true };
+                               .colorOutput = true,
+                               .appPrefix = appName };
     auto logger = UtilsFactory::createLogger (LoggerType::Console, loggerConfig);
 
     // Initialize assets
-    auto assetManager =
-      UtilsFactory::createAssetManager (execPathResult.value (), "DotNameBot");
+    auto assetManager = UtilsFactory::createAssetManager (execPathResult.value (), appName);
 
     if (!assetManager->validate ()) {
       logger->errorStream () << "Failed to validate assets: " << assetManager->getAssetsPath ();
@@ -55,8 +57,8 @@ int main (int argc, char** argv) {
     logger->infoStream () << "Library initialized successfully";
 
     // Run application logic
-    logger->infoStream () << "DotNameBot running...";
-    logger->infoStream () << "DotNameBot shutting down";
+    logger->infoStream () << appName << " running...";
+    logger->infoStream () << appName << " shutting down";
     return EXIT_SUCCESS;
 
   } catch (const std::exception& e) {
