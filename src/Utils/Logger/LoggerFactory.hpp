@@ -1,7 +1,8 @@
 #pragma once
-#include "Utils/Logger/ILogger.hpp"
 #include <memory>
 #include <string>
+
+#include "Utils/Logger/ILogger.hpp"
 
 namespace dotnamecpp::logging {
 
@@ -21,37 +22,38 @@ namespace dotnamecpp::logging {
   class LoggerFactory {
   public:
     /**
-     * @brief Create a logger instance based on the specified type and configuration
-     * 
+     * @brief Create a logger instance based on the specified type and
+     * configuration
+     *
      * @param type The type of logger to create (Console, File, Null)
      * @param config Configuration options for the logger
-     * @return std::shared_ptr<ILogger> 
+     * @return std::shared_ptr<ILogger>
      */
-    static std::shared_ptr<ILogger> create (LoggerType type = LoggerType::Console,
-                                            const LoggerConfig& config = LoggerConfig{});
+    static std::shared_ptr<ILogger> create(LoggerType type = LoggerType::Console,
+                                           const LoggerConfig &config = LoggerConfig{});
 
     /**
      * @brief Create a Console object logger
-     * 
-     * @param config 
-     * @return std::shared_ptr<ILogger> 
+     *
+     * @param config
+     * @return std::shared_ptr<ILogger>
      */
-    static std::shared_ptr<ILogger> createConsole (const LoggerConfig& config = LoggerConfig{});
+    static std::shared_ptr<ILogger> createConsole(const LoggerConfig &config = LoggerConfig{});
 
     /**
      * @brief Create a File object logger
-     * 
-     * @param config 
-     * @return std::shared_ptr<ILogger> 
+     *
+     * @param config
+     * @return std::shared_ptr<ILogger>
      */
-    static std::shared_ptr<ILogger> createFile (const LoggerConfig& config = LoggerConfig{});
+    static std::shared_ptr<ILogger> createFile(const LoggerConfig &config = LoggerConfig{});
 
     /**
      * @brief Create a Null object logger
-     * 
-     * @return std::shared_ptr<ILogger> 
+     *
+     * @return std::shared_ptr<ILogger>
      */
-    static std::shared_ptr<ILogger> createNull ();
+    static std::shared_ptr<ILogger> createNull();
   };
 
 } // namespace dotnamecpp::logging
