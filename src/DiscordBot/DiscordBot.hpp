@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-enum class OptionType { String, Integer, Bool };
-
 class DiscordBot : public IBot {
 public:
   DiscordBot(std::shared_ptr<dotnamecpp::logging::ILogger> logger,
@@ -36,6 +34,20 @@ public:
     return "D++ Discord Bot";
   }
 
+private:
+  std::unique_ptr<dpp::cluster> bot_;
+
+  std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
+  std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
+  std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
+
+  bool getTokenFromFile(std::string &token);
+  std::atomic<bool> running_{false};
+
+  std::vector<dpp::slashcommand> slashCommands_;
+
+  enum class OptionType : std::uint8_t { String, Integer, Bool };
+
   struct CommandOption {
     OptionType type;
     std::string name;
@@ -49,26 +61,24 @@ public:
     std::vector<CommandOption> options;
   };
 
-private:
-  std::unique_ptr<dpp::cluster> bot_;
+  static dpp::command_option_type toCommandOptionType(OptionType type) {
+    switch (type) {
+    case OptionType::String:
+      return dpp::co_string;
+    case OptionType::Integer:
+      return dpp::co_integer;
+    case OptionType::Bool:
+      return dpp::co_boolean;
+    default:
+      throw std::invalid_argument("Unknown OptionType");
+    }
+  };
 
-  std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
-  std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
-  std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
-
-  bool getTokenFromFile(std::string &token);
-  std::atomic<bool> running_{false};
-
-  std::vector<dpp::slashcommand> slashCommands_;
   const std::vector<customSlashCommandContainer> cmds = {
       {"ping", "Get pong.", {}},
       {"help", "Get help.", {}},
       {"emoji", "Get emoji.", {}},
       {"verse", "Get verse", {}},
-      {"invokerefetch", "Manually refetch RSS/ATOM feeds", {}},
-      {"listurls", "Get list of RSS/ATOM feed URLs", {}},
-      {"printfeed", "Get random RSS/ATOM feed items", {}},
-      {"printcountfeeds", "Get count of RSS/ATOM feed items", {}},
       {"btc", "Get Bitcoin price (USD)", {}},
       {"eth", "Get Ethereum price (USD)", {}},
       {"t2e",
@@ -82,6 +92,10 @@ private:
        "Add another RSS/ATOM feed URL",
        {{OptionType::String, "url", "URL of the RSS/ATOM feed", true},
         {OptionType::Bool, "embedded", "Whether the feed should be embedded", false}}},
+      {"invokerefetch", "Manually refetch RSS/ATOM feeds", {}},
+      {"listurls", "Get list of RSS/ATOM feed URLs", {}},
+      {"printfeed", "Get random RSS/ATOM feed items", {}},
+      {"printcountfeeds", "Get count of RSS/ATOM feed items", {}},
       {"botstatus",
        "Set bot status",
        {{OptionType::String, "message", "The status message", true}}},
@@ -89,6 +103,23 @@ private:
        "Run a command and return the output",
        {{OptionType::String, "command", "The command to run", true}}}};
 
-  void setupSlashCommands();
+  /**
+   * @brief Load slash commands from configuration
+   *
+   */
+  void loadSlashCommandsFromConfig();
+
+  /**
+   * @brief Register slash commands to Discord
+   *        Very soon exceeding rate limits if many commands are registered
+   *
+   */
   void registerSlashCommandsToDiscord();
+
+  /**
+   * @brief Register bulk slash commands to Discord
+   *        More efficient way to register multiple commands at once
+   *
+   */
+  void registerBulkSlashCommandsToDiscord();
 };

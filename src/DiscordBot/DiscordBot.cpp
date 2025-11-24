@@ -49,8 +49,10 @@ bool DiscordBot::initialize() {
       logger_->info("Bot is ready! Logged in as: " + bot_->me.username);
       logger_->info("Bot ID: " + std::to_string(bot_->me.id));
 
-      setupSlashCommands();
-      registerSlashCommandsToDiscord();
+      if (dpp::run_once<struct register_bot_commands>()) {
+        loadSlashCommandsFromConfig();
+        registerBulkSlashCommandsToDiscord();
+      }
 
       bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "Running ..."));
     });
@@ -100,22 +102,7 @@ bool DiscordBot::stop() {
   return true;
 }
 
-namespace {
-  dpp::command_option_type toCommandOptionType(OptionType type) {
-    switch (type) {
-    case OptionType::String:
-      return dpp::co_string;
-    case OptionType::Integer:
-      return dpp::co_integer;
-    case OptionType::Bool:
-      return dpp::co_boolean;
-    default:
-      throw std::invalid_argument("Unknown OptionType");
-    }
-  }
-} // namespace
-
-void DiscordBot::setupSlashCommands() {
+void DiscordBot::loadSlashCommandsFromConfig() {
   for (const auto &cmdContainer : cmds) {
     dpp::slashcommand command(cmdContainer.name, cmdContainer.description, bot_->me.id);
 
@@ -128,7 +115,7 @@ void DiscordBot::setupSlashCommands() {
       }
     }
     slashCommands_.emplace_back(command);
-    logger_->infoStream() << "Registered slash command: " << cmdContainer.name;
+    logger_->infoStream() << "Loaded slash command: " << cmdContainer.name;
   }
 }
 
@@ -144,4 +131,16 @@ void DiscordBot::registerSlashCommandsToDiscord() {
           }
         });
   }
+}
+
+void DiscordBot::registerBulkSlashCommandsToDiscord() {
+  bot_->global_bulk_command_create(
+      slashCommands_, [this](const dpp::confirmation_callback_t &callback) {
+        if (callback.is_error()) {
+          logger_->errorStream() << "Failed to register bulk commands: "
+                                 << callback.get_error().message;
+        } else {
+          logger_->info("Successfully registered bulk slash commands");
+        }
+      });
 }
