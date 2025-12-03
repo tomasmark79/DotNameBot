@@ -57,7 +57,13 @@ int main(int argc, char **argv) {
 
     // Initialize library
     auto library = std::make_unique<v1::DotNameBotLib>(logger, assetManager);
+
+#if __cplusplus >= 202002L
+    // Available in C++20 and later
+    logger->infoWithLocation("Library initialized successfully");
+#else
     logger->infoStream() << "Library initialized successfully";
+#endif
 
     logger->infoStream() << appName << " shutting down";
     return EXIT_SUCCESS;
