@@ -50,12 +50,20 @@ bool DiscordBot::initialize() {
       logger_->info("Bot ID: " + std::to_string(bot_->me.id));
 
       if (dpp::run_once<struct register_bot_commands>()) {
-        loadSlashCommandsFromConfig();
         registerBulkSlashCommandsToDiscord();
       }
 
-      bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "magic text ..."));
+      // Set bot presence with current time
+      auto start_time = std::chrono::system_clock::now();
+      auto time_t_now = std::chrono::system_clock::to_time_t(start_time);
+      std::tm tm_now = *std::localtime(&time_t_now);
+      std::ostringstream oss;
+      oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
+      std::string time_str = oss.str();
+      bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "since: " + time_str));
     });
+
+    bot_->on_slashcommand([this](const dpp::slashcommand_t &event) { handleSlashCommand(event); });
 
     return true;
   } catch (const std::exception &e) {
@@ -102,45 +110,54 @@ bool DiscordBot::stop() {
   return true;
 }
 
-void DiscordBot::loadSlashCommandsFromConfig() {
-  for (const auto &cmdContainer : cmds) {
-    dpp::slashcommand command(cmdContainer.name, cmdContainer.description, bot_->me.id);
+void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
+  const auto &cmd_name = event.command.get_command_name();
+  logger_->info("Received slash command: " + cmd_name);
 
-    for (const auto &option : cmdContainer.options) {
-      try {
-        command.add_option(dpp::command_option(toCommandOptionType(option.type), option.name,
-                                               option.description, option.required));
-      } catch (const std::invalid_argument &) {
-        logger_->warning("Unknown option type for command: " + cmdContainer.name);
+  auto it = std::find_if(commands_.begin(), commands_.end(), [&cmd_name](const SlashCommand &cmd) {
+    return cmd.getName() == cmd_name;
+  });
+
+  if (it != commands_.end()) {
+    const auto &handler_type = it->getHandlerType();
+    if (handler_type == "simple") {
+      if (cmd_name == "ping") {
+        event.reply("pong!");
       }
+      if (cmd_name == "help") {
+        std::string help_msg = "Available commands:\n";
+        for (const auto &cmd : commands_) {
+          help_msg += "`/" + cmd.getName() + "` : " + cmd.getDescription() + "\n";
+        }
+        event.reply(help_msg);
+      }
+      if (cmd_name == "emoji") {
+        event.reply(emojiesLib_->getRandomEmoji());
+      }
+    } else {
+      event.reply("Command handler for '" + cmd_name + "' not implemented yet.");
     }
-    slashCommands_.emplace_back(command);
-    logger_->infoStream() << "Loaded slash command: " << cmdContainer.name;
-  }
-}
-
-void DiscordBot::registerSlashCommandsToDiscord() {
-  for (const auto &command : slashCommands_) {
-    bot_->global_command_create(
-        command, [this, command](const dpp::confirmation_callback_t &callback) {
-          if (callback.is_error()) {
-            logger_->errorStream() << "Failed to register command '" << command.name
-                                   << "': " << callback.get_error().message;
-          } else {
-            logger_->infoStream() << "Successfully registered command: " << command.name;
-          }
-        });
+  } else {
+    event.reply("Unknown command: " + cmd_name);
   }
 }
 
 void DiscordBot::registerBulkSlashCommandsToDiscord() {
-  bot_->global_bulk_command_create(
-      slashCommands_, [this](const dpp::confirmation_callback_t &callback) {
-        if (callback.is_error()) {
-          logger_->errorStream() << "Failed to register bulk commands: "
-                                 << callback.get_error().message;
-        } else {
-          logger_->info("Successfully registered bulk slash commands");
-        }
-      });
+  std::vector<dpp::slashcommand> dpp_commands;
+  dpp_commands.reserve(commands_.size());
+
+  for (const auto &cmd : commands_) {
+    dpp_commands.push_back(cmd.toDppCommand(bot_->me.id));
+    logger_->info("Prepared slash command: " + cmd.getName());
+  }
+
+  bot_->global_bulk_command_create(dpp_commands, [this](
+                                                     const dpp::confirmation_callback_t &callback) {
+    if (callback.is_error()) {
+      logger_->errorStream() << "Failed to register bulk commands: "
+                             << callback.get_error().message;
+    } else {
+      logger_->infoStream() << "Successfully registered " << commands_.size() << " slash commands";
+    }
+  });
 }
