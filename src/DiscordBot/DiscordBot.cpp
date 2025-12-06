@@ -54,7 +54,7 @@ bool DiscordBot::initialize() {
         registerBulkSlashCommandsToDiscord();
       }
 
-      bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "Running ..."));
+      bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "magic text ..."));
     });
 
     return true;

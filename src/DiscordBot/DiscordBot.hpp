@@ -2,20 +2,45 @@
 
 #include <dpp/dpp.h>
 
-#include <IBot/IBot.hpp>
+#include <ILifeCycle/ILifeCycle.hpp>
+#include <ServiceContainer/ServiceContainer.hpp>
+
 #include <Utils/UtilsFactory.hpp>
+
 #include <atomic>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include <EmojiesLib/EmojiesLib.hpp>
+
+using IBot = ILifeCycle;
+
 class DiscordBot : public IBot {
 public:
-  DiscordBot(std::shared_ptr<dotnamecpp::logging::ILogger> logger,
-             std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager,
-             std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings = nullptr)
-      : logger_(logger ? std::move(logger) : std::make_shared<dotnamecpp::logging::NullLogger>()),
-        assetManager_(std::move(assetManager)), customStrings_(std::move(customStrings)) {}
+  explicit DiscordBot(ServiceContainer &services)
+      : logger_(services.getService<dotnamecpp::logging::ILogger>()),
+        assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
+        emojiesLib_(services.getService<dotname::EmojiesLib>()) {
+
+    if (!logger_) {
+      throw std::runtime_error("DiscordBot requires a logger");
+    }
+
+    if (!assetManager_) {
+      throw std::runtime_error("DiscordBot requires an asset manager");
+    }
+
+    if (emojiesLib_) {
+      logger_->infoStream() << "DiscordBot initialized with EmojiesLib, random emoji: "
+                            << emojiesLib_->getRandomEmoji();
+    } else {
+      throw std::runtime_error("DiscordBot requires an EmojiesLib");
+    }
+
+    // CustomStrings loader is created on-demand
+    customStrings_ = dotnamecpp::utils::UtilsFactory::createCustomStringsLoader(assetManager_);
+  }
 
   ~DiscordBot() override { stop(); }
 
@@ -40,6 +65,7 @@ private:
   std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
   std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
   std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
+  std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
 
   bool getTokenFromFile(std::string &token);
   std::atomic<bool> running_{false};
@@ -75,9 +101,9 @@ private:
   };
 
   const std::vector<customSlashCommandContainer> cmds = {
-      {"ping", "Get pong.", {}},
-      {"help", "Get help.", {}},
-      {"emoji", "Get emoji.", {}},
+      {"ping", "Get pong", {}},
+      {"help", "Get help", {}},
+      {"emoji", "Get emoji", {}},
       {"verse", "Get verse", {}},
       {"btc", "Get Bitcoin price (USD)", {}},
       {"eth", "Get Ethereum price (USD)", {}},

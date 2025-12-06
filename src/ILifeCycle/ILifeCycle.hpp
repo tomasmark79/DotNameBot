@@ -4,7 +4,7 @@
 
 /**
  * @brief Interface for lifecycle management of services or components.
- * 
+ *
  */
 class ILifeCycle {
 public:
