@@ -52,45 +52,6 @@ namespace dotnamecpp::v1 {
     }
   }
 
-  DotNameBotLib::DotNameBotLib(DotNameBotLib &&other) noexcept
-      : logger_(std::move(other.logger_)), assetManager_(std::move(other.assetManager_)),
-        assetsPath_(std::move(other.assetsPath_)), isInitialized_(other.isInitialized_),
-        shouldStop_(other.shouldStop_.load()), services_(std::move(other.services_)),
-        botOrchestrator_(std::move(other.botOrchestrator_)),
-        emojiesLib_(std::move(other.emojiesLib_)) {
-    other.isInitialized_ = false;
-    other.shouldStop_.store(false);
-    if (logger_) {
-      logger_->infoStream() << libName_ << " move constructed";
-    }
-  }
-
-  DotNameBotLib &DotNameBotLib::operator=(DotNameBotLib &&other) noexcept {
-    if (this != &other) {
-      // Stop current instance
-      if (isInitialized_) {
-        stop();
-      }
-
-      // Move all members
-      logger_ = std::move(other.logger_);
-      assetManager_ = std::move(other.assetManager_);
-      assetsPath_ = std::move(other.assetsPath_);
-      isInitialized_ = other.isInitialized_;
-      shouldStop_.store(other.shouldStop_.load());
-      services_ = std::move(other.services_);
-      botOrchestrator_ = std::move(other.botOrchestrator_);
-      emojiesLib_ = std::move(other.emojiesLib_);
-
-      other.isInitialized_ = false;
-      other.shouldStop_.store(false);
-      if (logger_) {
-        logger_->infoStream() << libName_ << " move assigned";
-      }
-    }
-    return *this;
-  }
-
   bool DotNameBotLib::run(int durationSeconds) {
     if (!isInitialized_) {
       logger_->errorStream() << "Cannot run: " << libName_ << " is not initialized";
@@ -103,8 +64,8 @@ namespace dotnamecpp::v1 {
     try {
       // Start all bots
       botOrchestrator_->startAll();
+      isRunning_.store(true);
       logger_->infoStream() << libName_ << " started all bots successfully";
-
       // Run for specified duration
       if (durationSeconds > 0) {
         logger_->infoStream() << "Running for " << durationSeconds << " seconds...";
@@ -140,12 +101,18 @@ namespace dotnamecpp::v1 {
       return;
     }
 
+    // Check if already stopped
+    if (!isRunning_.load()) {
+      return;
+    }
+
     logger_->infoStream() << "Stopping " << libName_ << "...";
     shouldStop_.store(true);
 
     if (botOrchestrator_) {
       try {
         botOrchestrator_->stopAll();
+        isRunning_.store(false);
         logger_->infoStream() << libName_ << " stopped all bots successfully";
       } catch (const std::exception &e) {
         logger_->errorStream() << "Error stopping bots: " << e.what();

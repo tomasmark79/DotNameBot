@@ -32,29 +32,15 @@ namespace dotnamecpp::v1 {
     ~DotNameBotLib();
 
     /**
-     * @brief Copy construction is deleted
+     * @brief Copy and move operations are deleted
+     *
+     * This class manages unique resources (services, orchestrator)
+     * and should not be copied or moved.
      */
     DotNameBotLib(const DotNameBotLib &other) = delete;
-
-    /**
-     * @brief Copy assignment is deleted
-     */
     DotNameBotLib &operator=(const DotNameBotLib &other) = delete;
-
-    /**
-     * @brief Move constructor
-     *
-     * @param other Object to move from
-     */
-    DotNameBotLib(DotNameBotLib &&other) noexcept;
-
-    /**
-     * @brief Move assignment operator
-     *
-     * @param other Object to move from
-     * @return Reference to this object
-     */
-    DotNameBotLib &operator=(DotNameBotLib &&other) noexcept;
+    DotNameBotLib(DotNameBotLib &&other) = delete;
+    DotNameBotLib &operator=(DotNameBotLib &&other) = delete;
 
     // ============================================================================
     // Main API
@@ -126,6 +112,7 @@ namespace dotnamecpp::v1 {
     std::filesystem::path assetsPath_;
     bool isInitialized_ = false;
     std::atomic<bool> shouldStop_{false};
+    std::atomic<bool> isRunning_{false};
 
     std::unique_ptr<ServiceContainer> services_;
     std::unique_ptr<Orchestrator<ILifeCycle>> botOrchestrator_;
