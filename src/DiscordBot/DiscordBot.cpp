@@ -79,6 +79,7 @@ bool DiscordBot::start() {
   }
 
   isRunning_.store(true);
+  startTime_ = std::chrono::system_clock::now();
   logger_->info("Starting " + getName() + " in non-blocking mode...");
 
   try {
@@ -108,10 +109,10 @@ bool DiscordBot::stop() {
   if (bot_) {
     logger_->info("Shutting down Discord bot...");
     bot_->shutdown();
-    
+
     // Give DPP time to clean up its threads
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    
+
     // Explicitly destroy the bot to ensure all DPP threads are stopped
     bot_.reset();
   }
@@ -173,6 +174,23 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
         // Just set the running flag to false, the main loop will handle cleanup
         logger_->info("Stop requested via /stopbot command");
         isRunning_.store(false);
+      }
+      if (cmd_name == "uptime") {
+        event.thinking();
+        auto now = std::chrono::system_clock::now();
+        auto uptime_duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime_);
+
+        constexpr int SECONDS_PER_MINUTE = 60;
+        constexpr int SECONDS_PER_HOUR = 3600;
+
+        auto total_seconds = uptime_duration.count();
+        int hours = static_cast<int>(total_seconds / SECONDS_PER_HOUR);
+        int minutes = static_cast<int>((total_seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+        int seconds = static_cast<int>(total_seconds % SECONDS_PER_MINUTE);
+
+        std::ostringstream oss;
+        oss << "Uptime: " << hours << "h " << minutes << "m " << seconds << "s";
+        event.edit_response(oss.str());
       }
     } else {
       event.reply("Command handler for '" + cmd_name + "' not implemented yet.");

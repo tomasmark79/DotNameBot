@@ -101,6 +101,8 @@ private:
   void handleSlashCommand(const dpp::slashcommand_t &event);
   std::atomic<bool> isRunning_{false};
 
+  std::chrono::time_point<std::chrono::system_clock> startTime_;
+
   /**
    * @brief Register bulk slash commands to Discord
    *        More efficient way to register multiple commands at once

@@ -19,6 +19,7 @@ const std::vector<SlashCommand> commands_ = {
     {"listurls", "get list of RSS/ATOM feed URLs", "rss"},
     {"printfeed", "get random RSS/ATOM feed items", "rss"},
     {"printcountfeeds", "get count of RSS/ATOM feed items", "rss"},
+    {"uptime", "get bot uptime", "botself"},
     {"stopbot", "stop the bot", "botself"},
     {"setstatus",
      "set bot status message",
