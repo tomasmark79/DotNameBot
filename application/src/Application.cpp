@@ -3,7 +3,7 @@
 #include <cxxopts.hpp>
 #include <iostream>
 
-// Application application using DotNameLib
+// Application application using DotNameBotLib
 // All components initialized via UtilsFactory
 
 int main(int argc, char **argv) {
@@ -57,6 +57,8 @@ int main(int argc, char **argv) {
 
     // Initialize library
     auto library = std::make_unique<v1::DotNameBotLib>(logger, assetManager);
+    // optionally register another objects
+    // library->getOrchestrator().add(std::make_unique<MyCustomBot>(library->getServices()));
 
 #if __cplusplus >= 202002L
     // Available in C++20 and later
@@ -64,6 +66,12 @@ int main(int argc, char **argv) {
 #else
     logger->infoStream() << "Library initialized successfully";
 #endif
+
+    // Start the bots (runs for 30 seconds by default)
+    if (!library->run(30)) {
+      logger->errorStream() << "Failed to run library";
+      return EXIT_FAILURE;
+    }
 
     logger->infoStream() << appName << " shutting down";
     return EXIT_SUCCESS;
