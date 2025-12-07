@@ -83,8 +83,13 @@ bool DiscordBot::start() {
 
   try {
     bot_->start(dpp::st_wait);
+    if (!running_.load()) {
+      logger_->warning(getName() + " stopped by user request");
+      running_.store(false);
+      return true;
+    }
+    logger_->warning(getName() + " exited unexpectedly");
     running_.store(false);
-    logger_->critical("CRITICAL: Bot has stopped unexpectedly!");
     return false;
   } catch (const std::exception &e) {
     logger_->error("Exception in " + getName() + " start: " + e.what());
@@ -99,14 +104,10 @@ bool DiscordBot::stop() {
     return true;
   }
 
-  logger_->info("Stopping " + getName() + "...");
-
   if (bot_) {
     bot_->shutdown();
-    logger_->info("Discord bot cluster shutdown initiated");
   }
 
-  logger_->info(getName() + " stopped");
   return true;
 }
 
@@ -120,6 +121,7 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
 
   if (it != commands_.end()) {
     const auto &handler_type = it->getHandlerType();
+
     if (handler_type == "simple") {
       if (cmd_name == "ping") {
         event.reply("pong!");
@@ -134,9 +136,16 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
       if (cmd_name == "emoji") {
         event.reply(emojiesLib_->getRandomEmoji());
       }
-    } else {
-      event.reply("Command handler for '" + cmd_name + "' not implemented yet.");
     }
+
+    if (handler_type == "botself") {
+      if (cmd_name == "stopbot") {
+        event.reply("Stopping bot as requested...");
+        stop();
+      }
+    }
+    event.reply("Command handler for '" + cmd_name + "' not implemented yet.");
+
   } else {
     event.reply("Unknown command: " + cmd_name);
   }
