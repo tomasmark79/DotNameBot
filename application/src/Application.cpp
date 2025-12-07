@@ -57,14 +57,13 @@ int main(int argc, char **argv) {
 
     // Initialize library
     auto library = std::make_unique<v1::DotNameBotLib>(logger, assetManager);
-    // optionally register another objects
-    // library->getOrchestrator().add(std::make_unique<MyCustomBot>(library->getServices()));
 
+    constexpr const char *libOk = "Library initialized successfully";
 #if __cplusplus >= 202002L
     // Available in C++20 and later
-    logger->infoWithLocation("Library initialized successfully");
+    logger->infoWithLocation(libOk);
 #else
-    logger->infoStream() << "Library initialized successfully";
+    logger->infoStream() << libOk;
 #endif
     constexpr int runEndless = 0;
     if (!library->run(runEndless)) {
