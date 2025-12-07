@@ -25,7 +25,7 @@ namespace dotnamecpp::v1 {
     // Initialize emojies library
     emojiesLib_ = std::make_shared<dotname::EmojiesLib>(assetManager_->getAssetsPath().string());
 
-    // Register services
+    // Register services to service container
     services_ = std::make_unique<ServiceContainer>();
     services_->registerService(logger_);
     services_->registerService(assetManager_);
