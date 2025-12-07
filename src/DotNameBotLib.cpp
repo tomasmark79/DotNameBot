@@ -30,6 +30,7 @@ namespace dotnamecpp::v1 {
     services_->registerService(logger_);
     services_->registerService(assetManager_);
     services_->registerService(emojiesLib_);
+
     logger_->infoStream() << "Total services registered: " << services_->getServiceCount();
 
     // Initialize orchestrator with default bots
@@ -58,14 +59,13 @@ namespace dotnamecpp::v1 {
       return false;
     }
 
-    // Reset stop flag
     shouldStop_.store(false);
 
     try {
-      // Start all bots
       botOrchestrator_->startAll();
       isRunning_.store(true);
       logger_->infoStream() << libName_ << " started all bots successfully";
+
       // Run for specified duration
       if (durationSeconds > 0) {
         logger_->infoStream() << "Running for " << durationSeconds << " seconds...";
@@ -78,17 +78,26 @@ namespace dotnamecpp::v1 {
         } else {
           logger_->infoStream() << libName_ << " finished after " << durationSeconds << " seconds";
         }
-        stop();
-      } else {
+      }
+
+      if (durationSeconds == 0) {
         logger_->infoStream() << "Running indefinitely. Call stop() to terminate.";
         constexpr int pollIntervalMs = 100;
         while (!shouldStop_.load()) {
+          if (botOrchestrator_->hasStopped()) {
+            logger_->warningStream() << libName_ << " detected all bots have stopped";
+            break;
+          }
           std::this_thread::sleep_for(std::chrono::milliseconds(pollIntervalMs));
         }
         logger_->infoStream() << libName_ << " stopped";
       }
 
+      // Cleanup - stop() will be called in destructor or explicitly by user
+      // If bots stopped themselves, we still need to cleanup
+      stop();
       return true;
+
     } catch (const std::exception &e) {
       logger_->errorStream() << "Error running " << libName_ << ": " << e.what();
       return false;

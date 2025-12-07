@@ -66,9 +66,8 @@ int main(int argc, char **argv) {
 #else
     logger->infoStream() << "Library initialized successfully";
 #endif
-
-    // Start the bots (runs for 30 seconds by default)
-    if (!library->run(30)) {
+    constexpr int runEndless = 0;
+    if (!library->run(runEndless)) {
       logger->errorStream() << "Failed to run library";
       return EXIT_FAILURE;
     }

@@ -47,12 +47,12 @@ public:
             try {
               item_ptr->start();
             } catch (const std::exception &e) {
-              // Item failed to start
+              // Item failed to start - error already logged by the item
             }
           });
         }
       } catch (const std::exception &e) {
-        // Failed to initialize item
+        // Failed to initialize item - error already logged by the item
       }
     }
   }
@@ -69,10 +69,11 @@ public:
       try {
         item->stop();
       } catch (const std::exception &e) {
-        // Error stopping item
+        // Error stopping item - error already logged by the item
       }
     }
 
+    // Join threads - they should exit naturally after stop() is called
     for (auto &thread : threads_) {
       if (thread.joinable()) {
         thread.join();
@@ -98,6 +99,22 @@ public:
   [[nodiscard]]
   size_t size() const {
     return items_.size();
+  }
+
+  /**
+   * @brief Check if all managed entities have stopped
+   *
+   * @return true
+   * @return false
+   */
+  [[nodiscard]]
+  bool hasStopped() const noexcept {
+    for (const auto &item : items_) {
+      if (item && item->isRunning()) {
+        return false;
+      }
+    }
+    return true;
   }
 
 private:

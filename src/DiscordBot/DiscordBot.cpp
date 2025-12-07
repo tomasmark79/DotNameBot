@@ -78,7 +78,7 @@ bool DiscordBot::start() {
     return false;
   }
 
-  running_.store(true);
+  isRunning_.store(true);
   logger_->info("Starting " + getName() + " in non-blocking mode...");
 
   try {
@@ -86,7 +86,7 @@ bool DiscordBot::start() {
     bot_->start(dpp::st_return);
 
     // Keep thread alive while running
-    while (running_.load()) {
+    while (isRunning_.load()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
@@ -94,19 +94,26 @@ bool DiscordBot::start() {
     return true;
   } catch (const std::exception &e) {
     logger_->error("Exception in " + getName() + " start: " + e.what());
-    running_.store(false);
+    isRunning_.store(false);
     return false;
   }
 }
 
 bool DiscordBot::stop() {
   // Atomic exchange: if already false (stopped), skip shutdown
-  if (!running_.exchange(false)) {
+  if (!isRunning_.exchange(false)) {
     return true;
   }
 
   if (bot_) {
+    logger_->info("Shutting down Discord bot...");
     bot_->shutdown();
+    
+    // Give DPP time to clean up its threads
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    
+    // Explicitly destroy the bot to ensure all DPP threads are stopped
+    bot_.reset();
   }
 
   return true;
@@ -152,6 +159,8 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
       }
       if (cmd_name == "stopbot") {
         event.reply("Stopping the bot...");
+
+        // Set presence before stopping
         auto start_time = std::chrono::system_clock::now();
         auto time_t_now = std::chrono::system_clock::to_time_t(start_time);
         std::tm tm_now = *std::localtime(&time_t_now);
@@ -160,8 +169,10 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
         std::string time_str = oss.str();
         bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "stopped: " + time_str));
 
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-        stop();
+        // Don't call stop() directly from event handler (causes deadlock in DPP thread pool)
+        // Just set the running flag to false, the main loop will handle cleanup
+        logger_->info("Stop requested via /stopbot command");
+        isRunning_.store(false);
       }
     } else {
       event.reply("Command handler for '" + cmd_name + "' not implemented yet.");

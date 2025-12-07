@@ -47,21 +47,23 @@ namespace dotnamecpp::v1 {
     // ============================================================================
 
     /**
-     * @brief Run your business logic
+     * @brief Run the bot orchestrator
      *
-     * This is the main entry point for your library's functionality.
-     * Starts a worker thread and runs for the specified duration.
+     * This is the main entry point for running the bots.
+     * Blocks until the specified duration expires or stop() is called.
      *
-     * @param durationSeconds Duration to run in seconds (0 = run indefinitely)
+     * @param durationSeconds Duration to run in seconds (0 = run indefinitely, <0 = single
+     * iteration)
      * @return true if successful
      * @return false if an error occurred or not initialized
      */
     bool run(int durationSeconds = 0);
 
     /**
-     * @brief Stop all running processes
+     * @brief Stop all running bots
      *
-     * Signals the worker thread to stop. Thread will be joined by run() or destructor.
+     * Signals the orchestrator to stop all bots gracefully.
+     * Can be called from within the application or externally.
      */
     void stop();
 

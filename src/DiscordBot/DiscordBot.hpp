@@ -76,7 +76,7 @@ public:
    */
   [[nodiscard]]
   bool isRunning() const override {
-    return running_.load();
+    return isRunning_.load();
   }
 
   /**
@@ -99,7 +99,7 @@ private:
 
   bool getTokenFromFile(std::string &token);
   void handleSlashCommand(const dpp::slashcommand_t &event);
-  std::atomic<bool> running_{false};
+  std::atomic<bool> isRunning_{false};
 
   /**
    * @brief Register bulk slash commands to Discord
