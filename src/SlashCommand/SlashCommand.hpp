@@ -18,7 +18,7 @@ public:
     std::string name;
     std::string description;
     bool required = false;
-    
+
     std::vector<std::pair<std::string, std::string>> choices;
     std::optional<int64_t> min_value;
     std::optional<int64_t> max_value;
