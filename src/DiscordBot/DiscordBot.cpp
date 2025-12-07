@@ -79,18 +79,19 @@ bool DiscordBot::start() {
   }
 
   running_.store(true);
-  logger_->info("Starting " + getName() + " with blocking call...");
+  logger_->info("Starting " + getName() + " in non-blocking mode...");
 
   try {
-    bot_->start(dpp::st_wait);
-    if (!running_.load()) {
-      logger_->warning(getName() + " stopped by user request");
-      running_.store(false);
-      return true;
+    // Start bot in non-blocking mode
+    bot_->start(dpp::st_return);
+
+    // Keep thread alive while running
+    while (running_.load()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    logger_->warning(getName() + " exited unexpectedly");
-    running_.store(false);
-    return false;
+
+    logger_->info(getName() + " stopped gracefully");
+    return true;
   } catch (const std::exception &e) {
     logger_->error("Exception in " + getName() + " start: " + e.what());
     running_.store(false);
@@ -127,25 +128,44 @@ void DiscordBot::handleSlashCommand(const dpp::slashcommand_t &event) {
         event.reply("pong!");
       }
       if (cmd_name == "help") {
+        event.thinking();
         std::string help_msg = "Available commands:\n";
         for (const auto &cmd : commands_) {
           help_msg += "`/" + cmd.getName() + "` : " + cmd.getDescription() + "\n";
         }
-        event.reply(help_msg);
+        event.edit_response(help_msg);
       }
       if (cmd_name == "emoji") {
-        event.reply(emojiesLib_->getRandomEmoji());
+        event.thinking();
+        event.edit_response(emojiesLib_->getRandomEmoji());
       }
-    }
-
-    if (handler_type == "botself") {
+    } else if (handler_type == "botself") {
+      if (cmd_name == "setstatus") {
+        event.thinking();
+        auto message_param = event.get_parameter("message");
+        if (message_param.index() == 0) {
+          event.edit_response("Error: Message parameter is required.");
+        }
+        std::string message = std::get<std::string>(message_param);
+        bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, message));
+        event.edit_response("Bot status set to: " + message);
+      }
       if (cmd_name == "stopbot") {
-        event.reply("Stopping bot as requested...");
+        event.reply("Stopping the bot...");
+        auto start_time = std::chrono::system_clock::now();
+        auto time_t_now = std::chrono::system_clock::to_time_t(start_time);
+        std::tm tm_now = *std::localtime(&time_t_now);
+        std::ostringstream oss;
+        oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
+        std::string time_str = oss.str();
+        bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "stopped: " + time_str));
+
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         stop();
       }
+    } else {
+      event.reply("Command handler for '" + cmd_name + "' not implemented yet.");
     }
-    event.reply("Command handler for '" + cmd_name + "' not implemented yet.");
-
   } else {
     event.reply("Unknown command: " + cmd_name);
   }

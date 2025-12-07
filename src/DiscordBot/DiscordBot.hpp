@@ -86,7 +86,7 @@ public:
    */
   [[nodiscard]]
   std::string getName() const override {
-    return "DotNameBot";
+    return "DiscordBot.hpp";
   }
 
 private:
@@ -96,8 +96,6 @@ private:
   std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
   std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
   std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
-
-  // std::vector<SlashCommand> slashCommands_;
 
   bool getTokenFromFile(std::string &token);
   void handleSlashCommand(const dpp::slashcommand_t &event);
