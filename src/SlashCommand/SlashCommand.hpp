@@ -20,8 +20,8 @@ public:
     bool required = false;
 
     std::vector<std::pair<std::string, std::string>> choices;
-    std::optional<int64_t> min_value;
-    std::optional<int64_t> max_value;
+    std::optional<int64_t> minValue;
+    std::optional<int64_t> maxValue;
   };
 
   /**
@@ -32,7 +32,7 @@ public:
    * @param h Handler type
    */
   SlashCommand(std::string n, std::string d, std::string h = "")
-      : name_(std::move(n)), description_(std::move(d)), handler_type_(std::move(h)) {}
+      : name_(std::move(n)), description_(std::move(d)), handlerType_(std::move(h)) {}
 
   /**
    * @brief Construct a new Slash Command object with options
@@ -44,20 +44,20 @@ public:
    */
   SlashCommand(std::string n, std::string d, std::vector<CommandOption> opts, std::string h = "")
       : name_(std::move(n)), description_(std::move(d)), options_(std::move(opts)),
-        handler_type_(std::move(h)) {}
+        handlerType_(std::move(h)) {}
 
   [[nodiscard]] const std::string &getName() const { return name_; }
   [[nodiscard]] const std::string &getDescription() const { return description_; }
-  [[nodiscard]] const std::string &getHandlerType() const { return handler_type_; }
+  [[nodiscard]] const std::string &getHandlerType() const { return handlerType_; }
   [[nodiscard]] const std::vector<CommandOption> &getOptions() const { return options_; }
 
   SlashCommand &setDefaultPermissions(dpp::permission perms) {
-    default_permissions_ = perms;
+    defaultPermissions_ = perms;
     return *this;
   }
 
   SlashCommand &setDmPermission(bool allowed) {
-    dm_permission_ = allowed;
+    dmPermission_ = allowed;
     return *this;
   }
 
@@ -73,10 +73,10 @@ private:
   std::string name_;
   std::string description_;
   std::vector<CommandOption> options_;
-  std::string handler_type_;
+  std::string handlerType_;
 
-  dpp::permission default_permissions_ = 0;
-  bool dm_permission_ = true;
+  dpp::permission defaultPermissions_ = 0;
+  bool dmPermission_ = true;
 
   static dpp::command_option_type toCommandOptionType(OptionType type) {
     switch (type) {

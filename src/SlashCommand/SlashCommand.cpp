@@ -36,14 +36,14 @@ dpp::slashcommand SlashCommand::toDppCommand(dpp::snowflake bot_id) const {
       dpp_opt.add_choice(dpp::command_option_choice(choice_name, choice_value));
     }
 
-    if (opt.min_value) dpp_opt.set_min_value(*opt.min_value);
-    if (opt.max_value) dpp_opt.set_max_value(*opt.max_value);
+    if (opt.minValue) dpp_opt.set_min_value(*opt.minValue);
+    if (opt.maxValue) dpp_opt.set_max_value(*opt.maxValue);
 
     cmd.add_option(dpp_opt);
   }
 
-  cmd.set_default_permissions(default_permissions_);
-  cmd.set_dm_permission(dm_permission_);
+  cmd.set_default_permissions(defaultPermissions_);
+  cmd.set_dm_permission(dmPermission_);
 
   return cmd;
 }
