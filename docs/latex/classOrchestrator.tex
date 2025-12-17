@@ -1,0 +1,196 @@
+\doxysection{Orchestrator\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classOrchestrator}{}\label{classOrchestrator}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+
+
+\doxylink{classOrchestrator}{Orchestrator} class to manage lifecycle of entities.  
+
+
+
+
+{\ttfamily \#include $<$Orchestrator.\+hpp$>$}
+
+
+
+Collaboration diagram for Orchestrator\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classOrchestrator__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classOrchestrator_a15ddab2c66e740673e6999588cbf748d}{Orchestrator}} (\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&services)
+\begin{DoxyCompactList}\small\item\em Construct a new \doxylink{classOrchestrator}{Orchestrator} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classOrchestrator_a5a4bd8d2b89b96330a26c543e267692f}{\texorpdfstring{$\sim$}{\string~}\+Orchestrator}} ()
+\item 
+void \mbox{\hyperlink{classOrchestrator_af145638b5eec3c1fb5befa8440a6c85b}{add}} (std\+::unique\+\_\+ptr$<$ T $>$ item)
+\begin{DoxyCompactList}\small\item\em Add a lifecycle-\/managed entity (bot, service, etc.) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOrchestrator_a666fbae24d25341d5ebe704f59106b8b}{start\+All}} ()
+\begin{DoxyCompactList}\small\item\em Start all managed entities. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25}{stop\+All}} ()
+\begin{DoxyCompactList}\small\item\em Stop all managed entities. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classOrchestrator_ab50900b695938e697ea668736c5cb507}{is\+Running}} () const
+\begin{DoxyCompactList}\small\item\em Check if the orchestrator is currently running. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classOrchestrator_a1c55b5d76975679590ea584800872b62}{size}} () const
+\begin{DoxyCompactList}\small\item\em Get the number of managed entities. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classOrchestrator_af166b8c3890bf7e250330d845449ed71}{has\+Stopped}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check if all managed entities have stopped. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Orchestrator$<$ T $>$}
+\doxylink{classOrchestrator}{Orchestrator} class to manage lifecycle of entities. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-constructors}
+\Hypertarget{classOrchestrator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classOrchestrator_a15ddab2c66e740673e6999588cbf748d}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!Orchestrator@{Orchestrator}}
+\index{Orchestrator@{Orchestrator}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Orchestrator()}{Orchestrator()}}
+{\footnotesize\ttfamily \label{classOrchestrator_a15ddab2c66e740673e6999588cbf748d} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\mbox{\hyperlink{classOrchestrator}{\+::\+Orchestrator}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&}]{services}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a new \doxylink{classOrchestrator}{Orchestrator} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em services} & Reference to the service container \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classOrchestrator_a5a4bd8d2b89b96330a26c543e267692f}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!````~Orchestrator@{\texorpdfstring{$\sim$}{\string~}Orchestrator}}
+\index{````~Orchestrator@{\texorpdfstring{$\sim$}{\string~}Orchestrator}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Orchestrator()}{\string~Orchestrator()}}
+{\footnotesize\ttfamily \label{classOrchestrator_a5a4bd8d2b89b96330a26c543e267692f} 
+template$<$typename T$>$ \\
+\mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{classOrchestrator}{Orchestrator}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classOrchestrator_a5a4bd8d2b89b96330a26c543e267692f_cgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-func-members}
+\Hypertarget{classOrchestrator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classOrchestrator_af145638b5eec3c1fb5befa8440a6c85b}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!add@{add}}
+\index{add@{add}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily \label{classOrchestrator_af145638b5eec3c1fb5befa8440a6c85b} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::add (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ T $>$}]{item}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a lifecycle-\/managed entity (bot, service, etc.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Unique pointer to the entity instance \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classOrchestrator_af145638b5eec3c1fb5befa8440a6c85b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classOrchestrator_af166b8c3890bf7e250330d845449ed71}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!hasStopped@{hasStopped}}
+\index{hasStopped@{hasStopped}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{hasStopped()}{hasStopped()}}
+{\footnotesize\ttfamily \label{classOrchestrator_af166b8c3890bf7e250330d845449ed71} 
+template$<$typename T$>$ \\
+bool \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::has\+Stopped (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Check if all managed entities have stopped. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classOrchestrator_ab50900b695938e697ea668736c5cb507}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{isRunning()}{isRunning()}}
+{\footnotesize\ttfamily \label{classOrchestrator_ab50900b695938e697ea668736c5cb507} 
+template$<$typename T$>$ \\
+bool \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::is\+Running (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Check if the orchestrator is currently running. 
+
+\begin{DoxyReturn}{Returns}
+true if running, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{classOrchestrator_a1c55b5d76975679590ea584800872b62}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!size@{size}}
+\index{size@{size}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classOrchestrator_a1c55b5d76975679590ea584800872b62} 
+template$<$typename T$>$ \\
+size\+\_\+t \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Get the number of managed entities. 
+
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of items 
+\end{DoxyReturn}
+\Hypertarget{classOrchestrator_a666fbae24d25341d5ebe704f59106b8b}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!startAll@{startAll}}
+\index{startAll@{startAll}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{startAll()}{startAll()}}
+{\footnotesize\ttfamily \label{classOrchestrator_a666fbae24d25341d5ebe704f59106b8b} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::start\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Start all managed entities. 
+
+\Hypertarget{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25}\index{Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}!stopAll@{stopAll}}
+\index{stopAll@{stopAll}!Orchestrator$<$ T $>$@{Orchestrator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{stopAll()}{stopAll()}}
+{\footnotesize\ttfamily \label{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25} 
+template$<$typename T$>$ \\
+void \mbox{\hyperlink{classOrchestrator}{Orchestrator}}$<$ T $>$\+::stop\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Stop all managed entities. 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25_icgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Orchestrator/\mbox{\hyperlink{Orchestrator_8hpp}{Orchestrator.\+hpp}}\end{DoxyCompactItemize}

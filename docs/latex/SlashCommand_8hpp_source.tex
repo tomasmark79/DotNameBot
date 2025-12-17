@@ -1,0 +1,79 @@
+\doxysection{Slash\+Command.\+hpp}
+\hypertarget{SlashCommand_8hpp_source}{}\label{SlashCommand_8hpp_source}\index{src/SlashCommand/SlashCommand.hpp@{src/SlashCommand/SlashCommand.hpp}}
+\mbox{\hyperlink{SlashCommand_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <dpp/dpp.h>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}{OptionType}}\ :\ std::uint8\_t\ \{\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{String}},\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92aa0faef0851b4294c06f2b94bb1cb2044}{Integer}},\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}{Bool}},\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a8f9bfe9d1345237cb3b2b205864da075}{User}},\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a781dc97dc62331eec3ea9ec4373a3ca8}{Channel}},\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1}{Role}}\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}{SlashCommand}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSlashCommand_1_1CommandOption}{CommandOption}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}{OptionType}}\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_a13a5944c2c5f6b8a7c31e3cb5571ff29}{type}};}
+\DoxyCodeLine{00018\ \ \ \ \ std::string\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_ae449531ef9e73d4e3bae908364247fc9}{name}};}
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_a28d51f3b4a71d3976dd02865a0bc6206}{description}};}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_a5708a3ecae3698ead86282a4d0347654}{required}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ std::vector<std::pair<std::string,\ std::string>>\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_ae5fe1c15cb3452c461ec2773a39a4f57}{choices}};}
+\DoxyCodeLine{00023\ \ \ \ \ std::optional<int64\_t>\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_ac3b80ebedbf2ac7de7ef71e705813465}{minValue}};}
+\DoxyCodeLine{00024\ \ \ \ \ std::optional<int64\_t>\ \mbox{\hyperlink{structSlashCommand_1_1CommandOption_a93d5786f53748460538ead69a5d8ca89}{maxValue}};}
+\DoxyCodeLine{00025\ \ \ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}{SlashCommand}}(std::string\ n,\ std::string\ d,\ std::string\ h\ =\ \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ :\ name\_(std::move(n)),\ description\_(std::move(d)),\ handlerType\_(std::move(h))\ \{\}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00045\ \ \ \mbox{\hyperlink{classSlashCommand_ace187cc88debe3c10d42c5ff4006a667}{SlashCommand}}(std::string\ n,\ std::string\ d,\ std::vector<CommandOption>\ opts,\ std::string\ h\ =\ \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ :\ name\_(std::move(n)),\ description\_(std::move(d)),\ options\_(std::move(opts)),}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ handlerType\_(std::move(h))\ \{\}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ std::string\ \&\mbox{\hyperlink{classSlashCommand_a91b06970051e82d681ba9fb83761fbcf}{getName}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ name\_;\ \}}
+\DoxyCodeLine{00050\ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ std::string\ \&\mbox{\hyperlink{classSlashCommand_a67672ea5f7b6660b3a024106661ab205}{getDescription}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ description\_;\ \}}
+\DoxyCodeLine{00051\ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ std::string\ \&\mbox{\hyperlink{classSlashCommand_a604a82d5bcf70a1eae73b8d555965ccb}{getHandlerType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ handlerType\_;\ \}}
+\DoxyCodeLine{00052\ \ \ [[nodiscard]]\ \textcolor{keyword}{const}\ std::vector<CommandOption>\ \&\mbox{\hyperlink{classSlashCommand_a804dcc26820daaaea373110b69268d5c}{getOptions}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ options\_;\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \mbox{\hyperlink{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}{SlashCommand}}\ \&\mbox{\hyperlink{classSlashCommand_a21fb0f8824a2bbc9f592956785314eaa}{setDefaultPermissions}}(dpp::permission\ perms)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ defaultPermissions\_\ =\ perms;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00057\ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \mbox{\hyperlink{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}{SlashCommand}}\ \&\mbox{\hyperlink{classSlashCommand_a1428242b4b624bb2cf0e6685169a6fbc}{setDmPermission}}(\textcolor{keywordtype}{bool}\ allowed)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ dmPermission\_\ =\ allowed;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00062\ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00070\ \ \ [[nodiscard]]\ dpp::slashcommand\ \mbox{\hyperlink{classSlashCommand_a60c91fd225f0b1069fa46ef67756013b}{toDppCommand}}(dpp::snowflake\ bot\_id)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ \ \ std::string\ name\_;}
+\DoxyCodeLine{00074\ \ \ std::string\ description\_;}
+\DoxyCodeLine{00075\ \ \ std::vector<CommandOption>\ options\_;}
+\DoxyCodeLine{00076\ \ \ std::string\ handlerType\_;}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ dpp::permission\ defaultPermissions\_\ =\ 0;}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{bool}\ dmPermission\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keyword}{static}\ dpp::command\_option\_type\ toCommandOptionType(\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}{OptionType}}\ type)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{OptionType::String}}:\ \textcolor{keywordflow}{return}\ dpp::co\_string;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92aa0faef0851b4294c06f2b94bb1cb2044}{OptionType::Integer}}:\ \textcolor{keywordflow}{return}\ dpp::co\_integer;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}{OptionType::Bool}}:\ \textcolor{keywordflow}{return}\ dpp::co\_boolean;}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a8f9bfe9d1345237cb3b2b205864da075}{OptionType::User}}:\ \textcolor{keywordflow}{return}\ dpp::co\_user;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a781dc97dc62331eec3ea9ec4373a3ca8}{OptionType::Channel}}:\ \textcolor{keywordflow}{return}\ dpp::co\_channel;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1}{OptionType::Role}}:\ \textcolor{keywordflow}{return}\ dpp::co\_role;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Unknown\ OptionType"{}});}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \}}
+\DoxyCodeLine{00092\ \};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ std::vector<SlashCommand>\ \mbox{\hyperlink{SlashCommand_8cpp_a03b9530a9a62ceb933e6fdf4523925a7}{commands\_}};}
+
+\end{DoxyCode}

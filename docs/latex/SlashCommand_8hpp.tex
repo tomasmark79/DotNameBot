@@ -1,0 +1,98 @@
+\doxysection{src/\+Slash\+Command/\+Slash\+Command.hpp File Reference}
+\hypertarget{SlashCommand_8hpp}{}\label{SlashCommand_8hpp}\index{src/SlashCommand/SlashCommand.hpp@{src/SlashCommand/SlashCommand.hpp}}
+{\ttfamily \#include $<$dpp/dpp.\+h$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for Slash\+Command.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{SlashCommand_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{SlashCommand_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classSlashCommand}{Slash\+Command}}
+\item 
+struct \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Slash\+Command\+::\+Command\+Option}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}{Option\+Type}} \+: std\+::uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{String}}
+, \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92aa0faef0851b4294c06f2b94bb1cb2044}{Integer}}
+, \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}{Bool}}
+, \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a8f9bfe9d1345237cb3b2b205864da075}{User}}
+, \newline
+\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a781dc97dc62331eec3ea9ec4373a3ca8}{Channel}}
+, \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1}{Role}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classSlashCommand}{Slash\+Command}} $>$ \mbox{\hyperlink{SlashCommand_8hpp_a03b9530a9a62ceb933e6fdf4523925a7}{commands\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{SlashCommand_8hpp_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}\index{SlashCommand.hpp@{SlashCommand.hpp}!OptionType@{OptionType}}
+\index{OptionType@{OptionType}!SlashCommand.hpp@{SlashCommand.hpp}}
+\doxysubsubsection{\texorpdfstring{OptionType}{OptionType}}
+{\footnotesize\ttfamily \label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92} 
+enum class \mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92}{Option\+Type}} \+: std\+::uint8\+\_\+t\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{String@{String}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!String@{String}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98} 
+String&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Integer@{Integer}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!Integer@{Integer}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92aa0faef0851b4294c06f2b94bb1cb2044}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92aa0faef0851b4294c06f2b94bb1cb2044} 
+Integer&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Bool@{Bool}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!Bool@{Bool}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034} 
+Bool&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{User@{User}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!User@{User}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a8f9bfe9d1345237cb3b2b205864da075}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a8f9bfe9d1345237cb3b2b205864da075} 
+User&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Channel@{Channel}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!Channel@{Channel}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a781dc97dc62331eec3ea9ec4373a3ca8}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a781dc97dc62331eec3ea9ec4373a3ca8} 
+Channel&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Role@{Role}!SlashCommand.hpp@{SlashCommand.hpp}}\index{SlashCommand.hpp@{SlashCommand.hpp}!Role@{Role}}}\Hypertarget{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1}\label{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1} 
+Role&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-var-members}
+\Hypertarget{SlashCommand_8hpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{SlashCommand_8hpp_a03b9530a9a62ceb933e6fdf4523925a7}\index{SlashCommand.hpp@{SlashCommand.hpp}!commands\_@{commands\_}}
+\index{commands\_@{commands\_}!SlashCommand.hpp@{SlashCommand.hpp}}
+\doxysubsubsection{\texorpdfstring{commands\_}{commands\_}}
+{\footnotesize\ttfamily \label{SlashCommand_8hpp_a03b9530a9a62ceb933e6fdf4523925a7} 
+const std\+::vector$<$\mbox{\hyperlink{classSlashCommand}{Slash\+Command}}$>$ commands\+\_\+\hspace{0.3cm}{\ttfamily [extern]}}
+

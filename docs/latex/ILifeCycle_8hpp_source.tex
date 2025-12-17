@@ -1,0 +1,35 @@
+\doxysection{ILife\+Cycle.\+hpp}
+\hypertarget{ILifeCycle_8hpp_source}{}\label{ILifeCycle_8hpp_source}\index{src/ILifeCycle/ILifeCycle.hpp@{src/ILifeCycle/ILifeCycle.hpp}}
+\mbox{\hyperlink{ILifeCycle_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00012\ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classILifeCycle_a49e9f914543e61dcedfa02936f170e3e}{\string~ILifeCycle}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \textcolor{comment}{//\ Prevent\ copying}}
+\DoxyCodeLine{00015\ \ \ \mbox{\hyperlink{classILifeCycle_a6ef5c4d6e474988f4654f761d7951a59}{ILifeCycle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00016\ \ \ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&\mbox{\hyperlink{classILifeCycle_a410325ff7ae3c89f8dc637f8e3fa395e}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \textcolor{comment}{//\ Allow\ moving}}
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{classILifeCycle_a0be6fd7fa06617b62a28e818f2810970}{ILifeCycle}}(\mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&\mbox{\hyperlink{classILifeCycle_abb9391517095b322cace242d57a04a39}{operator=}}(\mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classILifeCycle_ad422fa0b85c411a5b816f59499ae1c37}{initialize}}()\ =\ 0;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classILifeCycle_a8db004565fc6eeae12be35039b4c9803}{start}}()\ =\ 0;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classILifeCycle_af7a517dc2a0b0c061eb6a3969a814342}{stop}}()\ =\ 0;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00052\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classILifeCycle_a063a4223cf2b2f8b440078d2d7fe1d05}{isRunning}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classILifeCycle_a4b26bdd88ae524d004f1e5ee9aabfe2c}{getName}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00062\ \};}
+
+\end{DoxyCode}

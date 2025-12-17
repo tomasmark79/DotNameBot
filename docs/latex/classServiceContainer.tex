@@ -1,0 +1,299 @@
+\doxysection{Service\+Container Class Reference}
+\hypertarget{classServiceContainer}{}\label{classServiceContainer}\index{ServiceContainer@{ServiceContainer}}
+
+
+Generic dependency injection container.  
+
+
+
+
+{\ttfamily \#include $<$Service\+Container.\+hpp$>$}
+
+
+
+Collaboration diagram for Service\+Container\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{classServiceContainer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{Service\+Container}} ()=default
+\item 
+\mbox{\hyperlink{classServiceContainer_add8db91df39a3c0d6308b165ceb964e8}{\texorpdfstring{$\sim$}{\string~}\+Service\+Container}} ()=default
+\item 
+\mbox{\hyperlink{classServiceContainer_a7a674fa2b2bcb15c0cd8385a33368112}{Service\+Container}} (const \mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&)=delete
+\item 
+\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \& \mbox{\hyperlink{classServiceContainer_a8a99dfde262c96da6581673a6ab28eb4}{operator=}} (const \mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&)=delete
+\item 
+\mbox{\hyperlink{classServiceContainer_ac9c9b92273263cecff1a0ae46adc7547}{Service\+Container}} (\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&\&)=default
+\item 
+\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \& \mbox{\hyperlink{classServiceContainer_aa560be08997f1fc5fa282437aa961f9a}{operator=}} (\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&\&)=default
+\item 
+{\footnotesize template$<$typename T$>$ }\\void \mbox{\hyperlink{classServiceContainer_a263bd4f54bd6a5e4ca1ef2bab7aa4bf8}{register\+Service}} (std\+::shared\+\_\+ptr$<$ T $>$ service)
+\begin{DoxyCompactList}\small\item\em Register a service in the container. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ \mbox{\hyperlink{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b}{get\+Service}} ()
+\begin{DoxyCompactList}\small\item\em Retrieve a service from the container. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ \mbox{\hyperlink{classServiceContainer_a40048f58b52589c05b8546ce9ce0d492}{get\+Service}} () const
+\begin{DoxyCompactList}\small\item\em Retrieve a service from the container (const version) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServiceContainer_a331d897340c03215bc7049f7dd70874d}{get\+Service\+Count}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get the Service Count object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\std\+::shared\+\_\+ptr$<$ T $>$ \mbox{\hyperlink{classServiceContainer_a1ab7d9ec98371087e9cadd2452308f7f}{get\+Service\+Or\+Throw}} ()
+\begin{DoxyCompactList}\small\item\em Retrieve a service, throwing if not found. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\bool \mbox{\hyperlink{classServiceContainer_a116546db81deafac91dc67790985e74b}{has\+Service}} () const
+\begin{DoxyCompactList}\small\item\em Check if a service is registered. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classServiceContainer_adcc59c0ac7caa0a3fe32c54d05c5cbc8}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get number of registered services. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServiceContainer_a297903892c498b74bba57cf55d98a00b}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clear all registered services. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generic dependency injection container. 
+
+Provides type-\/safe service registration and retrieval. Services are stored as shared\+\_\+ptr and can be accessed by type. 
+
+\label{doc-constructors}
+\Hypertarget{classServiceContainer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classServiceContainer_a0e65096158cc09151873b980b49337ed}\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{ServiceContainer()}{ServiceContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classServiceContainer_a0e65096158cc09151873b980b49337ed} 
+Service\+Container\+::\+Service\+Container (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_a0e65096158cc09151873b980b49337ed_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_add8db91df39a3c0d6308b165ceb964e8}\index{ServiceContainer@{ServiceContainer}!````~ServiceContainer@{\texorpdfstring{$\sim$}{\string~}ServiceContainer}}
+\index{````~ServiceContainer@{\texorpdfstring{$\sim$}{\string~}ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ServiceContainer()}{\string~ServiceContainer()}}
+{\footnotesize\ttfamily \label{classServiceContainer_add8db91df39a3c0d6308b165ceb964e8} 
+Service\+Container\+::\texorpdfstring{$\sim$}{\string~}\+Service\+Container (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{classServiceContainer_a7a674fa2b2bcb15c0cd8385a33368112}\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{ServiceContainer()}{ServiceContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classServiceContainer_a7a674fa2b2bcb15c0cd8385a33368112} 
+Service\+Container\+::\+Service\+Container (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_a7a674fa2b2bcb15c0cd8385a33368112_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_ac9c9b92273263cecff1a0ae46adc7547}\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\index{ServiceContainer@{ServiceContainer}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{ServiceContainer()}{ServiceContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classServiceContainer_ac9c9b92273263cecff1a0ae46adc7547} 
+Service\+Container\+::\+Service\+Container (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_ac9c9b92273263cecff1a0ae46adc7547_cgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-func-members}
+\Hypertarget{classServiceContainer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classServiceContainer_a297903892c498b74bba57cf55d98a00b}\index{ServiceContainer@{ServiceContainer}!clear@{clear}}
+\index{clear@{clear}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classServiceContainer_a297903892c498b74bba57cf55d98a00b} 
+void Service\+Container\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clear all registered services. 
+
+\Hypertarget{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b}\index{ServiceContainer@{ServiceContainer}!getService@{getService}}
+\index{getService@{getService}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{getService()}{getService()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b} 
+template$<$typename T$>$ \\
+std\+::shared\+\_\+ptr$<$ T $>$ Service\+Container\+::get\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieve a service from the container. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Service type to retrieve \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Shared pointer to service, or nullptr if not found 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_a40048f58b52589c05b8546ce9ce0d492}\index{ServiceContainer@{ServiceContainer}!getService@{getService}}
+\index{getService@{getService}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{getService()}{getService()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classServiceContainer_a40048f58b52589c05b8546ce9ce0d492} 
+template$<$typename T$>$ \\
+std\+::shared\+\_\+ptr$<$ T $>$ Service\+Container\+::get\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieve a service from the container (const version) 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Service type to retrieve \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Shared pointer to service, or nullptr if not found 
+\end{DoxyReturn}
+\Hypertarget{classServiceContainer_a331d897340c03215bc7049f7dd70874d}\index{ServiceContainer@{ServiceContainer}!getServiceCount@{getServiceCount}}
+\index{getServiceCount@{getServiceCount}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{getServiceCount()}{getServiceCount()}}
+{\footnotesize\ttfamily \label{classServiceContainer_a331d897340c03215bc7049f7dd70874d} 
+int Service\+Container\+::get\+Service\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Get the Service Count object. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{classServiceContainer_a1ab7d9ec98371087e9cadd2452308f7f}\index{ServiceContainer@{ServiceContainer}!getServiceOrThrow@{getServiceOrThrow}}
+\index{getServiceOrThrow@{getServiceOrThrow}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{getServiceOrThrow()}{getServiceOrThrow()}}
+{\footnotesize\ttfamily \label{classServiceContainer_a1ab7d9ec98371087e9cadd2452308f7f} 
+template$<$typename T$>$ \\
+std\+::shared\+\_\+ptr$<$ T $>$ Service\+Container\+::get\+Service\+Or\+Throw (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieve a service, throwing if not found. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Service type to retrieve \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Shared pointer to service 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::runtime\+\_\+error} & if service not found \\
+\hline
+\end{DoxyExceptions}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_a1ab7d9ec98371087e9cadd2452308f7f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_a116546db81deafac91dc67790985e74b}\index{ServiceContainer@{ServiceContainer}!hasService@{hasService}}
+\index{hasService@{hasService}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{hasService()}{hasService()}}
+{\footnotesize\ttfamily \label{classServiceContainer_a116546db81deafac91dc67790985e74b} 
+template$<$typename T$>$ \\
+bool Service\+Container\+::has\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if a service is registered. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Service type to check \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+true if service exists, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{classServiceContainer_a8a99dfde262c96da6581673a6ab28eb4}\index{ServiceContainer@{ServiceContainer}!operator=@{operator=}}
+\index{operator=@{operator=}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classServiceContainer_a8a99dfde262c96da6581673a6ab28eb4} 
+\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \& Service\+Container\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_a8a99dfde262c96da6581673a6ab28eb4_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_aa560be08997f1fc5fa282437aa961f9a}\index{ServiceContainer@{ServiceContainer}!operator=@{operator=}}
+\index{operator=@{operator=}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classServiceContainer_aa560be08997f1fc5fa282437aa961f9a} 
+\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \& Service\+Container\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classServiceContainer}{Service\+Container}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServiceContainer_aa560be08997f1fc5fa282437aa961f9a_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServiceContainer_a263bd4f54bd6a5e4ca1ef2bab7aa4bf8}\index{ServiceContainer@{ServiceContainer}!registerService@{registerService}}
+\index{registerService@{registerService}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{registerService()}{registerService()}}
+{\footnotesize\ttfamily \label{classServiceContainer_a263bd4f54bd6a5e4ca1ef2bab7aa4bf8} 
+template$<$typename T$>$ \\
+void Service\+Container\+::register\+Service (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ T $>$}]{service}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Register a service in the container. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Service type (usually an interface) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em service} & Shared pointer to the service instance \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classServiceContainer_adcc59c0ac7caa0a3fe32c54d05c5cbc8}\index{ServiceContainer@{ServiceContainer}!size@{size}}
+\index{size@{size}!ServiceContainer@{ServiceContainer}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classServiceContainer_adcc59c0ac7caa0a3fe32c54d05c5cbc8} 
+size\+\_\+t Service\+Container\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Get number of registered services. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Service\+Container/\mbox{\hyperlink{ServiceContainer_8hpp}{Service\+Container.\+hpp}}\end{DoxyCompactItemize}

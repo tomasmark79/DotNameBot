@@ -1,0 +1,13 @@
+<map id="Orchestrator::add" name="Orchestrator::add">
+<area shape="rect" id="Node000001" title="Add a lifecycle&#45;managed entity (bot, service, etc.)" alt="" coords="498,113,620,140"/>
+<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ae52e0d55f95c209a522a006a93a84df9" title="Construct a new object." alt="" coords="252,105,450,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="483,129,451,129,451,124,483,124"/>
+<area shape="rect" id="Node000003" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab374c3465be88ad1b20cadc305d717ee" title="Copy and move operations are deleted." alt="" coords="5,5,204,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,101,203,62,172,51,174,46,205,58,292,96"/>
+<area shape="rect" id="Node000004" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a1f5dcbe232a7e66a327641490a35cbcf" title=" " alt="" coords="5,72,204,115"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="236,114,204,109,205,104,236,109"/>
+<area shape="rect" id="Node000005" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a6b63d7f6b34fc161b9eb7ac490871584" title=" " alt="" coords="5,139,204,181"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="236,145,205,149,204,144,236,140"/>
+<area shape="rect" id="Node000006" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a16323839bbe707a325febf0a29583248" title=" " alt="" coords="5,205,204,248"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="292,157,205,196,174,207,172,202,203,191,290,153"/>
+</map>

@@ -1,0 +1,243 @@
+\doxysection{ILife\+Cycle Class Reference}
+\hypertarget{classILifeCycle}{}\label{classILifeCycle}\index{ILifeCycle@{ILifeCycle}}
+
+
+Interface for lifecycle management of services or components.  
+
+
+
+
+{\ttfamily \#include $<$ILife\+Cycle.\+hpp$>$}
+
+
+
+Inheritance diagram for ILife\+Cycle\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classILifeCycle__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ILife\+Cycle\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classILifeCycle__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILife\+Cycle}} ()=default
+\item 
+virtual \mbox{\hyperlink{classILifeCycle_a49e9f914543e61dcedfa02936f170e3e}{\texorpdfstring{$\sim$}{\string~}\+ILife\+Cycle}} ()=default
+\item 
+\mbox{\hyperlink{classILifeCycle_a6ef5c4d6e474988f4654f761d7951a59}{ILife\+Cycle}} (const \mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&)=delete
+\item 
+\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \& \mbox{\hyperlink{classILifeCycle_a410325ff7ae3c89f8dc637f8e3fa395e}{operator=}} (const \mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&)=delete
+\item 
+\mbox{\hyperlink{classILifeCycle_a0be6fd7fa06617b62a28e818f2810970}{ILife\+Cycle}} (\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&\&)=default
+\item 
+\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \& \mbox{\hyperlink{classILifeCycle_abb9391517095b322cace242d57a04a39}{operator=}} (\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&\&)=default
+\item 
+virtual bool \mbox{\hyperlink{classILifeCycle_ad422fa0b85c411a5b816f59499ae1c37}{initialize}} ()=0
+\begin{DoxyCompactList}\small\item\em Initialize the service. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classILifeCycle_a8db004565fc6eeae12be35039b4c9803}{start}} ()=0
+\begin{DoxyCompactList}\small\item\em Start the service (blocking or non-\/blocking depending on implementation) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classILifeCycle_af7a517dc2a0b0c061eb6a3969a814342}{stop}} ()=0
+\begin{DoxyCompactList}\small\item\em Stop the service. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classILifeCycle_a063a4223cf2b2f8b440078d2d7fe1d05}{is\+Running}} () const =0
+\begin{DoxyCompactList}\small\item\em Check if service is running. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classILifeCycle_a4b26bdd88ae524d004f1e5ee9aabfe2c}{get\+Name}} () const =0
+\begin{DoxyCompactList}\small\item\em Get the Name object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interface for lifecycle management of services or components. 
+
+\label{doc-constructors}
+\Hypertarget{classILifeCycle_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{ILifeCycle()}{ILifeCycle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classILifeCycle_a64e5d7091868eeb01bb2434da438081d} 
+ILife\+Cycle\+::\+ILife\+Cycle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{classILifeCycle_a64e5d7091868eeb01bb2434da438081d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classILifeCycle_a49e9f914543e61dcedfa02936f170e3e}\index{ILifeCycle@{ILifeCycle}!````~ILifeCycle@{\texorpdfstring{$\sim$}{\string~}ILifeCycle}}
+\index{````~ILifeCycle@{\texorpdfstring{$\sim$}{\string~}ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ILifeCycle()}{\string~ILifeCycle()}}
+{\footnotesize\ttfamily \label{classILifeCycle_a49e9f914543e61dcedfa02936f170e3e} 
+virtual ILife\+Cycle\+::\texorpdfstring{$\sim$}{\string~}\+ILife\+Cycle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\Hypertarget{classILifeCycle_a6ef5c4d6e474988f4654f761d7951a59}\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{ILifeCycle()}{ILifeCycle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classILifeCycle_a6ef5c4d6e474988f4654f761d7951a59} 
+ILife\+Cycle\+::\+ILife\+Cycle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{classILifeCycle_a6ef5c4d6e474988f4654f761d7951a59_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classILifeCycle_a0be6fd7fa06617b62a28e818f2810970}\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\index{ILifeCycle@{ILifeCycle}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{ILifeCycle()}{ILifeCycle()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classILifeCycle_a0be6fd7fa06617b62a28e818f2810970} 
+ILife\+Cycle\+::\+ILife\+Cycle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{classILifeCycle_a0be6fd7fa06617b62a28e818f2810970_cgraph}
+\end{center}
+\end{figure}
+
+
+\label{doc-func-members}
+\Hypertarget{classILifeCycle_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classILifeCycle_a4b26bdd88ae524d004f1e5ee9aabfe2c}\index{ILifeCycle@{ILifeCycle}!getName@{getName}}
+\index{getName@{getName}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{classILifeCycle_a4b26bdd88ae524d004f1e5ee9aabfe2c} 
+virtual std\+::string ILife\+Cycle\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [pure virtual]}}
+
+
+
+Get the Name object. 
+
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_ab1d753b20152be10d894158f585f63bd}{dotnamecpp\+::discordbot\+::\+Discord\+Bot}}.
+
+\Hypertarget{classILifeCycle_ad422fa0b85c411a5b816f59499ae1c37}\index{ILifeCycle@{ILifeCycle}!initialize@{initialize}}
+\index{initialize@{initialize}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily \label{classILifeCycle_ad422fa0b85c411a5b816f59499ae1c37} 
+virtual bool ILife\+Cycle\+::initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Initialize the service. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5c2963ad0b530b93f96f5646de023b69}{dotnamecpp\+::discordbot\+::\+Discord\+Bot}}.
+
+\Hypertarget{classILifeCycle_a063a4223cf2b2f8b440078d2d7fe1d05}\index{ILifeCycle@{ILifeCycle}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{isRunning()}{isRunning()}}
+{\footnotesize\ttfamily \label{classILifeCycle_a063a4223cf2b2f8b440078d2d7fe1d05} 
+virtual bool ILife\+Cycle\+::is\+Running (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [pure virtual]}}
+
+
+
+Check if service is running. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a54158b4a061d1a2ff4401602bcdded1c}{dotnamecpp\+::discordbot\+::\+Discord\+Bot}}.
+
+\Hypertarget{classILifeCycle_a410325ff7ae3c89f8dc637f8e3fa395e}\index{ILifeCycle@{ILifeCycle}!operator=@{operator=}}
+\index{operator=@{operator=}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classILifeCycle_a410325ff7ae3c89f8dc637f8e3fa395e} 
+\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \& ILife\+Cycle\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classILifeCycle_a410325ff7ae3c89f8dc637f8e3fa395e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classILifeCycle_abb9391517095b322cace242d57a04a39}\index{ILifeCycle@{ILifeCycle}!operator=@{operator=}}
+\index{operator=@{operator=}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classILifeCycle_abb9391517095b322cace242d57a04a39} 
+\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \& ILife\+Cycle\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classILifeCycle}{ILife\+Cycle}} \&\&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classILifeCycle_abb9391517095b322cace242d57a04a39_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classILifeCycle_a8db004565fc6eeae12be35039b4c9803}\index{ILifeCycle@{ILifeCycle}!start@{start}}
+\index{start@{start}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily \label{classILifeCycle_a8db004565fc6eeae12be35039b4c9803} 
+virtual bool ILife\+Cycle\+::start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Start the service (blocking or non-\/blocking depending on implementation) 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f6245ac4c780609c215c1081ff097b8}{dotnamecpp\+::discordbot\+::\+Discord\+Bot}}.
+
+\Hypertarget{classILifeCycle_af7a517dc2a0b0c061eb6a3969a814342}\index{ILifeCycle@{ILifeCycle}!stop@{stop}}
+\index{stop@{stop}!ILifeCycle@{ILifeCycle}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily \label{classILifeCycle_af7a517dc2a0b0c061eb6a3969a814342} 
+virtual bool ILife\+Cycle\+::stop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Stop the service. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5cac9d7eea641a37523ca99d8d38963c}{dotnamecpp\+::discordbot\+::\+Discord\+Bot}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+ILife\+Cycle/\mbox{\hyperlink{ILifeCycle_8hpp}{ILife\+Cycle.\+hpp}}\end{DoxyCompactItemize}

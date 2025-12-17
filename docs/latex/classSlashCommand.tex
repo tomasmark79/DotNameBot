@@ -1,0 +1,176 @@
+\doxysection{Slash\+Command Class Reference}
+\hypertarget{classSlashCommand}{}\label{classSlashCommand}\index{SlashCommand@{SlashCommand}}
+
+
+{\ttfamily \#include $<$Slash\+Command.\+hpp$>$}
+
+
+
+Collaboration diagram for Slash\+Command\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classSlashCommand__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Command\+Option}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}{Slash\+Command}} (std\+::string n, std\+::string d, std\+::string h="{}"{})
+\begin{DoxyCompactList}\small\item\em Construct a new Slash Command object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classSlashCommand_ace187cc88debe3c10d42c5ff4006a667}{Slash\+Command}} (std\+::string n, std\+::string d, std\+::vector$<$ \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Command\+Option}} $>$ opts, std\+::string h="{}"{})
+\begin{DoxyCompactList}\small\item\em Construct a new Slash Command object with options. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{classSlashCommand_a91b06970051e82d681ba9fb83761fbcf}{get\+Name}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classSlashCommand_a67672ea5f7b6660b3a024106661ab205}{get\+Description}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{classSlashCommand_a604a82d5bcf70a1eae73b8d555965ccb}{get\+Handler\+Type}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Command\+Option}} $>$ \& \mbox{\hyperlink{classSlashCommand_a804dcc26820daaaea373110b69268d5c}{get\+Options}} () const
+\item 
+\mbox{\hyperlink{classSlashCommand}{Slash\+Command}} \& \mbox{\hyperlink{classSlashCommand_a21fb0f8824a2bbc9f592956785314eaa}{set\+Default\+Permissions}} (dpp\+::permission perms)
+\item 
+\mbox{\hyperlink{classSlashCommand}{Slash\+Command}} \& \mbox{\hyperlink{classSlashCommand_a1428242b4b624bb2cf0e6685169a6fbc}{set\+Dm\+Permission}} (bool allowed)
+\item 
+dpp\+::slashcommand \mbox{\hyperlink{classSlashCommand_a60c91fd225f0b1069fa46ef67756013b}{to\+Dpp\+Command}} (dpp\+::snowflake bot\+\_\+id) const
+\begin{DoxyCompactList}\small\item\em Convert to dpp\+::slashcommand. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{classSlashCommand_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0}\index{SlashCommand@{SlashCommand}!SlashCommand@{SlashCommand}}
+\index{SlashCommand@{SlashCommand}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{SlashCommand()}{SlashCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0} 
+Slash\+Command\+::\+Slash\+Command (\begin{DoxyParamCaption}\item[{std\+::string}]{n}{, }\item[{std\+::string}]{d}{, }\item[{std\+::string}]{h}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Slash Command object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Name of the command \\
+\hline
+{\em d} & Description of the command \\
+\hline
+{\em h} & Handler type \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classSlashCommand_a2279dfc962fe30b81d6c125246ec8cb0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classSlashCommand_ace187cc88debe3c10d42c5ff4006a667}\index{SlashCommand@{SlashCommand}!SlashCommand@{SlashCommand}}
+\index{SlashCommand@{SlashCommand}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{SlashCommand()}{SlashCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classSlashCommand_ace187cc88debe3c10d42c5ff4006a667} 
+Slash\+Command\+::\+Slash\+Command (\begin{DoxyParamCaption}\item[{std\+::string}]{n}{, }\item[{std\+::string}]{d}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Command\+Option}} $>$}]{opts}{, }\item[{std\+::string}]{h}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Slash Command object with options. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Name of the command \\
+\hline
+{\em d} & Description of the command \\
+\hline
+{\em opts} & Options for the command \\
+\hline
+{\em h} & Handler type \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classSlashCommand_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSlashCommand_a67672ea5f7b6660b3a024106661ab205}\index{SlashCommand@{SlashCommand}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a67672ea5f7b6660b3a024106661ab205} 
+const std\+::string \& Slash\+Command\+::get\+Description (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classSlashCommand_a604a82d5bcf70a1eae73b8d555965ccb}\index{SlashCommand@{SlashCommand}!getHandlerType@{getHandlerType}}
+\index{getHandlerType@{getHandlerType}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{getHandlerType()}{getHandlerType()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a604a82d5bcf70a1eae73b8d555965ccb} 
+const std\+::string \& Slash\+Command\+::get\+Handler\+Type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classSlashCommand_a91b06970051e82d681ba9fb83761fbcf}\index{SlashCommand@{SlashCommand}!getName@{getName}}
+\index{getName@{getName}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a91b06970051e82d681ba9fb83761fbcf} 
+const std\+::string \& Slash\+Command\+::get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classSlashCommand_a804dcc26820daaaea373110b69268d5c}\index{SlashCommand@{SlashCommand}!getOptions@{getOptions}}
+\index{getOptions@{getOptions}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{getOptions()}{getOptions()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a804dcc26820daaaea373110b69268d5c} 
+const std\+::vector$<$ \mbox{\hyperlink{structSlashCommand_1_1CommandOption}{Command\+Option}} $>$ \& Slash\+Command\+::get\+Options (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+\Hypertarget{classSlashCommand_a21fb0f8824a2bbc9f592956785314eaa}\index{SlashCommand@{SlashCommand}!setDefaultPermissions@{setDefaultPermissions}}
+\index{setDefaultPermissions@{setDefaultPermissions}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{setDefaultPermissions()}{setDefaultPermissions()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a21fb0f8824a2bbc9f592956785314eaa} 
+\mbox{\hyperlink{classSlashCommand}{Slash\+Command}} \& Slash\+Command\+::set\+Default\+Permissions (\begin{DoxyParamCaption}\item[{dpp\+::permission}]{perms}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classSlashCommand_a21fb0f8824a2bbc9f592956785314eaa_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classSlashCommand_a1428242b4b624bb2cf0e6685169a6fbc}\index{SlashCommand@{SlashCommand}!setDmPermission@{setDmPermission}}
+\index{setDmPermission@{setDmPermission}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{setDmPermission()}{setDmPermission()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a1428242b4b624bb2cf0e6685169a6fbc} 
+\mbox{\hyperlink{classSlashCommand}{Slash\+Command}} \& Slash\+Command\+::set\+Dm\+Permission (\begin{DoxyParamCaption}\item[{bool}]{allowed}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classSlashCommand_a1428242b4b624bb2cf0e6685169a6fbc_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classSlashCommand_a60c91fd225f0b1069fa46ef67756013b}\index{SlashCommand@{SlashCommand}!toDppCommand@{toDppCommand}}
+\index{toDppCommand@{toDppCommand}!SlashCommand@{SlashCommand}}
+\doxysubsubsection{\texorpdfstring{toDppCommand()}{toDppCommand()}}
+{\footnotesize\ttfamily \label{classSlashCommand_a60c91fd225f0b1069fa46ef67756013b} 
+dpp\+::slashcommand Slash\+Command\+::to\+Dpp\+Command (\begin{DoxyParamCaption}\item[{dpp\+::snowflake}]{bot\+\_\+id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+Convert to dpp\+::slashcommand. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot\+\_\+id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dpp\+::slashcommand 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Slash\+Command/\mbox{\hyperlink{SlashCommand_8hpp}{Slash\+Command.\+hpp}}\item 
+src/\+Slash\+Command/\mbox{\hyperlink{SlashCommand_8cpp}{Slash\+Command.\+cpp}}\end{DoxyCompactItemize}

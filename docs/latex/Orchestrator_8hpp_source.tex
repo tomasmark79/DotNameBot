@@ -1,0 +1,96 @@
+\doxysection{Orchestrator.\+hpp}
+\hypertarget{Orchestrator_8hpp_source}{}\label{Orchestrator_8hpp_source}\index{src/Orchestrator/Orchestrator.hpp@{src/Orchestrator/Orchestrator.hpp}}
+\mbox{\hyperlink{Orchestrator_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ILifeCycle_8hpp}{ILifeCycle/ILifeCycle.hpp}}>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ServiceContainer_8hpp}{ServiceContainer/ServiceContainer.hpp}}>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classOrchestrator_a15ddab2c66e740673e6999588cbf748d}{Orchestrator}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classOrchestrator_a15ddab2c66e740673e6999588cbf748d}{Orchestrator}}(\mbox{\hyperlink{classServiceContainer}{ServiceContainer}}\ \&services)\ :\ services\_(services)\ \{\}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \mbox{\hyperlink{classOrchestrator_a5a4bd8d2b89b96330a26c543e267692f}{\string~Orchestrator}}()\ \{\ \mbox{\hyperlink{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25}{stopAll}}();\ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classOrchestrator_af145638b5eec3c1fb5befa8440a6c85b}{add}}(std::unique\_ptr<T>\ item)\ \{\ items\_.push\_back(std::move(item));\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classOrchestrator_a666fbae24d25341d5ebe704f59106b8b}{startAll}}()\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{if}\ (running\_.exchange(\textcolor{keyword}{true}))\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ Already\ running}}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item\ :\ items\_)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (item-\/>initialize())\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ T\ *item\_ptr\ =\ item.get();}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ threads\_.emplace\_back([item\_ptr]()\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item\_ptr-\/>start();}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::exception\ \&e)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Item\ failed\ to\ start\ -\/\ error\ already\ logged\ by\ the\ item}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::exception\ \&e)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Failed\ to\ initialize\ item\ -\/\ error\ already\ logged\ by\ the\ item}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classOrchestrator_ab6f3fc6985a670a6189c99d511df4c25}{stopAll}}()\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (!running\_.exchange(\textcolor{keyword}{false}))\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \textcolor{keywordflow}{return};\ \textcolor{comment}{//\ Already\ stopped}}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item\ :\ items\_)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ item-\/>stop();}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::exception\ \&e)\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Error\ stopping\ item\ -\/\ error\ already\ logged\ by\ the\ item}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Join\ threads\ -\/\ they\ should\ exit\ naturally\ after\ stop()\ is\ called}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&thread\ :\ threads\_)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (thread.joinable())\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ thread.join();}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00089\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classOrchestrator_ab50900b695938e697ea668736c5cb507}{isRunning}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ running\_.load();}
+\DoxyCodeLine{00092\ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classOrchestrator_a1c55b5d76975679590ea584800872b62}{size}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ items\_.size();}
+\DoxyCodeLine{00102\ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00110\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classOrchestrator_af166b8c3890bf7e250330d845449ed71}{hasStopped}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&item\ :\ items\_)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (item\ \&\&\ item-\/>isRunning())\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00118\ \ \ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00121\ \ \ std::vector<std::unique\_ptr<T>>\ items\_;}
+\DoxyCodeLine{00122\ \ \ std::vector<std::thread>\ threads\_;}
+\DoxyCodeLine{00123\ \ \ std::atomic<bool>\ running\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ [[maybe\_unused]]}
+\DoxyCodeLine{00126\ \ \ ServiceContainer\ \&services\_;}
+\DoxyCodeLine{00127\ \};}
+
+\end{DoxyCode}

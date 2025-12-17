@@ -1,0 +1,7 @@
+<map id="dotnamecpp::v1::DotNameBotLib::stop" name="dotnamecpp::v1::DotNameBotLib::stop">
+<area shape="rect" id="Node000001" title="Stop all running bots." alt="" coords="252,39,450,81"/>
+<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#abc0f7ffd4ef59f4d7f685917d2be3914" title="Run the bot orchestrator." alt="" coords="5,5,204,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,47,204,43,205,37,236,42"/>
+<area shape="rect" id="Node000003" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a32b01a22a5f71db61c86bec25efc232f" title="Destroy the object." alt="" coords="5,72,204,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,78,205,83,204,77,236,73"/>
+</map>

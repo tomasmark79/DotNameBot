@@ -1,0 +1,37 @@
+<map id="src/Utils/Filesystem/IFileReader.hpp" name="src/Utils/Filesystem/IFileReader.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="554,5,693,48"/>
+<area shape="rect" id="Node000002" href="$FileReader_8hpp.html" title=" " alt="" coords="294,96,433,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,56,426,98,424,93,548,51"/>
+<area shape="rect" id="Node000006" href="$JsonSerializer_8hpp.html" title=" " alt="" coords="517,104,730,131"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="626,64,626,104,621,104,621,64"/>
+<area shape="rect" id="Node000008" href="$UtilsFactory_8hpp.html" title=" " alt="" coords="786,104,955,131"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="697,51,836,101,834,106,695,56"/>
+<area shape="rect" id="Node000003" href="$FileReaderTest_8cpp.html" title=" " alt="" coords="5,187,189,229"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="288,147,160,189,159,183,286,142"/>
+<area shape="rect" id="Node000004" href="$FileReader_8cpp.html" title=" " alt="" coords="213,187,352,229"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="337,152,303,188,299,185,333,148"/>
+<area shape="rect" id="Node000005" href="$UtilsFactory_8cpp.html" title=" " alt="" coords="375,195,544,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="399,147,448,192,444,196,395,151"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="588,141,484,196,482,192,586,136"/>
+<area shape="rect" id="Node000007" href="$JsonSerializer_8cpp.html" title=" " alt="" coords="569,195,782,221"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="641,143,671,193,666,195,637,146"/>
+<area shape="poly" id="edge20_Node000008_Node000005" title=" " alt="" coords="797,137,519,197,518,191,796,132"/>
+<area shape="rect" id="Node000009" href="$Application_8cpp.html" title=" " alt="" coords="779,277,978,304"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="860,145,847,185,845,207,848,229,858,254,871,275,867,278,853,257,842,230,840,207,842,184,855,144"/>
+<area shape="rect" id="Node000010" href="$DotNameBotLib_8hpp.html" title=" " alt="" coords="857,187,1017,229"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="891,142,924,185,919,188,887,145"/>
+<area shape="rect" id="Node000012" href="$DiscordBot_8hpp.html" title=" " alt="" coords="1041,195,1244,221"/>
+<area shape="poly" id="edge13_Node000008_Node000012" title=" " alt="" coords="925,133,1104,192,1103,197,923,138"/>
+<area shape="rect" id="Node000014" href="$RssManager_8hpp.html" title=" " alt="" coords="1268,195,1438,221"/>
+<area shape="poly" id="edge16_Node000008_Node000014" title=" " alt="" coords="961,131,1256,184,1293,191,1292,197,1255,189,960,136"/>
+<area shape="poly" id="edge11_Node000010_Node000009" title=" " alt="" coords="915,244,890,278,885,275,911,241"/>
+<area shape="rect" id="Node000011" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="1031,277,1192,304"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="997,234,1085,274,1083,279,995,239"/>
+<area shape="poly" id="edge15_Node000012_Node000011" title=" " alt="" coords="1135,237,1119,278,1114,276,1130,235"/>
+<area shape="rect" id="Node000013" href="$DiscordBot_8cpp.html" title=" " alt="" coords="1216,277,1418,304"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="1184,226,1291,274,1289,279,1182,231"/>
+<area shape="poly" id="edge18_Node000014_Node000011" title=" " alt="" coords="1302,229,1150,279,1149,274,1300,224"/>
+<area shape="poly" id="edge17_Node000014_Node000013" title=" " alt="" coords="1344,237,1325,278,1320,276,1339,235"/>
+<area shape="rect" id="Node000015" href="$RssManager_8cpp.html" title=" " alt="" coords="1442,277,1613,304"/>
+<area shape="poly" id="edge19_Node000014_Node000015" title=" " alt="" coords="1395,226,1502,274,1499,279,1393,231"/>
+</map>

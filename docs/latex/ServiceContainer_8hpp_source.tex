@@ -1,0 +1,81 @@
+\doxysection{Service\+Container.\+hpp}
+\hypertarget{ServiceContainer_8hpp_source}{}\label{ServiceContainer_8hpp_source}\index{src/ServiceContainer/ServiceContainer.hpp@{src/ServiceContainer/ServiceContainer.hpp}}
+\mbox{\hyperlink{ServiceContainer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{classServiceContainer_add8db91df39a3c0d6308b165ceb964e8}{\string~ServiceContainer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{comment}{//\ Non-\/copyable}}
+\DoxyCodeLine{00022\ \ \ \mbox{\hyperlink{classServiceContainer_a7a674fa2b2bcb15c0cd8385a33368112}{ServiceContainer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&\mbox{\hyperlink{classServiceContainer_a8a99dfde262c96da6581673a6ab28eb4}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{comment}{//\ Movable}}
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{classServiceContainer_ac9c9b92273263cecff1a0ae46adc7547}{ServiceContainer}}(\mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&\mbox{\hyperlink{classServiceContainer_aa560be08997f1fc5fa282437aa961f9a}{operator=}}(\mbox{\hyperlink{classServiceContainer_a0e65096158cc09151873b980b49337ed}{ServiceContainer}}\ \&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServiceContainer_a263bd4f54bd6a5e4ca1ef2bab7aa4bf8}{registerService}}(std::shared\_ptr<T>\ service)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ services\_[std::type\_index(\textcolor{keyword}{typeid}(T))]\ =\ service;}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00045\ \ \ std::shared\_ptr<T>\ \mbox{\hyperlink{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b}{getService}}()\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ services\_.find(std::type\_index(\textcolor{keyword}{typeid}(T)));}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ services\_.end())\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::static\_pointer\_cast<T>(it-\/>second);}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00051\ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00059\ \ \ std::shared\_ptr<T>\ \mbox{\hyperlink{classServiceContainer_a40048f58b52589c05b8546ce9ce0d492}{getService}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ services\_.find(std::type\_index(\textcolor{keyword}{typeid}(T)));}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ services\_.end())\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::static\_pointer\_cast<T>(it-\/>second);}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00065\ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00072\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classServiceContainer_a331d897340c03215bc7049f7dd70874d}{getServiceCount}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(services\_.size());}
+\DoxyCodeLine{00075\ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00084\ \ \ std::shared\_ptr<T>\ \mbox{\hyperlink{classServiceContainer_a1ab7d9ec98371087e9cadd2452308f7f}{getServiceOrThrow}}()\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{auto}\ service\ =\ \mbox{\hyperlink{classServiceContainer_acabdcb87246df2f3d7c0f26e81146b8b}{getService<T>}}();}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{if}\ (!service)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Service\ not\ found:\ "{}}\ +\ std::string(\textcolor{keyword}{typeid}(T).name()));}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ service;}
+\DoxyCodeLine{00090\ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classServiceContainer_a116546db81deafac91dc67790985e74b}{hasService}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ services\_.find(std::type\_index(\textcolor{keyword}{typeid}(T)))\ !=\ services\_.end();}
+\DoxyCodeLine{00100\ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00105\ \ \ [[nodiscard]]}
+\DoxyCodeLine{00106\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classServiceContainer_adcc59c0ac7caa0a3fe32c54d05c5cbc8}{size}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ services\_.size();}
+\DoxyCodeLine{00108\ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServiceContainer_a297903892c498b74bba57cf55d98a00b}{clear}}()\ \{\ services\_.clear();\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00116\ \ \ \textcolor{comment}{//\ note:\ RTTI\ (Run-\/Time\ Type\ Information)\ based\ storage}}
+\DoxyCodeLine{00117\ \ \ std::unordered\_map<std::type\_index,\ std::shared\_ptr<void>>\ services\_;}
+\DoxyCodeLine{00118\ \};}
+
+\end{DoxyCode}
