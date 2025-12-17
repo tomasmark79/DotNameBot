@@ -4,13 +4,20 @@
 
 # DotNameBot
 
-## Universal Bot Application
+Universal Bot Application
 
 ## Overview
 
 ### Implemented features
 
 - Discord bot
+- RSS/ATOM feed reader
+- Emoji library
+
+## Architecture
+
+- Modular architecture with service container and orchestrator
+- Dependency injection for easy testing and extension
 
 ---
 
