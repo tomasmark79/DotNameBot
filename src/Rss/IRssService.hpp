@@ -1,82 +1,91 @@
 #pragma once
 
-#include <ServiceContainer/ServiceContainer.hpp>
 #include <cstdint>
 #include <string>
 
-// Forward declaration
-struct RSSItem;
+namespace dotnamecpp::rss {
 
-/**
- * @brief Interface for RSS Service
- *
- * Provides methods for fetching and managing RSS feeds.
- */
-
-class IRssService {
-public:
-  /**
-   * @brief Destroy the IRssService object
-   *
-   */
-  virtual ~IRssService() = default;
+  // Forward declaration
+  struct RSSItem;
 
   /**
-   * @brief Refetch all RSS feeds from the stored URLs
+   * @brief Interface for RSS Service
    *
-   * @return int Returns 0 on success, -1 on failure
+   * Provides methods for fetching and managing RSS feeds.
    */
-  virtual int refetchRssFeeds() = 0;
 
-  /**
-   * @brief List all stored RSS URLs
-   *
-   * @return std::string A formatted string listing all RSS URLs
-   */
-  [[nodiscard]]
-  virtual std::string listUrls() = 0;
+  class IRssService {
+  public:
+    /**
+     * @brief Destroy the IRssService object
+     *
+     */
+    virtual ~IRssService() = default;
 
-  /**
-   * @brief Get a random RSS item from the feed buffer
-   *
-   * @return RSSItem
-   */
-  [[nodiscard]]
-  virtual RSSItem getRandomItem() = 0;
+    /**
+     * @brief Initialize the RSS service
+     *
+     * @return int Returns 0 on success, -1 on failure
+     */
+    virtual int Initialize() = 0;
 
-  /**
-   * @brief Get a random RSS item matching the embedded flag
-   *
-   * @param embedded Whether to match embedded items
-   * @return RSSItem
-   */
-  [[nodiscard]]
-  virtual RSSItem getRandomItemMatchingEmbedded(bool embedded) = 0;
+    /**
+     * @brief Refetch all RSS feeds from the stored URLs
+     *
+     * @return int Returns 0 on success, -1 on failure
+     */
+    virtual int refetchRssFeeds() = 0;
 
-  /**
-   * @brief Get the total number of items in the feed buffer
-   *
-   * @return size_t
-   */
-  [[nodiscard]]
-  virtual size_t getItemCount() const = 0;
+    /**
+     * @brief List all stored RSS URLs
+     *
+     * @return std::string A formatted string listing all RSS URLs
+     */
+    [[nodiscard]]
+    virtual std::string listUrls() = 0;
 
-  /**
-   * @brief Get the total number of items matching the embedded flag
-   *
-   * @param embedded Whether to match embedded items
-   * @return size_t
-   */
-  [[nodiscard]]
-  virtual size_t getItemCountMatchingEmbedded(bool embedded) const = 0;
+    /**
+     * @brief Get a random RSS item from the feed buffer
+     *
+     * @return RSSItem
+     */
+    [[nodiscard]]
+    virtual RSSItem getRandomItem() = 0;
 
-  /**
-   * @brief Add a new RSS URL to the list
-   *
-   * @param url The RSS feed URL
-   * @param embedded Whether items from this feed should be marked as embedded
-   * @param discordChannelId Optional Discord channel ID associated with this feed
-   * @return int Returns 0 on success, -1 on failure
-   */
-  virtual int addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
-};
+    /**
+     * @brief Get a random RSS item matching the embedded flag
+     *
+     * @param embedded Whether to match embedded items
+     * @return RSSItem
+     */
+    [[nodiscard]]
+    virtual RSSItem getRandomItemMatchingEmbedded(bool embedded) = 0;
+
+    /**
+     * @brief Get the total number of items in the feed buffer
+     *
+     * @return size_t
+     */
+    [[nodiscard]]
+    virtual size_t getItemCount() const = 0;
+
+    /**
+     * @brief Get the total number of items matching the embedded flag
+     *
+     * @param embedded Whether to match embedded items
+     * @return size_t
+     */
+    [[nodiscard]]
+    virtual size_t getItemCountMatchingEmbedded(bool embedded) const = 0;
+
+    /**
+     * @brief Add a new RSS URL to the list
+     *
+     * @param url The RSS feed URL
+     * @param embedded Whether items from this feed should be marked as embedded
+     * @param discordChannelId Optional Discord channel ID associated with this feed
+     * @return int Returns 0 on success, -1 on failure
+     */
+    virtual int addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+  };
+} // namespace dotnamecpp::rss

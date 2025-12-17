@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DotNameBotLib/version.h> // first configuration will create this file
+#include <DotNameBotLib/version.h> // cmake configuration will generate this file
 #include <Utils/UtilsFactory.hpp>
 #include <atomic>
 #include <filesystem>
@@ -9,6 +9,8 @@
 
 #include <EmojiesLib/EmojiesLib.hpp>
 #include <Orchestrator/Orchestrator.hpp>
+
+#include <Rss/IRssService.hpp>
 #include <ServiceContainer/ServiceContainer.hpp>
 
 namespace dotnamecpp::v1 {
@@ -115,9 +117,9 @@ namespace dotnamecpp::v1 {
     bool isInitialized_ = false;
     std::atomic<bool> shouldStop_{false};
     std::atomic<bool> isRunning_{false};
-
     std::unique_ptr<ServiceContainer> services_;
     std::unique_ptr<Orchestrator<ILifeCycle>> botOrchestrator_;
+    std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
     std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
   };
 

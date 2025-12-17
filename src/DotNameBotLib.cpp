@@ -1,5 +1,6 @@
 #include <DiscordBot/DiscordBot.hpp>
 #include <DotNameBotLib/DotNameBotLib.hpp>
+#include <Rss/RssManager.hpp>
 
 namespace dotnamecpp::v1 {
 
@@ -22,20 +23,23 @@ namespace dotnamecpp::v1 {
       logger_->warningStream() << "Logo not found: " << logoPath;
     }
 
-    // Initialize emojies library
-    emojiesLib_ = std::make_shared<dotname::EmojiesLib>(assetManager_->getAssetsPath().string());
+    // another services
+    emojiesLib_ = std::make_shared<dotname::EmojiesLib>(
+        /* there is no dependency injection yet */ assetManager_->getAssetsPath().string());
+    rssService_ = std::make_shared<dotnamecpp::rss::RssManager>(logger_, assetManager_);
 
     // Register services to service container
     services_ = std::make_unique<ServiceContainer>();
     services_->registerService(logger_);
     services_->registerService(assetManager_);
     services_->registerService(emojiesLib_);
+    services_->registerService(rssService_);
 
     logger_->infoStream() << "Total services registered: " << services_->getServiceCount();
 
     // Initialize orchestrator with default bots
     botOrchestrator_ = std::make_unique<Orchestrator<ILifeCycle>>(*services_);
-    auto discordBot = std::make_unique<DiscordBot>(*services_);
+    auto discordBot = std::make_unique<dotnamecpp::discordbot::DiscordBot>(*services_);
     botOrchestrator_->add(std::move(discordBot));
     logger_->infoStream() << "Registered " << botOrchestrator_->size() << " bot(s)";
 
@@ -93,8 +97,6 @@ namespace dotnamecpp::v1 {
         logger_->infoStream() << libName_ << " stopped";
       }
 
-      // Cleanup - stop() will be called in destructor or explicitly by user
-      // If bots stopped themselves, we still need to cleanup
       stop();
       return true;
 
@@ -133,5 +135,4 @@ namespace dotnamecpp::v1 {
   const std::filesystem::path &DotNameBotLib::getAssetsPath() const noexcept { return assetsPath_; }
   ServiceContainer &DotNameBotLib::getServices() noexcept { return *services_; }
   Orchestrator<ILifeCycle> &DotNameBotLib::getOrchestrator() noexcept { return *botOrchestrator_; }
-
 } // namespace dotnamecpp::v1
