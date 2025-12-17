@@ -16,6 +16,7 @@ Universal Bot Application
 
 ## Architecture
 
+- [Doxygen Documentation of DotNameBot](https://tomasmark79.github.io/DotNameBot/html/index.html)
 - Modular architecture with service container and orchestrator
 - Dependency injection for easy testing and extension
 
