@@ -79,8 +79,19 @@ namespace dotnamecpp::rss {
      * @param url The RSS feed URL
      * @param embedded Whether items from this feed should be marked as embedded
      * @param discordChannelId Optional Discord channel ID associated with this feed
-     * @return int Returns 0 on success, -1 on failure
+     * @return true on success, otherwise false
      */
     virtual bool addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+
+    /**
+     * @brief Modify an existing RSS URL in the list
+     *
+     * @param url The RSS feed URL
+     * @param embedded Whether items from this feed should be marked as embedded
+     * @param discordChannelId Optional Discord channel ID associated with this feed
+     * @return true on success, otherwise false
+     */
+    virtual bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
   };
+
 } // namespace dotnamecpp::rss

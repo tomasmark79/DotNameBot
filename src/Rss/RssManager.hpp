@@ -7,6 +7,7 @@
 
 #include <Utils/UtilsFactory.hpp>
 
+#include <cstdint>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 #include <random>
@@ -29,6 +30,7 @@ namespace dotnamecpp::rss {
     bool Initialize() override;
     int refetchRssFeeds() override;
     bool addUrl(const std::string &url, bool embedded, uint64_t discordChannelId = 0) override;
+    bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId = 0) override;
     [[nodiscard]] std::string listUrlsAsString() override;
     [[nodiscard]] RSSItem getRandomItem() override;
     [[nodiscard]] RSSItem getRandomItemMatchingEmbedded(bool embedded) override;

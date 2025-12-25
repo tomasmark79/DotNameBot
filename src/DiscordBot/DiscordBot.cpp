@@ -183,26 +183,49 @@ namespace dotnamecpp::discordbot {
 
         if (cmd_name == "addurl") {
           event.thinking();
-          auto url_param = event.get_parameter("url");
-          auto embedded_param = event.get_parameter("embedded");
+          auto urlParam = event.get_parameter("url");
+          auto embeddedParam = event.get_parameter("embedded");
 
-          if (url_param.index() == 0) {
+          if (urlParam.index() == 0) {
             event.edit_response("Error: URL parameter is required.");
             return;
           }
 
-          std::string url = std::get<std::string>(url_param);
+          std::string url = std::get<std::string>(urlParam);
           bool embedded = false;
-          if (embedded_param.index() == 1) {
-            embedded = std::get<bool>(embedded_param);
+          if (embeddedParam.index() != 0) {
+            embedded = std::get<bool>(embeddedParam);
           }
 
-          int result = rssService_->addUrl(url, embedded, 0);
-          if (result == 0) {
+          if (rssService_->addUrl(url, embedded, event.command.channel_id)) {
             event.edit_response("Successfully added RSS/ATOM feed URL: " + url +
                                 (embedded ? " (embedded)" : " (non-embedded)"));
           } else {
             event.edit_response("Failed to add RSS/ATOM feed URL: " + url);
+          }
+        }
+
+        if (cmd_name == "modurl") {
+          event.thinking();
+          auto urlParam = event.get_parameter("url");
+          auto embeddedParam = event.get_parameter("embedded");
+
+          if (urlParam.index() == 0) {
+            event.edit_response("Error: URL parameter is required.");
+            return;
+          }
+
+          std::string url = std::get<std::string>(urlParam);
+          bool embedded = false;
+          if (embeddedParam.index() != 0) {
+            embedded = std::get<bool>(embeddedParam);
+          }
+
+          if (rssService_->modUrl(url, embedded, event.command.channel_id)) {
+            event.edit_response("Successfully modified RSS/ATOM feed URL: " + url +
+                                (embedded ? " (embedded)" : " (non-embedded)"));
+          } else {
+            event.edit_response("Failed to modify RSS/ATOM feed URL: " + url);
           }
         }
 

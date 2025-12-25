@@ -5,6 +5,8 @@
 #include <fstream>
 #include <random>
 #include <regex>
+#include <string>
+#include <utility>
 
 namespace dotnamecpp::rss {
 
@@ -31,9 +33,10 @@ namespace dotnamecpp::rss {
 
   bool RssManager::Initialize() {
     // Create default files if they do not exist
+    // Avoid trailing slash in url paths is best practice
     if (!std::filesystem::exists(urlsPath_)) {
       nlohmann::json defaultUrls = nlohmann::json::array(
-          {{{"url", "https://blog.digitalspace.name/feed/atom/"}, {"embedded", true}}});
+          {{{"url", "https://blog.digitalspace.name/feed/atom"}, {"embedded", true}}});
 
       std::ofstream file(urlsPath_);
       if (!file.is_open()) {
@@ -91,6 +94,18 @@ namespace dotnamecpp::rss {
     }
     urls_.emplace_back(url, embedded, discordChannelId);
     return saveUrls();
+  }
+
+  bool RssManager::modUrl(const std::string &url, bool embedded, uint64_t discordChannelId) {
+    for (auto &existingUrl : urls_) {
+      if (existingUrl.url == url) {
+        existingUrl.embedded = embedded;
+        existingUrl.discordChannelId = discordChannelId;
+        return saveUrls();
+      }
+    }
+    logger_->warningStream() << "URL not found for modification: " << url;
+    return false;
   }
 
   bool RssManager::saveUrls() {
