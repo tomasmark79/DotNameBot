@@ -95,6 +95,8 @@ namespace dotnamecpp::discordbot {
     }
 
   private:
+    constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
+
     std::unique_ptr<dpp::cluster> bot_;
 
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
@@ -105,6 +107,8 @@ namespace dotnamecpp::discordbot {
 
     bool getTokenFromFile(std::string &token);
     void handleSlashCommand(const dpp::slashcommand_t &event);
+    static bool splitDiscordMessageIfNeeded(const std::string &message,
+                                            std::vector<std::string> &outMessages);
     std::atomic<bool> isRunning_{false};
     std::chrono::time_point<std::chrono::system_clock> startTime_;
 

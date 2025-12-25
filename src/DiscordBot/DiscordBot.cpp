@@ -164,7 +164,18 @@ namespace dotnamecpp::discordbot {
         if (cmd_name == "listurls") {
           event.thinking();
           std::string urlsList = rssService_->listUrlsAsString();
-          event.edit_response(urlsList);
+          if (urlsList.empty()) {
+            return;
+          }
+        
+          event.edit_response("Registered RSS/ATOM feed URLs:\n");
+          std::vector<std::string> splitMessages;
+          if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
+            for (const auto &msgPart : splitMessages) {
+              dpp::message msg(event.command.channel_id, msgPart);
+              bot_->message_create(msg);
+            }
+          }
         }
 
         if (cmd_name == "getrandomfeed") {
@@ -323,4 +334,35 @@ namespace dotnamecpp::discordbot {
           }
         });
   }
+
+  bool DiscordBot::splitDiscordMessageIfNeeded(const std::string &message,
+                                               std::vector<std::string> &outMessages) {
+    if (message.length() <= MAX_DISCORD_MESSAGE_LENGTH) {
+      outMessages.push_back(message);
+      return true;
+    }
+
+    size_t start = 0;
+    while (start < message.length()) {
+      size_t end = std::min(start + MAX_DISCORD_MESSAGE_LENGTH, message.length());
+
+      // Try to split at the last newline or space before the limit
+      size_t splitPos = message.rfind('\n', end);
+      if (splitPos == std::string::npos || splitPos < start) {
+        splitPos = message.rfind(' ', end);
+      }
+      if (splitPos == std::string::npos || splitPos < start) {
+        splitPos = end; // Forced split
+      }
+
+      outMessages.push_back(message.substr(start, splitPos - start));
+      start = splitPos;
+      if (message[start] == '\n' || message[start] == ' ') {
+        ++start; // Skip the delimiter
+      }
+    }
+
+    return true;
+  }
+
 } // namespace dotnamecpp::discordbot
