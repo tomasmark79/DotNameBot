@@ -12,7 +12,12 @@ Universal Bot Application
 
 - Discord bot
 - RSS/ATOM feed reader
-- Emoji library (just for testing purposes)
+
+### Screenshots
+
+![DotNameBot Screenshot](screenshot-discord.png)
+
+
 
 ## Architecture
 
