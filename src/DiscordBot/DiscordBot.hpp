@@ -120,5 +120,19 @@ namespace dotnamecpp::discordbot {
      *
      */
     void registerBulkSlashCommandsToDiscord();
+
+    /**
+     * @brief Put a timer that periodically sends a random RSS feed item to a Discord channel 
+     * 
+     * @return true 
+     * @return false 
+     */
+     std::atomic<bool> isRunningTimer_{true};
+     bool putRandomFeedTimer();
+     
+     std::atomic<bool> isFetchFeedsTimerRunning_{true};
+     bool fetchFeedsTimer();
+     
+     std::vector<std::thread> threads_;
   };
 } // namespace dotnamecpp::discordbot

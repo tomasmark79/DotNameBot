@@ -63,6 +63,20 @@ namespace dotnamecpp::discordbot {
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
         bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "since: " + time_str));
+
+        // Initial RSS fetch
+        int itemsFetched = rssService_->refetchRssFeeds();
+        if (itemsFetched >= 0) {
+          logger_->info("Initial RSS fetch completed. Total items in buffer: " +
+                        std::to_string(rssService_->getItemCount()));
+        } else {
+          logger_->error("Initial RSS fetch failed.");
+        }
+
+        // Start the periodic random feed timer
+        if (!putRandomFeedTimer()) {
+          logger_->error("Failed to start random feed timer.");
+        }
       });
 
       bot_->on_slashcommand(
@@ -108,6 +122,15 @@ namespace dotnamecpp::discordbot {
     if (!isRunning_.exchange(false)) {
       return true;
     }
+
+    // Join all worker threads
+    isRunningTimer_.store(false);
+    for (auto &thread : threads_) {
+      if (thread.joinable()) {
+        thread.join();
+      }
+    }
+    threads_.clear();
 
     if (bot_) {
       logger_->info("Shutting down Discord bot...");
@@ -324,16 +347,16 @@ namespace dotnamecpp::discordbot {
       logger_->info("Prepared slash command: " + cmd.getName());
     }
 
-    bot_->global_bulk_command_create(
-        dpp_commands, [this](const dpp::confirmation_callback_t &callback) {
-          if (callback.is_error()) {
-            logger_->errorStream()
-                << "Failed to register bulk commands: " << callback.get_error().message;
-          } else {
-            logger_->infoStream() << "Successfully registered " << commands_.size()
-                                  << " slash commands";
-          }
-        });
+    bot_->global_bulk_command_create(dpp_commands,
+                                     [this](const dpp::confirmation_callback_t &callback) {
+      if (callback.is_error()) {
+        logger_->errorStream() << "Failed to register bulk commands: "
+                               << callback.get_error().message;
+      } else {
+        logger_->infoStream() << "Successfully registered " << commands_.size()
+                              << " slash commands";
+      }
+    });
   }
 
   bool DiscordBot::splitDiscordMessageIfNeeded(const std::string &message,
@@ -379,6 +402,72 @@ namespace dotnamecpp::discordbot {
       }
     });
     return success;
+  }
+
+  // TODO: take outside the magic number
+  // Timer interval for publicate message is 10 messages per hour
+  constexpr int TICK_INTERVAL_SECONDS = 6 * 60;
+
+  bool DiscordBot::putRandomFeedTimer() {
+    threads_.emplace_back([this]() -> void {
+      isRunningTimer_.store(true);
+
+      while (isRunningTimer_.load()) {
+        std::this_thread::sleep_for(std::chrono::seconds(TICK_INTERVAL_SECONDS));
+
+        dotnamecpp::rss::RSSItem item = rssService_->getRandomItem();
+        if (item.title.empty()) {
+          logger_->info("No RSS items available at the moment.");
+        }
+
+        dpp::message msg(item.discordChannelId, item.toMarkdownLink());
+
+        if (!item.embedded) {
+          msg.set_flags(dpp::m_suppress_embeds);
+        }
+
+        bot_->message_create(msg, [this, &item](const dpp::confirmation_callback_t &callback) {
+          if (callback.is_error()) {
+            logger_->error("Failed to create message: " + callback.get_error().message);
+          }
+
+          const auto &createdMessage = callback.get<dpp::message>();
+          bot_->message_crosspost(
+              createdMessage.id, createdMessage.channel_id,
+              [this, &item](const dpp::confirmation_callback_t &crosspostCallback) {
+            if (crosspostCallback.is_error()) {
+              logger_->errorStream()
+                  << "Failed to crosspost message: " << crosspostCallback.get_error().message;
+            } else {
+              logger_->infoStream() << "Message crossposted successfully.";
+              logTheServed(item);
+            }
+          });
+        });
+      }
+    });
+    return true;
+  }
+
+  // TODO: take outside the magic number
+  constexpr int FETCH_INTERVAL_SECONDS = 60 * 60; // 60 minutes
+
+  bool DiscordBot::fetchFeedsTimer() {
+    threads_.emplace_back([this]() -> void {
+      isFetchFeedsTimerRunning_.store(true);
+      while (isFetchFeedsTimerRunning_.load()) {
+        std::this_thread::sleep_for(std::chrono::seconds(FETCH_INTERVAL_SECONDS));
+
+        int itemsFetched = rssService_->refetchRssFeeds();
+        if (itemsFetched >= 0) {
+          logger_->info("Periodic RSS fetch completed. Total items in buffer: " +
+                        std::to_string(rssService_->getItemCount()));
+        } else {
+          logger_->error("Periodic RSS fetch failed.");
+        }
+      }
+    });
+    return true;
   }
 
 } // namespace dotnamecpp::discordbot
