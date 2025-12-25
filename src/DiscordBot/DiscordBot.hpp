@@ -7,6 +7,7 @@
 #include <ServiceContainer/ServiceContainer.hpp>
 
 #include <Rss/IRssService.hpp>
+#include <Rss/RssManager.hpp>
 #include <Utils/UtilsFactory.hpp>
 
 #include <atomic>
@@ -22,7 +23,8 @@ namespace dotnamecpp::discordbot {
     explicit DiscordBot(ServiceContainer &services)
         : logger_(services.getService<dotnamecpp::logging::ILogger>()),
           assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
-          emojiesLib_(services.getService<dotname::EmojiesLib>()) {
+          emojiesLib_(services.getService<dotname::EmojiesLib>()),
+          rssService_(services.getService<dotnamecpp::rss::IRssService>()) {
 
       if (!logger_) {
         throw std::runtime_error("DiscordBot requires a logger");

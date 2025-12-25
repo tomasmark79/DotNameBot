@@ -25,32 +25,30 @@ namespace dotnamecpp::rss {
     /**
      * @brief Initialize the RSS service
      *
-     * @return int Returns 0 on success, -1 on failure
+     * @return bool Returns true on success, false on failure
      */
-    virtual int Initialize() = 0;
+    virtual bool Initialize() = 0;
 
     /**
      * @brief Refetch all RSS feeds from the stored URLs
      *
-     * @return int Returns 0 on success, -1 on failure
+     * @return int Returns the number of new items fetched
      */
-    virtual int refetchRssFeeds() = 0;
+    [[nodiscard]] virtual int refetchRssFeeds() = 0;
 
     /**
      * @brief List all stored RSS URLs
      *
      * @return std::string A formatted string listing all RSS URLs
      */
-    [[nodiscard]]
-    virtual std::string listUrls() = 0;
+    [[nodiscard]] virtual std::string listUrlsAsString() = 0;
 
     /**
      * @brief Get a random RSS item from the feed buffer
      *
      * @return RSSItem
      */
-    [[nodiscard]]
-    virtual RSSItem getRandomItem() = 0;
+    [[nodiscard]] virtual RSSItem getRandomItem() = 0;
 
     /**
      * @brief Get a random RSS item matching the embedded flag
@@ -58,16 +56,14 @@ namespace dotnamecpp::rss {
      * @param embedded Whether to match embedded items
      * @return RSSItem
      */
-    [[nodiscard]]
-    virtual RSSItem getRandomItemMatchingEmbedded(bool embedded) = 0;
+    [[nodiscard]] virtual RSSItem getRandomItemMatchingEmbedded(bool embedded) = 0;
 
     /**
      * @brief Get the total number of items in the feed buffer
      *
      * @return size_t
      */
-    [[nodiscard]]
-    virtual size_t getItemCount() const = 0;
+    [[nodiscard]] virtual size_t getItemCount() const = 0;
 
     /**
      * @brief Get the total number of items matching the embedded flag
@@ -75,8 +71,7 @@ namespace dotnamecpp::rss {
      * @param embedded Whether to match embedded items
      * @return size_t
      */
-    [[nodiscard]]
-    virtual size_t getItemCountMatchingEmbedded(bool embedded) const = 0;
+    [[nodiscard]] virtual size_t getItemCountMatchingEmbedded(bool embedded) const = 0;
 
     /**
      * @brief Add a new RSS URL to the list
@@ -86,6 +81,6 @@ namespace dotnamecpp::rss {
      * @param discordChannelId Optional Discord channel ID associated with this feed
      * @return int Returns 0 on success, -1 on failure
      */
-    virtual int addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+    virtual bool addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
   };
 } // namespace dotnamecpp::rss

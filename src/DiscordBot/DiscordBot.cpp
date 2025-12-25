@@ -1,5 +1,4 @@
 #include "DiscordBot.hpp"
-#include <Rss/RssManager.hpp>
 
 namespace dotnamecpp::discordbot {
 
@@ -48,7 +47,7 @@ namespace dotnamecpp::discordbot {
         }
       });
 
-      bot_->on_ready([this](const dpp::ready_t &event) {
+      bot_->on_ready([this](const dpp::ready_t &) {
         logger_->info("Bot is ready! Logged in as: " + bot_->me.username);
         logger_->info("Bot ID: " + std::to_string(bot_->me.id));
 
@@ -65,12 +64,6 @@ namespace dotnamecpp::discordbot {
         std::string time_str = oss.str();
         bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "since: " + time_str));
       });
-
-      rssService_ = std::make_shared<dotnamecpp::rss::RssManager>(logger_, assetManager_);
-      if (rssService_->Initialize() != 0) {
-        logger_->error("Failed to initialize RSS service");
-        return false;
-      }
 
       bot_->on_slashcommand(
           [this](const dpp::slashcommand_t &event) { handleSlashCommand(event); });
@@ -170,7 +163,7 @@ namespace dotnamecpp::discordbot {
         }
         if (cmd_name == "listurls") {
           event.thinking();
-          std::string urlsList = rssService_->listUrls();
+          std::string urlsList = rssService_->listUrlsAsString();
           event.edit_response("RSS/ATOM Feed URLs:\n" + urlsList);
         }
 

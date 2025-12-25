@@ -1,6 +1,5 @@
 
 #include "RssManager.hpp"
-// #include <Logger/Logger.hpp>
 
 #include <curl/curl.h>
 #include <fstream>
@@ -9,95 +8,107 @@
 
 namespace dotnamecpp::rss {
 
-  // RSSItem Struct Implementation
-  RSSItem::RSSItem(std::string &t, std::string &l, std::string &d, std::string &date,
-                   bool e, uint64_t dChId)
-      : title(std::move(t)), link(std::move(l)), description(std::move(d)),
-        pubDate(std::move(date)), embedded(e), discordChannelId(dChId) {
-    generateHash();
-  }
-  void RSSItem::generateHash() {
-    std::hash<std::string> hasher;
-    hash = std::to_string(hasher(title + link + description));
-  }
-
-  std::string RSSItem::toMarkdownLink() const { return "[" + title + "](" + link + ")"; }
-
-  // RSSFeed Struct Implementation
-  void RSSFeed::addItem(const RSSItem &item) { items.push_back(item); }
-
-  size_t RSSFeed::size() const { return items.size(); }
-  void RSSFeed::clear() { items.clear(); }
-
-  // RssManager Class Implementation
   RssManager::RssManager(std::shared_ptr<dotnamecpp::logging::ILogger> logger,
                          std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager)
-      : rng_(std::random_device{}()), logger_(std::move(logger)),
-        assetManager_(std::move(assetManager)) {
+      : logger_(std::move(logger)), assetManager_(std::move(assetManager)) {
 
-    // Create default files if they don't exist
-    if (!std::filesystem::exists(getUrlsPath())) {
+    rng_.seed(std::random_device{}());
+    urlsPath_ = assetManager_->getAssetsPath() / "rssUrls.json";
+    hashesPath_ = assetManager_->getAssetsPath() / "seenHashes.json";
+
+    if (!isInitialized_) {
+      isInitialized_ = this->Initialize();
+    }
+  }
+
+  RssManager::~RssManager() {
+    // Save seen hashes on destruction
+    if (!saveAllSeenHashes()) {
+      logger_->error("Failed to save seen hashes on RssManager destruction");
+    }
+    isInitialized_ = false;
+  }
+
+  bool RssManager::Initialize() {
+    // Create default files if they do not exist
+    if (!std::filesystem::exists(urlsPath_)) {
       nlohmann::json defaultUrls = nlohmann::json::array(
           {{{"url", "https://blog.digitalspace.name/feed/atom/"}, {"embedded", true}}});
 
-      std::ofstream file(getUrlsPath());
+      std::ofstream file(urlsPath_);
       if (!file.is_open()) {
-        return;
+        return false;
       }
       file << defaultUrls.dump(4);
-      logger_->infoStream() << "Created default RSS URLs file at: " << getUrlsPath();
+      logger_->infoStream() << "Created default RSS URLs file at: " << urlsPath_;
     }
 
-    if (!std::filesystem::exists(getHashesPath())) {
+    if (!std::filesystem::exists(hashesPath_)) {
       nlohmann::json defaultHashes = nlohmann::json::array();
-      std::ofstream file(getHashesPath());
-      if (!file.is_open()) return;
+      std::ofstream file(hashesPath_);
+      if (!file.is_open()) {
+        return false;
+      }
       file << defaultHashes.dump(4);
-      logger_->infoStream() << "Created default seen hashes file at: " << getHashesPath();
+      logger_->infoStream() << "Created default seen hashes file at: " << hashesPath_;
     }
 
-    // Initialize timestamps after loading
-    if (std::filesystem::exists(getUrlsPath())) {
-      urlsLastModified_ = std::filesystem::last_write_time(getUrlsPath());
+    if (std::filesystem::exists(urlsPath_)) {
+      urlsLastModified_ = std::filesystem::last_write_time(urlsPath_);
     }
 
-    if (std::filesystem::exists(getHashesPath())) {
-      hashesLastModified_ = std::filesystem::last_write_time(getHashesPath());
+    if (std::filesystem::exists(hashesPath_)) {
+      hashesLastModified_ = std::filesystem::last_write_time(hashesPath_);
     }
+
+    return loadUrls() && loadSeenHashes();
   }
 
-  int RssManager::Initialize() { return loadUrls() == 0 && loadSeenHashes() == 0 ? 0 : -1; }
+  int RssManager::refetchRssFeeds() {
+    if (!hasFilesChanged()) {
+      logger_->infoStream() << "Files changed, reloading URLs and seen hashes.";
+    }
 
-  size_t RssManager::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
-    ((std::string *)userp)->append((char *)contents, size * nmemb);
-    return size * nmemb;
+    feed_.clear();
+    int totalItems = 0;
+    for (const auto &rssUrl : urls_) {
+      int items = fetchUrlSource(rssUrl.url, rssUrl.embedded, rssUrl.discordChannelId);
+      if (items > 0) {
+        totalItems += items;
+      }
+    }
+    logger_->infoStream() << "Total fetched items: " << totalItems
+                          << " (total in buffer: " << feed_.items.size() << ")";
+    return totalItems;
   }
 
-  int RssManager::addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) {
+  bool RssManager::addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) {
     for (const auto &existingUrl : urls_) {
       if (existingUrl.url == url) {
         logger_->warningStream() << "URL already exists: " << url;
-        return -1;
+        return false;
       }
     }
     urls_.emplace_back(url, embedded, discordChannelId);
     return saveUrls();
   }
 
-  int RssManager::saveUrls() {
+  bool RssManager::saveUrls() {
     nlohmann::json jsonData = nlohmann::json::array();
     for (const auto &url : urls_) {
       jsonData.push_back({{"url", url.url},
                           {"embedded", url.embedded},
                           {"discordChannelId", url.discordChannelId}});
     }
-    std::ofstream file(getUrlsPath());
-    if (!file.is_open()) return -1;
+    std::ofstream file(urlsPath_);
+    if (!file.is_open()) {
+      return false;
+    }
     file << jsonData.dump(4);
-    return 0;
+    return true;
   }
 
-  std::string RssManager::listUrls() {
+  std::string RssManager::listUrlsAsString() {
     std::string sourcesList;
     sourcesList = "";
     for (const auto &url : urls_) {
@@ -110,9 +121,11 @@ namespace dotnamecpp::rss {
     return sourcesList.empty() ? "No RSS sources available." : sourcesList;
   }
 
-  int RssManager::loadUrls() {
-    std::ifstream file(getUrlsPath());
-    if (!file.is_open()) return -1;
+  bool RssManager::loadUrls() {
+    std::ifstream file(urlsPath_);
+    if (!file.is_open()) {
+      return false;
+    }
 
     nlohmann::json jsonData;
     file >> jsonData;
@@ -134,12 +147,24 @@ namespace dotnamecpp::rss {
     }
 
     logger_->infoStream() << "Loaded " << urls_.size() << " RSS URLs.";
-    return 0;
+    return true;
   }
 
-  int RssManager::loadSeenHashes() {
-    std::ifstream file(getHashesPath());
-    if (!file.is_open()) return -1;
+  size_t RssManager::getItemCountMatchingEmbedded(bool embedded) const {
+    size_t count = 0;
+    for (const auto &item : feed_.items) {
+      if (item.embedded == embedded) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  bool RssManager::loadSeenHashes() {
+    std::ifstream file(hashesPath_);
+    if (!file.is_open()) {
+      return false;
+    }
 
     nlohmann::json jsonData;
     try {
@@ -148,10 +173,12 @@ namespace dotnamecpp::rss {
       logger_->errorStream() << "Hashes file corrupted: " << e.what() << ". Creating new file.";
       // std::endl;
       seenHashes_.clear();
-      std::ofstream outFile(getHashesPath());
-      if (!outFile.is_open()) return -1;
+      std::ofstream outFile(hashesPath_);
+      if (!outFile.is_open()) {
+        return false;
+      }
       outFile << nlohmann::json::array().dump(4);
-      return 0;
+      return true;
     }
 
     seenHashes_.clear();
@@ -162,10 +189,10 @@ namespace dotnamecpp::rss {
     }
 
     logger_->infoStream() << "Loaded " << seenHashes_.size() << " seen hashes.";
-    return 0;
+    return true;
   }
 
-  int RssManager::saveSeenHash(const std::string &hash) {
+  bool RssManager::saveSeenHash(const std::string &hash) {
     seenHashes_.insert(hash);
 
     nlohmann::json jsonData = nlohmann::json::array();
@@ -173,17 +200,21 @@ namespace dotnamecpp::rss {
       jsonData.push_back(h);
     }
 
-    std::ofstream file(getHashesPath());
-    if (!file.is_open()) return -1;
+    std::ofstream file(hashesPath_);
+    if (!file.is_open()) {
+      return false;
+    }
     file << jsonData.dump(4);
-    return 0;
+    return true;
   }
 
   std::string RssManager::downloadFeed(const std::string &url) {
-    std::string buffer = "";
+    std::string buffer;
     try {
       CURL *curl = curl_easy_init();
-      if (!curl) return "";
+      if (curl == nullptr) {
+        return "";
+      }
 
       // Set HTTP headers
       struct curl_slist *headers = nullptr;
@@ -200,18 +231,14 @@ namespace dotnamecpp::rss {
 
       curl_easy_setopt(
           curl, CURLOPT_USERAGENT,
-          "DiTwi RSS Reader by DotName (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36)");
+          "DotNameBot RSS Reader by DotName: https://github.com/tomasmark79/DotNameBot");
 
-      // Set timeout options
       curl_easy_setopt(curl, CURLOPT_TIMEOUT, 30L);
       curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 10L);
-
-      // Accept any encoding
       curl_easy_setopt(curl, CURLOPT_ENCODING, "");
 
       CURLcode res = curl_easy_perform(curl);
 
-      // Clean up headers
       curl_slist_free_all(headers);
       curl_easy_cleanup(curl);
 
@@ -238,25 +265,25 @@ namespace dotnamecpp::rss {
     bool isAtom = false;
 
     // Try RSS 2.0 format
-    if (auto rssElement = doc.FirstChildElement("rss")) {
+    if (auto *rssElement = doc.FirstChildElement("rss")) {
       channel = rssElement->FirstChildElement("channel");
-      if (channel) {
+      if (channel != nullptr) {
         firstItem = channel->FirstChildElement("item");
       }
     }
     // Try RSS 1.0 format
-    else if (auto rdfElement = doc.FirstChildElement("rdf:RDF")) {
+    else if (auto *rdfElement = doc.FirstChildElement("rdf:RDF")) {
       channel = rdfElement->FirstChildElement("channel");
       firstItem = rdfElement->FirstChildElement("item");
     }
     // Try Atom format
-    else if (auto feedElement = doc.FirstChildElement("feed")) {
+    else if (auto *feedElement = doc.FirstChildElement("feed")) {
       channel = feedElement;
       firstItem = feedElement->FirstChildElement("entry");
       isAtom = true;
     }
 
-    if (!channel) {
+    if (channel == nullptr) {
       logger_->errorStream() << "No valid RSS/Atom channel found.";
       return feed;
     }
@@ -264,95 +291,98 @@ namespace dotnamecpp::rss {
     // Parse channel info
     if (isAtom) {
       // Atom feed info
-      if (auto titleEl = channel->FirstChildElement("title")) {
-        feed.title = titleEl->GetText() ? titleEl->GetText() : "";
+      if (auto *titleEl = channel->FirstChildElement("title")) {
+        feed.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
       }
-      if (auto subtitleEl = channel->FirstChildElement("subtitle")) {
-        feed.description = subtitleEl->GetText() ? subtitleEl->GetText() : "";
+      if (auto *subtitleEl = channel->FirstChildElement("subtitle")) {
+        feed.description = (subtitleEl->GetText() != nullptr) ? subtitleEl->GetText() : "";
       }
-      if (auto linkEl = channel->FirstChildElement("link")) {
+      if (auto *linkEl = channel->FirstChildElement("link")) {
         const char *href = linkEl->Attribute("href");
-        feed.link = href ? href : "";
+        feed.link = (href != nullptr) ? href : "";
       }
     } else {
       // RSS feed info
-      if (auto titleEl = channel->FirstChildElement("title")) {
-        feed.title = titleEl->GetText() ? titleEl->GetText() : "";
+      if (auto *titleEl = channel->FirstChildElement("title")) {
+        feed.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
       }
-      if (auto descEl = channel->FirstChildElement("description")) {
-        feed.description = descEl->GetText() ? descEl->GetText() : "";
+      if (auto *descEl = channel->FirstChildElement("description")) {
+        feed.description = (descEl->GetText() != nullptr) ? descEl->GetText() : "";
       }
-      if (auto linkEl = channel->FirstChildElement("link")) {
-        feed.link = linkEl->GetText() ? linkEl->GetText() : "";
+      if (auto *linkEl = channel->FirstChildElement("link")) {
+        feed.link = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
       }
     }
 
     // Parse items
+    [[maybe_unused]]
     int newItems = 0;
     const char *itemTag = isAtom ? "entry" : "item";
 
-    for (auto item = firstItem; item; item = item->NextSiblingElement(itemTag)) {
+    for (auto *item = firstItem; item != nullptr; item = item->NextSiblingElement(itemTag)) {
       RSSItem rssItem;
       rssItem.embedded = embedded;
       rssItem.discordChannelId = discordChannelId;
 
       if (isAtom) {
         // Parse Atom entry
-        if (auto titleEl = item->FirstChildElement("title")) {
-          rssItem.title = titleEl->GetText() ? titleEl->GetText() : "";
+        if (auto *titleEl = item->FirstChildElement("title")) {
+          rssItem.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
         }
-        if (auto linkEl = item->FirstChildElement("link")) {
+        if (auto *linkEl = item->FirstChildElement("link")) {
           const char *href = linkEl->Attribute("href");
-          rssItem.link = href ? href : "";
+          rssItem.url = (href != nullptr) ? href : "";
         }
-        if (auto summaryEl = item->FirstChildElement("summary")) {
-          rssItem.description = summaryEl->GetText() ? summaryEl->GetText() : "";
-        } else if (auto contentEl = item->FirstChildElement("content")) {
-          rssItem.description = contentEl->GetText() ? contentEl->GetText() : "";
+        if (auto *summaryEl = item->FirstChildElement("summary")) {
+          rssItem.description = (summaryEl->GetText() != nullptr) ? summaryEl->GetText() : "";
+        } else if (auto *contentEl = item->FirstChildElement("content")) {
+          rssItem.description = (contentEl->GetText() != nullptr) ? contentEl->GetText() : "";
         }
 
-        if (auto updatedEl = item->FirstChildElement("updated")) {
-          rssItem.pubDate = updatedEl->GetText() ? updatedEl->GetText() : "";
-        } else if (auto publishedEl = item->FirstChildElement("published")) {
-          rssItem.pubDate = publishedEl->GetText() ? publishedEl->GetText() : "";
+        if (auto *updatedEl = item->FirstChildElement("updated")) {
+          rssItem.pubDate = (updatedEl->GetText() != nullptr) ? updatedEl->GetText() : "";
+        } else if (auto *publishedEl = item->FirstChildElement("published")) {
+          rssItem.pubDate = (publishedEl->GetText() != nullptr) ? publishedEl->GetText() : "";
         }
       } else {
         // Parse RSS item (existing code)
-        if (auto titleEl = item->FirstChildElement("title")) {
+        if (auto *titleEl = item->FirstChildElement("title")) {
           // Handle CDATA sections properly by getting all text content
           const char *text = titleEl->GetText();
-          if (text) {
+          if (text != nullptr) {
             rssItem.title = text;
           } else {
             // If GetText() returns null, try to get text from child nodes (including CDATA)
-            auto textNode = titleEl->FirstChild();
-            if (textNode && textNode->ToText()) {
-              rssItem.title = textNode->Value() ? textNode->Value() : "";
+            auto *textNode = titleEl->FirstChild();
+            if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+              rssItem.title = (textNode->Value() != nullptr) ? textNode->Value() : "";
             }
           }
         }
-        if (auto linkEl = item->FirstChildElement("link")) {
-          rssItem.link = linkEl->GetText() ? linkEl->GetText() : "";
+        if (auto *linkEl = item->FirstChildElement("link")) {
+          rssItem.url = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
         }
-        if (auto descEl = item->FirstChildElement("description")) {
+        if (auto *descEl = item->FirstChildElement("description")) {
           // Handle CDATA sections properly by getting all text content
           const char *text = descEl->GetText();
-          if (text) {
+          if (text != nullptr) {
             rssItem.description = text;
           } else {
             // If GetText() returns null, try to get text from child nodes (including CDATA)
-            auto textNode = descEl->FirstChild();
-            if (textNode && textNode->ToText()) {
-              rssItem.description = textNode->Value() ? textNode->Value() : "";
+            auto *textNode = descEl->FirstChild();
+            if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+              rssItem.description = (textNode->Value() != nullptr) ? textNode->Value() : "";
             }
           }
         }
-        if (auto dateEl = item->FirstChildElement("pubDate")) {
-          rssItem.pubDate = dateEl->GetText() ? dateEl->GetText() : "";
+        if (auto *dateEl = item->FirstChildElement("pubDate")) {
+          rssItem.pubDate = (dateEl->GetText() != nullptr) ? dateEl->GetText() : "";
         }
       }
 
-      if (rssItem.title.empty() || rssItem.link.empty()) continue;
+      if (rssItem.title.empty() || rssItem.url.empty()) {
+        continue;
+      };
 
       rssItem.generateHash(); // Generate hash from original, unprocessed data
 
@@ -404,26 +434,6 @@ namespace dotnamecpp::rss {
     return addedItems;
   }
 
-  int RssManager::refetchRssFeeds() {
-
-    checkAndReloadFiles();
-
-    // Clear _feed buffer
-    feed_.clear();
-
-    int totalItems = 0;
-
-    for (const auto &rssUrl : urls_) {
-      int items = fetchUrlSource(rssUrl.url, rssUrl.embedded, rssUrl.discordChannelId);
-      if (items > 0) {
-        totalItems += items;
-      }
-    }
-    logger_->infoStream() << "Total fetched items: " << totalItems
-                          << " (total in buffer: " << feed_.items.size() << ")";
-    return totalItems;
-  }
-
   RSSItem RssManager::getRandomItem() {
     if (feed_.items.empty()) {
       return RSSItem{};
@@ -472,17 +482,18 @@ namespace dotnamecpp::rss {
     return item;
   }
 
-  // Add method to save all hashes at once (call this periodically or at shutdown)
-  int RssManager::saveAllSeenHashes() {
+  bool RssManager::saveAllSeenHashes() {
     nlohmann::json jsonData = nlohmann::json::array();
     for (const auto &h : seenHashes_) {
       jsonData.push_back(h);
     }
 
-    std::ofstream file(getHashesPath());
-    if (!file.is_open()) return -1;
+    std::ofstream file(hashesPath_);
+    if (!file.is_open()) {
+      return false;
+    }
     file << jsonData.dump(4);
-    return 0;
+    return true;
   }
 
   bool RssManager::hasFileChanged(const std::filesystem::path &path,
@@ -499,9 +510,9 @@ namespace dotnamecpp::rss {
     return false;
   }
 
-  void RssManager::checkAndReloadFiles() {
-    bool urlsChanged = hasFileChanged(getUrlsPath(), urlsLastModified_);
-    bool hashesChanged = hasFileChanged(getHashesPath(), hashesLastModified_);
+  bool RssManager::hasFilesChanged() {
+    bool urlsChanged = hasFileChanged(urlsPath_, urlsLastModified_);
+    bool hashesChanged = hasFileChanged(hashesPath_, hashesLastModified_);
 
     if (urlsChanged) {
       logger_->infoStream() << "URLs file changed, reloading...";
@@ -512,5 +523,15 @@ namespace dotnamecpp::rss {
       logger_->infoStream() << "Hashes file changed, reloading...";
       loadSeenHashes();
     }
+    return (urlsChanged || hashesChanged);
   }
+
+  size_t RssManager::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    ((std::string *)userp)->append((char *)contents, size * nmemb);
+    return size * nmemb;
+  }
+
+  std::string RssManager::getItemAsMarkdown(const RSSItem &item) { return item.toMarkdownLink(); }
+  void RssManager::clearFeedBuffer() { feed_.clear(); }
+
 } // namespace dotnamecpp::rss
