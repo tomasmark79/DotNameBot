@@ -120,6 +120,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3ed7b353fa2518f1b25c9c5f5b535d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refetch all RSS feeds from the stored URLs.  <br /></td></tr>
 <tr class="memitem:a27e3979a7d81f8b7a309461f2d4a8b68" id="r_a27e3979a7d81f8b7a309461f2d4a8b68"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27e3979a7d81f8b7a309461f2d4a8b68">addUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId=0) override</td></tr>
 <tr class="memdesc:a27e3979a7d81f8b7a309461f2d4a8b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new RSS URL to the list.  <br /></td></tr>
+<tr class="memitem:a9484e21d6d887ce165dd7274f3cd1515" id="r_a9484e21d6d887ce165dd7274f3cd1515"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9484e21d6d887ce165dd7274f3cd1515">modUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId=0) override</td></tr>
+<tr class="memdesc:a9484e21d6d887ce165dd7274f3cd1515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an existing RSS URL in the list.  <br /></td></tr>
+<tr class="memitem:af7b5a6d174a09f7afe520e34174d29f8" id="r_af7b5a6d174a09f7afe520e34174d29f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7b5a6d174a09f7afe520e34174d29f8">remUrl</a> (const std::string &amp;url) override</td></tr>
+<tr class="memdesc:af7b5a6d174a09f7afe520e34174d29f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an existing RSS URL from the list.  <br /></td></tr>
 <tr class="memitem:af81ee0debcf70c8e879fa5a1934815e8" id="r_af81ee0debcf70c8e879fa5a1934815e8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af81ee0debcf70c8e879fa5a1934815e8">listUrlsAsString</a> () override</td></tr>
 <tr class="memdesc:af81ee0debcf70c8e879fa5a1934815e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all stored RSS URLs.  <br /></td></tr>
 <tr class="memitem:aca0ba13d4a29203c10adf306920632f4" id="r_aca0ba13d4a29203c10adf306920632f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca0ba13d4a29203c10adf306920632f4">getRandomItem</a> () override</td></tr>
@@ -228,7 +232,7 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int Returns 0 on success, -1 on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success, otherwise false </dd></dl>
 
 <p>Implements <a class="el" href="classdotnamecpp_1_1rss_1_1IRssService.html#a59636f4ea502dcc58ec0b43d58878548">dotnamecpp::rss::IRssService</a>.</p>
 
@@ -431,6 +435,53 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a9484e21d6d887ce165dd7274f3cd1515" name="a9484e21d6d887ce165dd7274f3cd1515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9484e21d6d887ce165dd7274f3cd1515">&#9670;&#160;</a></span>modUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dotnamecpp::rss::RssManager::modUrl </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>embedded</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>discordChannelId</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Modify an existing RSS URL in the list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>The RSS feed URL </td></tr>
+    <tr><td class="paramname">embedded</td><td>Whether items from this feed should be marked as embedded </td></tr>
+    <tr><td class="paramname">discordChannelId</td><td>Optional Discord channel ID associated with this feed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success, otherwise false </dd></dl>
+
+<p>Implements <a class="el" href="classdotnamecpp_1_1rss_1_1IRssService.html#a9fbc3525ab5c9d46ed5d097da40c143f">dotnamecpp::rss::IRssService</a>.</p>
+
+</div>
+</div>
 <a id="a3ed7b353fa2518f1b25c9c5f5b535d59" name="a3ed7b353fa2518f1b25c9c5f5b535d59"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ed7b353fa2518f1b25c9c5f5b535d59">&#9670;&#160;</a></span>refetchRssFeeds()</h2>
 
@@ -458,6 +509,42 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>int Returns the number of new items fetched </dd></dl>
 
 <p>Implements <a class="el" href="classdotnamecpp_1_1rss_1_1IRssService.html#ac9fc9b2b5b01dc129c504bc99ecf9dae">dotnamecpp::rss::IRssService</a>.</p>
+
+</div>
+</div>
+<a id="af7b5a6d174a09f7afe520e34174d29f8" name="af7b5a6d174a09f7afe520e34174d29f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7b5a6d174a09f7afe520e34174d29f8">&#9670;&#160;</a></span>remUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dotnamecpp::rss::RssManager::remUrl </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove an existing RSS URL from the list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>The RSS feed URL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success, otherwise false </dd></dl>
+
+<p>Implements <a class="el" href="classdotnamecpp_1_1rss_1_1IRssService.html#a755763e4366f71421e2f0c6756dfd3ad">dotnamecpp::rss::IRssService</a>.</p>
 
 </div>
 </div>

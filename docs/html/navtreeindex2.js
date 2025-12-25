@@ -1,5 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a3dbdd32f5deb1fb88df91a1097659a28":[1,0,0,4,1,6],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a4cfc42962af0c27a5a12c2cfaad99cf8":[0,0,0,4,1,9],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a4cfc42962af0c27a5a12c2cfaad99cf8":[1,0,0,4,1,9],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a6cae276df622cfc93b52f14759a032b4":[0,0,0,4,1,3],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a6cae276df622cfc93b52f14759a032b4":[1,0,0,4,1,3],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a73951a60e3f1ac52c69c1d8bf5ab3b75":[0,0,0,4,1,0],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a73951a60e3f1ac52c69c1d8bf5ab3b75":[1,0,0,4,1,0],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a79a7f65ee015e18cfd6ce51ea41fdc67":[0,0,0,4,1,1],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#a79a7f65ee015e18cfd6ce51ea41fdc67":[1,0,0,4,1,1],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#a7f71a757e95cb895d77dc7221ec6b4f0":[0,0,0,4,1,12],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#a7f71a757e95cb895d77dc7221ec6b4f0":[1,0,0,4,1,12],
@@ -241,13 +249,5 @@ var NAVTREEINDEX2 =
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#a5236993a86e1949e0a8c5bb1a25040bf":[1,0,0,4,13,3],
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#a53394a496986575d5e8276fc1d6578cd":[0,0,0,4,13,4],
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#a53394a496986575d5e8276fc1d6578cd":[1,0,0,4,13,4],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa4a9e9a435a00249e7ff9125f303bcd0":[0,0,0,4,13,0],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa4a9e9a435a00249e7ff9125f303bcd0":[1,0,0,4,13,0],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa7ef20d6d41feba72c353012a4eb790f":[0,0,0,4,13,7],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa7ef20d6d41feba72c353012a4eb790f":[1,0,0,4,13,7],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#abc29531252bca837835c0dcc6c445b96":[0,0,0,4,13,10],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#abc29531252bca837835c0dcc6c445b96":[1,0,0,4,13,10],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#abdd440f2871d84298fd2d919330a346f":[0,0,0,4,13,6],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#abdd440f2871d84298fd2d919330a346f":[1,0,0,4,13,6],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9":[0,0,0,4,13,2]
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa4a9e9a435a00249e7ff9125f303bcd0":[0,0,0,4,13,0]
 };

@@ -10,5 +10,6 @@ var searchData=
   ['missingkey_7',['MissingKey',['../namespacedotnamecpp_1_1utils.html#aea22063b35ff66feb70a5f21ac136cdfa6f82777fb581d741d2b7a707a3e93190',1,'dotnamecpp::utils']]],
   ['mockassetmanager_8',['MockAssetManager',['../classMockAssetManager.html',1,'MockAssetManager'],['../classMockAssetManager.html#a4b5097234b3a46fa928c8612bbbf9537',1,'MockAssetManager::MockAssetManager()']]],
   ['mockassetmanager_2ehpp_9',['MockAssetManager.hpp',['../MockAssetManager_8hpp.html',1,'']]],
-  ['multilinefile_5f_10',['multiLineFile_',['../classFileReaderTest.html#af0fe4eb3c032cea577dc4a0ed2c0345f',1,'FileReaderTest']]]
+  ['modurl_10',['modUrl',['../classdotnamecpp_1_1rss_1_1IRssService.html#a9fbc3525ab5c9d46ed5d097da40c143f',1,'dotnamecpp::rss::IRssService::modUrl()'],['../classdotnamecpp_1_1rss_1_1RssManager.html#a9484e21d6d887ce165dd7274f3cd1515',1,'dotnamecpp::rss::RssManager::modUrl()']]],
+  ['multilinefile_5f_11',['multiLineFile_',['../classFileReaderTest.html#af0fe4eb3c032cea577dc4a0ed2c0345f',1,'FileReaderTest']]]
 ];

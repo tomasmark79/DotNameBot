@@ -49,7 +49,11 @@ virtual size\+\_\+t \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_af993
 virtual size\+\_\+t \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ab48f5dd0482ec2883bff9e4291e5d691}{get\+Item\+Count\+Matching\+Embedded}} (bool embedded) const =0
 \begin{DoxyCompactList}\small\item\em Get the total number of items matching the embedded flag. \end{DoxyCompactList}\item 
 virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a59636f4ea502dcc58ec0b43d58878548}{add\+Url}} (const std\+::string \&url, bool embedded, uint64\+\_\+t discord\+Channel\+Id)=0
-\begin{DoxyCompactList}\small\item\em Add a new RSS URL to the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Add a new RSS URL to the list. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f}{mod\+Url}} (const std\+::string \&url, bool embedded, uint64\+\_\+t discord\+Channel\+Id)=0
+\begin{DoxyCompactList}\small\item\em Modify an existing RSS URL in the list. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad}{rem\+Url}} (const std\+::string \&url)=0
+\begin{DoxyCompactList}\small\item\em Remove an existing RSS URL from the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -95,7 +99,7 @@ Add a new RSS URL to the list.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-int Returns 0 on success, -\/1 on failure 
+true on success, otherwise false 
 \end{DoxyReturn}
 
 
@@ -213,6 +217,32 @@ std\+::string A formatted string listing all RSS URLs
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_af81ee0debcf70c8e879fa5a1934815e8}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
+\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!modUrl@{modUrl}}
+\index{modUrl@{modUrl}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
+\doxysubsubsection{\texorpdfstring{modUrl()}{modUrl()}}
+{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f} 
+virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::mod\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{bool}]{embedded}{, }\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Modify an existing RSS URL in the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & The RSS feed URL \\
+\hline
+{\em embedded} & Whether items from this feed should be marked as embedded \\
+\hline
+{\em discord\+Channel\+Id} & Optional Discord channel ID associated with this feed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, otherwise false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a9484e21d6d887ce165dd7274f3cd1515}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
+
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_ac9fc9b2b5b01dc129c504bc99ecf9dae}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!refetchRssFeeds@{refetchRssFeeds}}
 \index{refetchRssFeeds@{refetchRssFeeds}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
 \doxysubsubsection{\texorpdfstring{refetchRssFeeds()}{refetchRssFeeds()}}
@@ -229,6 +259,28 @@ int Returns the number of new items fetched
 
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a3ed7b353fa2518f1b25c9c5f5b535d59}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
+
+\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!remUrl@{remUrl}}
+\index{remUrl@{remUrl}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
+\doxysubsubsection{\texorpdfstring{remUrl()}{remUrl()}}
+{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad} 
+virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::rem\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Remove an existing RSS URL from the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & The RSS feed URL \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, otherwise false 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_af7b5a6d174a09f7afe520e34174d29f8}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
 
 

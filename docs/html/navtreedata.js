@@ -30,6 +30,7 @@ var NAVTREE =
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
     ] ],
@@ -59,10 +60,10 @@ var NAVTREEINDEX =
 [
 "Application_8cpp.html",
 "classMockAssetManager.html#af7bd4703685f7e58e055bed20dab6931",
-"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a79a7f65ee015e18cfd6ce51ea41fdc67",
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9",
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a75fc7d3239bac6259001f867b46816d1",
-"structdotnamecpp_1_1utils_1_1UtilsFactory_1_1UtilsBundle.html#a3bd5af4005b513a303d13bfedc50bd6d"
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a3dbdd32f5deb1fb88df91a1097659a28",
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#aa4a9e9a435a00249e7ff9125f303bcd0",
+"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a1f5dcbe232a7e66a327641490a35cbcf",
+"structdotnamecpp_1_1utils_1_1UtilsFactory_1_1AppComponents.html#a04f44a32016351b0ad44ca5d2ee4bc76"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

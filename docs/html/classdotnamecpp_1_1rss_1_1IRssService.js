@@ -8,5 +8,7 @@ var classdotnamecpp_1_1rss_1_1IRssService =
     [ "getRandomItemMatchingEmbedded", "classdotnamecpp_1_1rss_1_1IRssService.html#a591471575f17b596689d27a3a107d044", null ],
     [ "Initialize", "classdotnamecpp_1_1rss_1_1IRssService.html#a250e20f8765c25a7e4a8cef3fa13e088", null ],
     [ "listUrlsAsString", "classdotnamecpp_1_1rss_1_1IRssService.html#a5faa2a922fcd6d9996aedc71f36e4552", null ],
-    [ "refetchRssFeeds", "classdotnamecpp_1_1rss_1_1IRssService.html#ac9fc9b2b5b01dc129c504bc99ecf9dae", null ]
+    [ "modUrl", "classdotnamecpp_1_1rss_1_1IRssService.html#a9fbc3525ab5c9d46ed5d097da40c143f", null ],
+    [ "refetchRssFeeds", "classdotnamecpp_1_1rss_1_1IRssService.html#ac9fc9b2b5b01dc129c504bc99ecf9dae", null ],
+    [ "remUrl", "classdotnamecpp_1_1rss_1_1IRssService.html#a755763e4366f71421e2f0c6756dfd3ad", null ]
 ];
