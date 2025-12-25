@@ -40,8 +40,8 @@ namespace dotnamecpp::rss {
     uint64_t discordChannelId;
 
     RSSItem() : embedded(false), discordChannelId(0) {}
-    RSSItem(const std::string &t, const std::string &l, const std::string &d,
-            const std::string &date, bool e, uint64_t dChId);
+    RSSItem(std::string &t, std::string &l, std::string &d,
+            std::string &date, bool e, uint64_t dChId);
 
     void generateHash();
     [[nodiscard]]

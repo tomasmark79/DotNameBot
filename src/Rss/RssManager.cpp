@@ -10,9 +10,10 @@
 namespace dotnamecpp::rss {
 
   // RSSItem Struct Implementation
-  RSSItem::RSSItem(const std::string &t, const std::string &l, const std::string &d,
-                   const std::string &date = "", bool e = false, uint64_t dChId = 0)
-      : title(t), link(l), description(d), pubDate(date), embedded(e), discordChannelId(dChId) {
+  RSSItem::RSSItem(std::string &t, std::string &l, std::string &d, std::string &date,
+                   bool e, uint64_t dChId)
+      : title(std::move(t)), link(std::move(l)), description(std::move(d)),
+        pubDate(std::move(date)), embedded(e), discordChannelId(dChId) {
     generateHash();
   }
   void RSSItem::generateHash() {
