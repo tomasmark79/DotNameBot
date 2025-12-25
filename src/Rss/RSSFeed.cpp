@@ -1,4 +1,3 @@
-#pragma once
 #include <Rss/RSSFeed.hpp>
 
 namespace dotnamecpp::rss {

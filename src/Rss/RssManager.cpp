@@ -104,7 +104,18 @@ namespace dotnamecpp::rss {
         return saveUrls();
       }
     }
-    logger_->warningStream() << "URL not found for modification: " << url;
+    logger_->warningStream() << "URL: " << url << " not found for modification";
+    return false;
+  }
+
+  bool RssManager::remUrl(const std::string &url) {
+    auto it = std::remove_if(urls_.begin(), urls_.end(),
+                             [&url](const RSSUrl &rssUrl) { return rssUrl.url == url; });
+    if (it != urls_.end()) {
+      urls_.erase(it, urls_.end());
+      return saveUrls();
+    }
+    logger_->warningStream() << "URL: " << url << " not found for removal";
     return false;
   }
 

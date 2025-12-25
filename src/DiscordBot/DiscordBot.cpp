@@ -164,7 +164,7 @@ namespace dotnamecpp::discordbot {
         if (cmd_name == "listurls") {
           event.thinking();
           std::string urlsList = rssService_->listUrlsAsString();
-          event.edit_response("RSS/ATOM Feed URLs:\n" + urlsList);
+          event.edit_response(urlsList);
         }
 
         if (cmd_name == "getrandomfeed") {
@@ -226,6 +226,21 @@ namespace dotnamecpp::discordbot {
                                 (embedded ? " (embedded)" : " (non-embedded)"));
           } else {
             event.edit_response("Failed to modify RSS/ATOM feed URL: " + url);
+          }
+        }
+
+        if (cmd_name == "remurl") {
+          event.thinking();
+          auto urlParam = event.get_parameter("url");
+          if (urlParam.index() == 0) {
+            event.edit_response("Error: URL parameter is required.");
+            return;
+          }
+          std::string url = std::get<std::string>(urlParam);
+          if (rssService_->remUrl(url)) {
+            event.edit_response("Successfully removed RSS/ATOM feed URL: " + url);
+          } else {
+            event.edit_response("Failed to remove RSS/ATOM feed URL: " + url);
           }
         }
 

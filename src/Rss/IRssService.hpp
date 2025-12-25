@@ -91,7 +91,15 @@ namespace dotnamecpp::rss {
      * @param discordChannelId Optional Discord channel ID associated with this feed
      * @return true on success, otherwise false
      */
+
     virtual bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+    /**
+     * @brief Remove an existing RSS URL from the list
+     *
+     * @param url The RSS feed URL
+     * @return true on success, otherwise false
+     */
+    virtual bool remUrl(const std::string &url) = 0;
   };
 
 } // namespace dotnamecpp::rss
