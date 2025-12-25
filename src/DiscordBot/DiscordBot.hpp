@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Rss/RSSItem.hpp"
 #include <SlashCommand/SlashCommand.hpp>
 #include <dpp/dpp.h>
 
@@ -109,6 +110,7 @@ namespace dotnamecpp::discordbot {
     void handleSlashCommand(const dpp::slashcommand_t &event);
     static bool splitDiscordMessageIfNeeded(const std::string &message,
                                             std::vector<std::string> &outMessages);
+    bool logTheServed(rss::RSSItem &item);
     std::atomic<bool> isRunning_{false};
     std::chrono::time_point<std::chrono::system_clock> startTime_;
 

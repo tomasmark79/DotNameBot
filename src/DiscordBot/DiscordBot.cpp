@@ -167,7 +167,7 @@ namespace dotnamecpp::discordbot {
           if (urlsList.empty()) {
             return;
           }
-        
+
           event.edit_response("Registered RSS/ATOM feed URLs:\n");
           std::vector<std::string> splitMessages;
           if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
@@ -184,11 +184,12 @@ namespace dotnamecpp::discordbot {
           if (item.title.empty()) {
             event.edit_response("No RSS items available at the moment.");
           } else {
-            std::string response = /* "**" + item.title + "**\n" + */ item.toMarkdownLink();
-            // if (!item.description.empty()) {
-            //   response += "\n\n" + item.description;
-            // }
+            std::string response = item.toMarkdownLink();
             event.edit_response(response);
+
+            if (!logTheServed(item)) {
+              logger_->error("Failed to log served RSS item.");
+            }
           }
         }
 
@@ -363,6 +364,21 @@ namespace dotnamecpp::discordbot {
     }
 
     return true;
+  }
+
+  bool DiscordBot::logTheServed(rss::RSSItem &item) {
+    // TODO: define outside the magic number
+    constexpr dpp::snowflake LOG_CHANNEL_ID = 1453787666201182359;
+    dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
+    msg.set_flags(dpp::m_suppress_embeds);
+    bool success = true;
+    bot_->message_create(msg, [&](const dpp::confirmation_callback_t &callback) {
+      if (callback.is_error()) {
+        logger_->error("Failed to log served RSS item: " + callback.get_error().message);
+        success = false;
+      }
+    });
+    return success;
   }
 
 } // namespace dotnamecpp::discordbot
