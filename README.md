@@ -12,7 +12,7 @@ Universal Bot Application
 
 - Discord bot
 - RSS/ATOM feed reader
-- Emoji library
+- Emoji library (just for testing purposes)
 
 ## Architecture
 
