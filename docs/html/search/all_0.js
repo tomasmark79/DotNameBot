@@ -4,7 +4,7 @@ var searchData=
   ['add_1',['add',['../classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b',1,'Orchestrator']]],
   ['adddots_2',['addDots',['../classdotnamecpp_1_1utils_1_1IStringFormatter.html#ad7d6c4d797c25196b9faa3edda2dde06',1,'dotnamecpp::utils::IStringFormatter::addDots()'],['../classdotnamecpp_1_1utils_1_1StringFormatter.html#a165ebea88f563469e0eadca3702f3d80',1,'dotnamecpp::utils::StringFormatter::addDots()']]],
   ['additem_3',['addItem',['../structdotnamecpp_1_1rss_1_1RSSFeed.html#a3b6eec652a2bc8a2ab296fc1f867500a',1,'dotnamecpp::rss::RSSFeed']]],
-  ['addurl_4',['addUrl',['../classdotnamecpp_1_1rss_1_1IRssService.html#ad600742f3ee7a5b21671d66ae958f9f6',1,'dotnamecpp::rss::IRssService::addUrl()'],['../classdotnamecpp_1_1rss_1_1RssManager.html#acb41fb30f0fd1c28274dba31a41c63b2',1,'dotnamecpp::rss::RssManager::addUrl()']]],
+  ['addurl_4',['addUrl',['../classdotnamecpp_1_1rss_1_1IRssService.html#a59636f4ea502dcc58ec0b43d58878548',1,'dotnamecpp::rss::IRssService::addUrl()'],['../classdotnamecpp_1_1rss_1_1RssManager.html#a27e3979a7d81f8b7a309461f2d4a8b68',1,'dotnamecpp::rss::RssManager::addUrl()']]],
   ['alreadyexists_5',['AlreadyExists',['../namespacedotnamecpp_1_1utils.html#a83c62c0f3ca5d2558b4c6aa4f610db1da89b69484680b18e9179e826c6e023805',1,'dotnamecpp::utils']]],
   ['appcomponents_6',['AppComponents',['../structdotnamecpp_1_1utils_1_1UtilsFactory_1_1AppComponents.html',1,'dotnamecpp::utils::UtilsFactory']]],
   ['application_2ecpp_7',['Application.cpp',['../Application_8cpp.html',1,'']]],

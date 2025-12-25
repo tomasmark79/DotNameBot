@@ -58,11 +58,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Application_8cpp.html",
-"classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b",
-"classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa3e2547a977f135ee8fe9fa81c1cb75f",
-"classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a43160cbc1a000aec98a58c00310ff165",
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ad845d5f4be2b9eb49099a89c784a2554",
-"structdotnamecpp_1_1utils_1_1UtilsFactory_1_1UtilsBundle.html#adf23cd3f092144bd162157088b3a2da1"
+"classMockAssetManager.html#af7bd4703685f7e58e055bed20dab6931",
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a79a7f65ee015e18cfd6ce51ea41fdc67",
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9",
+"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a75fc7d3239bac6259001f867b46816d1",
+"structdotnamecpp_1_1utils_1_1UtilsFactory_1_1UtilsBundle.html#a3bd5af4005b513a303d13bfedc50bd6d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

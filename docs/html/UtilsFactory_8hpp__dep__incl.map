@@ -1,23 +1,23 @@
 <map id="src/Utils/UtilsFactory.hpp" name="src/Utils/UtilsFactory.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="284,5,453,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="329,5,498,32"/>
 <area shape="rect" id="Node000002" href="$Application_8cpp.html" title=" " alt="" coords="5,171,204,197"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="269,29,209,37,151,47,103,62,85,72,73,82,68,92,66,103,70,127,82,150,96,169,92,172,78,153,65,128,60,103,63,90,69,78,82,67,101,58,150,42,209,31,268,24"/>
-<area shape="rect" id="Node000003" href="$DotNameBotLib_8hpp.html" title=" " alt="" coords="84,80,243,123"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="323,40,217,82,215,77,321,36"/>
-<area shape="rect" id="Node000005" href="$DiscordBot_8hpp.html" title=" " alt="" coords="267,88,470,115"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="371,48,371,88,366,88,366,48"/>
-<area shape="rect" id="Node000007" href="$RssManager_8hpp.html" title=" " alt="" coords="494,88,664,115"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="417,35,547,85,545,90,415,40"/>
-<area shape="rect" id="Node000009" href="$UtilsFactory_8cpp.html" title=" " alt="" coords="688,88,857,115"/>
-<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="450,33,677,77,713,85,712,90,676,83,449,38"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="141,137,116,172,112,169,137,134"/>
-<area shape="rect" id="Node000004" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="257,171,418,197"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="223,127,312,168,309,173,221,132"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="361,130,345,171,340,170,356,128"/>
-<area shape="rect" id="Node000006" href="$DiscordBot_8cpp.html" title=" " alt="" coords="442,171,644,197"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="411,119,517,168,515,173,408,124"/>
-<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="528,122,377,173,375,168,527,117"/>
-<area shape="poly" id="edge9_Node000007_Node000006" title=" " alt="" coords="570,130,551,172,546,169,565,128"/>
-<area shape="rect" id="Node000008" href="$RssManager_8cpp.html" title=" " alt="" coords="669,171,839,197"/>
-<area shape="poly" id="edge11_Node000007_Node000008" title=" " alt="" coords="621,119,728,168,726,173,619,124"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="314,33,207,52,163,66,134,82,120,102,111,127,107,170,101,170,106,125,115,100,131,78,161,61,206,47,313,28"/>
+<area shape="rect" id="Node000003" href="$DotNameBotLib_8hpp.html" title=" " alt="" coords="145,80,304,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="371,41,274,82,272,77,369,36"/>
+<area shape="rect" id="Node000005" href="$DiscordBot_8hpp.html" title=" " alt="" coords="523,171,726,197"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="451,38,513,78,571,127,614,169,611,172,567,131,510,82,448,42"/>
+<area shape="rect" id="Node000007" href="$RssManager_8hpp.html" title=" " alt="" coords="329,88,499,115"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="416,48,416,88,411,88,411,48"/>
+<area shape="rect" id="Node000009" href="$UtilsFactory_8cpp.html" title=" " alt="" coords="574,88,744,115"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="467,35,622,85,620,90,466,40"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="183,134,125,172,122,168,180,129"/>
+<area shape="rect" id="Node000004" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="210,245,372,272"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="242,136,288,244,283,246,237,138"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="552,204,350,247,349,242,551,199"/>
+<area shape="rect" id="Node000006" href="$DiscordBot_8cpp.html" title=" " alt="" coords="523,245,726,272"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="627,213,627,245,622,245,622,213"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="375,125,345,145,319,172,308,191,302,210,295,246,290,245,296,209,304,188,314,169,341,141,372,120"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="462,118,592,168,591,173,460,123"/>
+<area shape="rect" id="Node000008" href="$RssManager_8cpp.html" title=" " alt="" coords="329,171,499,197"/>
+<area shape="poly" id="edge11_Node000007_Node000008" title=" " alt="" coords="416,130,416,171,411,171,411,130"/>
 </map>

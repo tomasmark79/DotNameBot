@@ -1,5 +1,13 @@
 var NAVTREEINDEX3 =
 {
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9":[1,0,0,4,13,2],
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#adbdfd49f0663b2a17692e10668094caf":[0,0,0,4,13,8],
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#adbdfd49f0663b2a17692e10668094caf":[1,0,0,4,13,8],
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#afecd6b4a6b1f0efce6b42d8b317c2911":[0,0,0,4,13,5],
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#afecd6b4a6b1f0efce6b42d8b317c2911":[1,0,0,4,13,5],
+"classdotnamecpp_1_1utils_1_1IPlatformInfo.html":[0,0,0,4,14],
+"classdotnamecpp_1_1utils_1_1IPlatformInfo.html":[1,0,0,4,14],
+"classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a43160cbc1a000aec98a58c00310ff165":[0,0,0,4,14,3],
 "classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a43160cbc1a000aec98a58c00310ff165":[1,0,0,4,14,3],
 "classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a5789d1febaa4e56564bf06adc60ef7b7":[0,0,0,4,14,1],
 "classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a5789d1febaa4e56564bf06adc60ef7b7":[1,0,0,4,14,1],
@@ -241,13 +249,5 @@ var NAVTREEINDEX3 =
 "classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a32b01a22a5f71db61c86bec25efc232f":[1,0,0,5,0,1],
 "classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a6b63d7f6b34fc161b9eb7ac490871584":[0,0,0,5,0,8],
 "classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a6b63d7f6b34fc161b9eb7ac490871584":[1,0,0,5,0,8],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a75fc7d3239bac6259001f867b46816d1":[0,0,0,5,0,7],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a75fc7d3239bac6259001f867b46816d1":[1,0,0,5,0,7],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab374c3465be88ad1b20cadc305d717ee":[0,0,0,5,0,2],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab374c3465be88ad1b20cadc305d717ee":[1,0,0,5,0,2],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab68e0404a5a6e9d8ab37b5e276a3d305":[0,0,0,5,0,4],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab68e0404a5a6e9d8ab37b5e276a3d305":[1,0,0,5,0,4],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#abc0f7ffd4ef59f4d7f685917d2be3914":[0,0,0,5,0,10],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#abc0f7ffd4ef59f4d7f685917d2be3914":[1,0,0,5,0,10],
-"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ad845d5f4be2b9eb49099a89c784a2554":[0,0,0,5,0,11]
+"classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a75fc7d3239bac6259001f867b46816d1":[0,0,0,5,0,7]
 };

@@ -24,7 +24,7 @@ var searchData=
   ['_7elogstream_21',['~LogStream',['../classdotnamecpp_1_1logging_1_1LogStream.html#aa526c78dd845217ceec4b5e5d26b908c',1,'dotnamecpp::logging::LogStream']]],
   ['_7eorchestrator_22',['~Orchestrator',['../classOrchestrator.html#a5a4bd8d2b89b96330a26c543e267692f',1,'Orchestrator']]],
   ['_7epathresolver_23',['~PathResolver',['../classdotnamecpp_1_1utils_1_1PathResolver.html#aa46f33603730dac35c50085e7e93227e',1,'dotnamecpp::utils::PathResolver']]],
-  ['_7erssmanager_24',['~RssManager',['../classdotnamecpp_1_1rss_1_1RssManager.html#a600c9cbba12fea8131cfeb49fdf6f862',1,'dotnamecpp::rss::RssManager']]],
+  ['_7erssmanager_24',['~RssManager',['../classdotnamecpp_1_1rss_1_1RssManager.html#a3bdbebb89328a5be2b50dc09c75ff5e5',1,'dotnamecpp::rss::RssManager']]],
   ['_7eservicecontainer_25',['~ServiceContainer',['../classServiceContainer.html#add8db91df39a3c0d6308b165ceb964e8',1,'ServiceContainer']]],
   ['_7estringformatter_26',['~StringFormatter',['../classdotnamecpp_1_1utils_1_1StringFormatter.html#afe266e14747d3b208dd077acde4c4317',1,'dotnamecpp::utils::StringFormatter']]],
   ['_7eunixplatforminfo_27',['~UnixPlatformInfo',['../classdotnamecpp_1_1utils_1_1UnixPlatformInfo.html#ad024e7d47810e76b4f166c1a51f4c798',1,'dotnamecpp::utils::UnixPlatformInfo']]],

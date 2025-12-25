@@ -5,138 +5,87 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{IRssService_8hpp}{Rss/IRssService.hpp}}>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{UtilsFactory_8hpp}{Utils/UtilsFactory.hpp}}>}}
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <filesystem>}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <nlohmann/json.hpp>}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <random>}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <tinyxml2.h>}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1rss}{dotnamecpp::rss}}\ \{}
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a084b31618ed1990a30644904649bf276}{RSSUrl}}\ \{}
-\DoxyCodeLine{00021\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a2364c4f9acba22940b9cb8668cdd1442}{url}};}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a3ab1988d234364bee7d2f317ebb9b1e2}{embedded}};\ \textcolor{comment}{//\ Whether\ this\ item\ should\ use\ embedded\ format}}
-\DoxyCodeLine{00023\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a404309ed2c866b65eb70dc2630654b65}{discordChannelId}};}
-\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a084b31618ed1990a30644904649bf276}{RSSUrl}}()\ :\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a3ab1988d234364bee7d2f317ebb9b1e2}{embedded}}(false),\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a404309ed2c866b65eb70dc2630654b65}{discordChannelId}}(0)\ \{\}}
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a8601deb2701e945877cd4e56059c19d5}{RSSUrl}}(\textcolor{keyword}{const}\ std::string\ \&u,\ \textcolor{keywordtype}{bool}\ e\ =\ \textcolor{keyword}{false},\ uint64\_t\ dChId\ =\ 0)}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a2364c4f9acba22940b9cb8668cdd1442}{url}}(u),\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a3ab1988d234364bee7d2f317ebb9b1e2}{embedded}}(e),\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSUrl_a404309ed2c866b65eb70dc2630654b65}{discordChannelId}}(dChId)\ \{\}}
-\DoxyCodeLine{00027\ \ \ \};}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_aeb94586f1cc8bd06bee978ebf4b7580f}{RSSItem}}\ \{}
-\DoxyCodeLine{00034\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_a8f26da3cf08a7ab6902e9d2480ccb498}{title}};}
-\DoxyCodeLine{00035\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_a68a4f3db6c669e94d8703bee0acd7ce2}{link}};}
-\DoxyCodeLine{00036\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_afd96c097141533d193b2d3990e452ecf}{description}};}
-\DoxyCodeLine{00037\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_abc99edf93d61d76a59affcfa23f6159c}{pubDate}};}
-\DoxyCodeLine{00038\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_ae8ea6bcf5851d087a56bdcf6110f3608}{hash}};}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_abc83456781c5cfbf4c5cf81778bbdaea}{embedded}};\ \textcolor{comment}{//\ Whether\ this\ item\ should\ use\ embedded\ format}}
-\DoxyCodeLine{00040\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_adc831ab9507fe8755f8c977818e2f121}{discordChannelId}};}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_aeb94586f1cc8bd06bee978ebf4b7580f}{RSSItem}}()\ :\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_abc83456781c5cfbf4c5cf81778bbdaea}{embedded}}(false),\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_adc831ab9507fe8755f8c977818e2f121}{discordChannelId}}(0)\ \{\}}
-\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_aeb94586f1cc8bd06bee978ebf4b7580f}{RSSItem}}(\textcolor{keyword}{const}\ std::string\ \&t,\ \textcolor{keyword}{const}\ std::string\ \&l,\ \textcolor{keyword}{const}\ std::string\ \&d,}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&date,\ \textcolor{keywordtype}{bool}\ e,\ uint64\_t\ dChId);}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_ae54b2021a4af544d7b76b5d8db9a83ed}{generateHash}}();}
-\DoxyCodeLine{00047\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00048\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_a93a7f6f71bda783aa9620def68166548}{toMarkdownLink}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00049\ \ \ \};}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{RSSFeed_8hpp}{Rss/RSSFeed.hpp}}>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{RSSItem_8hpp}{Rss/RSSItem.hpp}}>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{RSSUrl_8hpp}{Rss/RSSUrl.hpp}}>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{UtilsFactory_8hpp}{Utils/UtilsFactory.hpp}}>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <nlohmann/json.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <tinyxml2.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1rss}{dotnamecpp::rss}}\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5f5b4ce3b332db46fbe72e3a6a6e7e42}{RssManager}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService}{IRssService}}\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5f5b4ce3b332db46fbe72e3a6a6e7e42}{RssManager}}(std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a3bdbebb89328a5be2b50dc09c75ff5e5}{\string~RssManager}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Public\ interface\ implementations}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5a02da7f6aeeca7bdce38080836dd676}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a3ed7b353fa2518f1b25c9c5f5b535d59}{refetchRssFeeds}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a27e3979a7d81f8b7a309461f2d4a8b68}{addUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId\ =\ 0)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00032\ \ \ \ \ [[nodiscard]]\ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_af81ee0debcf70c8e879fa5a1934815e8}{listUrlsAsString}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aca0ba13d4a29203c10adf306920632f4}{getRandomItem}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00034\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaea4cb356ec1cbbb0459a31c58b40c7c}{getRandomItemMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a03d9fb244b937285a8b57d1c3d681ef6}{getItemCount}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ feed\_.items.size();\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaf4027ab3775c4174fea7c1647635286}{getItemCountMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Private\ helpers}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ fetchUrlSource(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ discordChannelId\ =\ 0);}
 \DoxyCodeLine{00050\ }
-\DoxyCodeLine{00055\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed}{RSSFeed}}\ \{}
-\DoxyCodeLine{00056\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a59998068ba1fb0a0408ea50eb5754566}{title}};}
-\DoxyCodeLine{00057\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac28db8f79282cbbaf8facd155ca74906}{description}};}
-\DoxyCodeLine{00058\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a1a93ee65d55dcbee1eba6aa7f2929dce}{link}};}
-\DoxyCodeLine{00059\ \ \ \ \ std::vector<RSSItem>\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a99cb75140e207b3cc22242bd69b6d8dc}{items}};}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a3b6eec652a2bc8a2ab296fc1f867500a}{addItem}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \&item);}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a978e7dbf5752cf06fcc91126a09eb0b8}{size}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ getItemAsMarkdown(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \&item);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ clearFeedBuffer();}
 \DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac3da735f258f22ba1438387d0abffac1}{clear}}();}
-\DoxyCodeLine{00066\ \ \ \};}
-\DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5f5b4ce3b332db46fbe72e3a6a6e7e42}{RssManager}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService}{IRssService}}\ \{}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5f5b4ce3b332db46fbe72e3a6a6e7e42}{RssManager}}(std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger,}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager);}
-\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a600c9cbba12fea8131cfeb49fdf6f862}{\string~RssManager}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a30da59d710ab22ef248b2cfeb5b14580}{Initialize}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a3ed7b353fa2518f1b25c9c5f5b535d59}{refetchRssFeeds}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00080\ \ \ \ \ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a2fc326114d23f7ec8cb157f5e2c9e18b}{listUrls}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aca0ba13d4a29203c10adf306920632f4}{getRandomItem}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00085\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaea4cb356ec1cbbb0459a31c58b40c7c}{getRandomItemMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a03d9fb244b937285a8b57d1c3d681ef6}{getItemCount}}()\textcolor{keyword}{\ const\ override\ }\{}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ feed\_.items.size();}
-\DoxyCodeLine{00091\ \ \ \ \ \}}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaf4027ab3775c4174fea7c1647635286}{getItemCountMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\textcolor{keyword}{\ const\ override\ }\{}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ count\ =\ 0;}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&item\ :\ feed\_.items)\ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (item.embedded\ ==\ embedded)\ \{}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ count++;}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
-\DoxyCodeLine{00102\ \ \ \ \ \}}
-\DoxyCodeLine{00103\ }
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_acb41fb30f0fd1c28274dba31a41c63b2}{addUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId\ =\ 0)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ WriteCallback(\textcolor{keywordtype}{void}\ *contents,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ nmemb,\ \textcolor{keywordtype}{void}\ *userp);}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{int}\ fetchUrlSource(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded\ =\ \textcolor{keyword}{false},}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint64\_t\ discordChannelId\ =\ 0);}
-\DoxyCodeLine{00120\ \ \ \ \ std::string\ getItemAsMarkdown(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \&item)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ item.\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem_a93a7f6f71bda783aa9620def68166548}{toMarkdownLink}}();\ \}}
-\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ clearFeedBuffer()\ \{\ feed\_.\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac3da735f258f22ba1438387d0abffac1}{clear}}();\ \}\ \textcolor{comment}{//\ Clear\ all\ items\ from\ buffer}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ WriteCallback(\textcolor{keywordtype}{void}\ *contents,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ nmemb,\ \textcolor{keywordtype}{void}\ *userp);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ hasFileChanged(\textcolor{keyword}{const}\ std::filesystem::path\ \&path,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::filesystem::file\_time\_type\ \&lastModified);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasFilesChanged();}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadUrls();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadSeenHashes();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{bool}\ saveUrls();}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ saveSeenHash(\textcolor{keyword}{const}\ std::string\ \&hash);}
 \DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ RSSFeed\ feed\_;}
-\DoxyCodeLine{00124\ \ \ \ \ std::vector<RSSUrl>\ urls\_;}
-\DoxyCodeLine{00125\ \ \ \ \ std::unordered\_set<std::string>\ seenHashes\_;}
-\DoxyCodeLine{00126\ \ \ \ \ std::mt19937\ rng\_;}
-\DoxyCodeLine{00127\ }
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ File\ operations}}
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{int}\ saveUrls();}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{int}\ loadUrls();}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{int}\ loadSeenHashes();}
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{int}\ saveSeenHash(\textcolor{keyword}{const}\ std::string\ \&hash);}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{int}\ saveAllSeenHashes();\ \textcolor{comment}{//\ Save\ all\ hashes\ at\ once}}
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasFileChanged(\textcolor{keyword}{const}\ std::filesystem::path\ \&path,}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::filesystem::file\_time\_type\ \&lastModified);}
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ checkAndReloadFiles();}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ RSSFeed\ parseRSS(\textcolor{keyword}{const}\ std::string\ \&xmlData,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId,}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \&totalDuplicateItems);}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \ \ \ \ std::string\ downloadFeed(\textcolor{keyword}{const}\ std::string\ \&url);}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \ \ \ \ std::filesystem::path\ getUrlsPath()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ assetManager\_-\/>getAssetsPath()\ /\ \textcolor{stringliteral}{"{}rssUrls.json"{}};}
-\DoxyCodeLine{00145\ \ \ \ \ \}}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \ \ std::filesystem::path\ getHashesPath()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ assetManager\_-\/>getAssetsPath()\ /\ \textcolor{stringliteral}{"{}seenHashes.json"{}};}
-\DoxyCodeLine{00149\ \ \ \ \ \}}
-\DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \ \ \ \ std::filesystem::file\_time\_type\ urlsLastModified\_;}
-\DoxyCodeLine{00152\ \ \ \ \ std::filesystem::file\_time\_type\ hashesLastModified\_;}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \ \ \ \ std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger\_;}
-\DoxyCodeLine{00155\ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager\_;}
-\DoxyCodeLine{00156\ \ \ \};}
-\DoxyCodeLine{00157\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{bool}\ saveAllSeenHashes();\ \textcolor{comment}{//\ Save\ all\ hashes\ at\ once}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed}{RSSFeed}}\ parseRSS(\textcolor{keyword}{const}\ std::string\ \&xmlData,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId,}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \&totalDuplicateItems);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00148\ \ \ \ \ std::string\ downloadFeed(\textcolor{keyword}{const}\ std::string\ \&url);}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Data\ members}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{bool}\ isInitialized\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ std::filesystem::path\ urlsPath\_;}
+\DoxyCodeLine{00154\ \ \ \ \ std::filesystem::file\_time\_type\ urlsLastModified\_;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ std::filesystem::path\ hashesPath\_;}
+\DoxyCodeLine{00157\ \ \ \ \ std::filesystem::file\_time\_type\ hashesLastModified\_;}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ std::mt19937\ rng\_;}
+\DoxyCodeLine{00160\ \ \ \ \ std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger\_;}
+\DoxyCodeLine{00161\ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager\_;}
+\DoxyCodeLine{00162\ \ \ \ \ RSSFeed\ feed\_;}
+\DoxyCodeLine{00163\ \ \ \ \ std::vector<RSSUrl>\ urls\_;}
+\DoxyCodeLine{00164\ \ \ \ \ std::unordered\_set<std::string>\ seenHashes\_;}
+\DoxyCodeLine{00165\ \ \ \};}
+\DoxyCodeLine{00166\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
 
 \end{DoxyCode}

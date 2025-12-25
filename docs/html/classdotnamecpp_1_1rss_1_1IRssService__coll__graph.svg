@@ -30,12 +30,12 @@
 <text xml:space="preserve" text-anchor="start" x="14" y="-266.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual ~IRssService</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-254.5" font-family="Helvetica,sans-Serif" font-size="10.00">()=default</text>
 <text xml:space="preserve" text-anchor="start" x="4" y="-238.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text xml:space="preserve" text-anchor="start" x="14" y="-238.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual int Initialize()=0</text>
+<text xml:space="preserve" text-anchor="start" x="14" y="-238.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual bool Initialize()=0</text>
 <text xml:space="preserve" text-anchor="start" x="4" y="-222.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-222.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual int refetchRssFeeds()=0</text>
 <text xml:space="preserve" text-anchor="start" x="4" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-206.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual std::string</text>
-<text xml:space="preserve" text-anchor="start" x="14" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00"> listUrls()=0</text>
+<text xml:space="preserve" text-anchor="start" x="14" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00"> listUrlsAsString()=0</text>
 <text xml:space="preserve" text-anchor="start" x="4" y="-178.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-178.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual RSSItem getRandom</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-166.5" font-family="Helvetica,sans-Serif" font-size="10.00">Item()=0</text>
@@ -51,7 +51,7 @@
 <text xml:space="preserve" text-anchor="start" x="14" y="-70.5" font-family="Helvetica,sans-Serif" font-size="10.00">MatchingEmbedded(bool embedded)</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-58.5" font-family="Helvetica,sans-Serif" font-size="10.00"> const =0</text>
 <text xml:space="preserve" text-anchor="start" x="4" y="-42.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text xml:space="preserve" text-anchor="start" x="14" y="-42.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual int addUrl</text>
+<text xml:space="preserve" text-anchor="start" x="14" y="-42.5" font-family="Helvetica,sans-Serif" font-size="10.00">virtual bool addUrl</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-30.5" font-family="Helvetica,sans-Serif" font-size="10.00">(const std::string &amp;url,</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00"> bool embedded, uint64</text>
 <text xml:space="preserve" text-anchor="start" x="14" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">_t discordChannelId)=0</text>

@@ -117,12 +117,12 @@ Collaboration diagram for dotnamecpp::rss::IRssService:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad313e0a06b99913096e4cbd08a6ccfcb" id="r_ad313e0a06b99913096e4cbd08a6ccfcb"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad313e0a06b99913096e4cbd08a6ccfcb">~IRssService</a> ()=default</td></tr>
 <tr class="memdesc:ad313e0a06b99913096e4cbd08a6ccfcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classdotnamecpp_1_1rss_1_1IRssService.html" title="Interface for RSS Service.">IRssService</a> object.  <br /></td></tr>
-<tr class="memitem:a085a8164ecd6b01842fa4b13ce936690" id="r_a085a8164ecd6b01842fa4b13ce936690"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a085a8164ecd6b01842fa4b13ce936690">Initialize</a> ()=0</td></tr>
-<tr class="memdesc:a085a8164ecd6b01842fa4b13ce936690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the RSS service.  <br /></td></tr>
+<tr class="memitem:a250e20f8765c25a7e4a8cef3fa13e088" id="r_a250e20f8765c25a7e4a8cef3fa13e088"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a250e20f8765c25a7e4a8cef3fa13e088">Initialize</a> ()=0</td></tr>
+<tr class="memdesc:a250e20f8765c25a7e4a8cef3fa13e088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the RSS service.  <br /></td></tr>
 <tr class="memitem:ac9fc9b2b5b01dc129c504bc99ecf9dae" id="r_ac9fc9b2b5b01dc129c504bc99ecf9dae"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9fc9b2b5b01dc129c504bc99ecf9dae">refetchRssFeeds</a> ()=0</td></tr>
 <tr class="memdesc:ac9fc9b2b5b01dc129c504bc99ecf9dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refetch all RSS feeds from the stored URLs.  <br /></td></tr>
-<tr class="memitem:a080d1087cc608357e70004f3727b9a58" id="r_a080d1087cc608357e70004f3727b9a58"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a080d1087cc608357e70004f3727b9a58">listUrls</a> ()=0</td></tr>
-<tr class="memdesc:a080d1087cc608357e70004f3727b9a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all stored RSS URLs.  <br /></td></tr>
+<tr class="memitem:a5faa2a922fcd6d9996aedc71f36e4552" id="r_a5faa2a922fcd6d9996aedc71f36e4552"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5faa2a922fcd6d9996aedc71f36e4552">listUrlsAsString</a> ()=0</td></tr>
+<tr class="memdesc:a5faa2a922fcd6d9996aedc71f36e4552"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all stored RSS URLs.  <br /></td></tr>
 <tr class="memitem:a9406e7e0b635a11fdff9c9c3345084f1" id="r_a9406e7e0b635a11fdff9c9c3345084f1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9406e7e0b635a11fdff9c9c3345084f1">getRandomItem</a> ()=0</td></tr>
 <tr class="memdesc:a9406e7e0b635a11fdff9c9c3345084f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random RSS item from the feed buffer.  <br /></td></tr>
 <tr class="memitem:a591471575f17b596689d27a3a107d044" id="r_a591471575f17b596689d27a3a107d044"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a591471575f17b596689d27a3a107d044">getRandomItemMatchingEmbedded</a> (bool embedded)=0</td></tr>
@@ -131,8 +131,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af993b4985d7d70f9b23e641a347af2f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of items in the feed buffer.  <br /></td></tr>
 <tr class="memitem:ab48f5dd0482ec2883bff9e4291e5d691" id="r_ab48f5dd0482ec2883bff9e4291e5d691"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab48f5dd0482ec2883bff9e4291e5d691">getItemCountMatchingEmbedded</a> (bool embedded) const =0</td></tr>
 <tr class="memdesc:ab48f5dd0482ec2883bff9e4291e5d691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of items matching the embedded flag.  <br /></td></tr>
-<tr class="memitem:ad600742f3ee7a5b21671d66ae958f9f6" id="r_ad600742f3ee7a5b21671d66ae958f9f6"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad600742f3ee7a5b21671d66ae958f9f6">addUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId)=0</td></tr>
-<tr class="memdesc:ad600742f3ee7a5b21671d66ae958f9f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new RSS URL to the list.  <br /></td></tr>
+<tr class="memitem:a59636f4ea502dcc58ec0b43d58878548" id="r_a59636f4ea502dcc58ec0b43d58878548"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59636f4ea502dcc58ec0b43d58878548">addUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId)=0</td></tr>
+<tr class="memdesc:a59636f4ea502dcc58ec0b43d58878548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new RSS URL to the list.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for RSS Service. </p>
@@ -166,8 +166,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ad600742f3ee7a5b21671d66ae958f9f6" name="ad600742f3ee7a5b21671d66ae958f9f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad600742f3ee7a5b21671d66ae958f9f6">&#9670;&#160;</a></span>addUrl()</h2>
+<a id="a59636f4ea502dcc58ec0b43d58878548" name="a59636f4ea502dcc58ec0b43d58878548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59636f4ea502dcc58ec0b43d58878548">&#9670;&#160;</a></span>addUrl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +176,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int dotnamecpp::rss::IRssService::addUrl </td>
+          <td class="memname">virtual bool dotnamecpp::rss::IRssService::addUrl </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
         </tr>
@@ -209,7 +209,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int Returns 0 on success, -1 on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#acb41fb30f0fd1c28274dba31a41c63b2">dotnamecpp::rss::RssManager</a>.</p>
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a27e3979a7d81f8b7a309461f2d4a8b68">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>
@@ -345,8 +345,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a085a8164ecd6b01842fa4b13ce936690" name="a085a8164ecd6b01842fa4b13ce936690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a085a8164ecd6b01842fa4b13ce936690">&#9670;&#160;</a></span>Initialize()</h2>
+<a id="a250e20f8765c25a7e4a8cef3fa13e088" name="a250e20f8765c25a7e4a8cef3fa13e088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a250e20f8765c25a7e4a8cef3fa13e088">&#9670;&#160;</a></span>Initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +355,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int dotnamecpp::rss::IRssService::Initialize </td>
+          <td class="memname">virtual bool dotnamecpp::rss::IRssService::Initialize </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -369,14 +369,14 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize the RSS service. </p>
-<dl class="section return"><dt>Returns</dt><dd>int Returns 0 on success, -1 on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true on success, false on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a30da59d710ab22ef248b2cfeb5b14580">dotnamecpp::rss::RssManager</a>.</p>
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a5a02da7f6aeeca7bdce38080836dd676">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>
-<a id="a080d1087cc608357e70004f3727b9a58" name="a080d1087cc608357e70004f3727b9a58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a080d1087cc608357e70004f3727b9a58">&#9670;&#160;</a></span>listUrls()</h2>
+<a id="a5faa2a922fcd6d9996aedc71f36e4552" name="a5faa2a922fcd6d9996aedc71f36e4552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5faa2a922fcd6d9996aedc71f36e4552">&#9670;&#160;</a></span>listUrlsAsString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +385,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string dotnamecpp::rss::IRssService::listUrls </td>
+          <td class="memname">virtual std::string dotnamecpp::rss::IRssService::listUrlsAsString </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -401,7 +401,7 @@ Public Member Functions</h2></td></tr>
 <p>List all stored RSS URLs. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string A formatted string listing all RSS URLs </dd></dl>
 
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a2fc326114d23f7ec8cb157f5e2c9e18b">dotnamecpp::rss::RssManager</a>.</p>
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#af81ee0debcf70c8e879fa5a1934815e8">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>
@@ -423,13 +423,13 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Refetch all RSS feeds from the stored URLs. </p>
-<dl class="section return"><dt>Returns</dt><dd>int Returns 0 on success, -1 on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int Returns the number of new items fetched </dd></dl>
 
 <p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a3ed7b353fa2518f1b25c9c5f5b535d59">dotnamecpp::rss::RssManager</a>.</p>
 

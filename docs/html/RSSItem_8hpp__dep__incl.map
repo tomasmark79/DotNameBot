@@ -1,0 +1,21 @@
+<map id="src/Rss/RSSItem.hpp" name="src/Rss/RSSItem.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="237,5,387,32"/>
+<area shape="rect" id="Node000002" href="$RSSFeed_8hpp.html" title=" " alt="" coords="120,80,274,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="280,43,219,82,216,77,278,38"/>
+<area shape="rect" id="Node000004" href="$RssManager_8hpp.html" title=" " alt="" coords="227,155,397,181"/>
+<area shape="poly" id="edge10_Node000001_Node000004" title=" " alt="" coords="314,48,314,154,309,154,309,48"/>
+<area shape="rect" id="Node000009" href="$RSSItem_8cpp.html" title=" " alt="" coords="349,80,499,107"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="345,38,406,77,403,82,342,43"/>
+<area shape="rect" id="Node000003" href="$RSSFeed_8cpp.html" title=" " alt="" coords="50,155,203,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="176,120,141,156,137,152,172,116"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="231,113,293,152,290,156,229,118"/>
+<area shape="rect" id="Node000005" href="$DiscordBot_8hpp.html" title=" " alt="" coords="72,229,274,256"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="275,191,199,231,196,226,273,187"/>
+<area shape="rect" id="Node000007" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="231,304,392,331"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="314,197,314,304,309,304,309,197"/>
+<area shape="rect" id="Node000008" href="$RssManager_8cpp.html" title=" " alt="" coords="349,229,520,256"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="348,187,414,226,412,231,345,192"/>
+<area shape="rect" id="Node000006" href="$DiscordBot_8cpp.html" title=" " alt="" coords="5,304,208,331"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="153,269,120,305,116,302,149,266"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="212,261,289,301,286,306,210,266"/>
+</map>

@@ -1,9 +1,12 @@
 <map id="src/Rss/RssManager.hpp" name="src/Rss/RssManager.hpp">
 <area shape="rect" id="Node000001" title=" " alt="" coords="227,5,397,32"/>
-<area shape="rect" id="Node000002" href="$DiscordBot_8cpp.html" title=" " alt="" coords="5,80,208,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="262,40,143,82,142,77,261,35"/>
-<area shape="rect" id="Node000003" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="231,80,392,107"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="314,48,314,80,309,80,309,48"/>
-<area shape="rect" id="Node000004" href="$RssManager_8cpp.html" title=" " alt="" coords="416,80,586,107"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="360,35,469,77,467,82,358,40"/>
+<area shape="rect" id="Node000002" href="$DiscordBot_8hpp.html" title=" " alt="" coords="72,80,274,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="275,42,199,82,196,77,273,37"/>
+<area shape="rect" id="Node000004" href="$DotNameBotLib_8cpp.html" title=" " alt="" coords="231,155,392,181"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="314,48,314,154,309,154,309,48"/>
+<area shape="rect" id="Node000005" href="$RssManager_8cpp.html" title=" " alt="" coords="349,80,520,107"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="348,38,414,77,412,82,345,43"/>
+<area shape="rect" id="Node000003" href="$DiscordBot_8cpp.html" title=" " alt="" coords="5,155,208,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="153,120,120,156,116,152,149,116"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="212,112,289,152,286,156,210,117"/>
 </map>

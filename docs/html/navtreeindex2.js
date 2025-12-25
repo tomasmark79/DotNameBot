@@ -1,5 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a79a7f65ee015e18cfd6ce51ea41fdc67":[1,0,0,4,1,1],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a7f71a757e95cb895d77dc7221ec6b4f0":[0,0,0,4,1,12],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a7f71a757e95cb895d77dc7221ec6b4f0":[1,0,0,4,1,12],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a8670bfd345ffcc06ba9e2725154629a6":[0,0,0,4,1,10],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#a8670bfd345ffcc06ba9e2725154629a6":[1,0,0,4,1,10],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa3d2b194c699c05e7a2bfbcf69d502af":[0,0,0,4,1,14],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa3d2b194c699c05e7a2bfbcf69d502af":[1,0,0,4,1,14],
+"classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa3e2547a977f135ee8fe9fa81c1cb75f":[0,0,0,4,1,7],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa3e2547a977f135ee8fe9fa81c1cb75f":[1,0,0,4,1,7],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa641ee6efd2034562d3b9d5ba5069252":[0,0,0,4,1,5],
 "classdotnamecpp_1_1utils_1_1DirectoryManager.html#aa641ee6efd2034562d3b9d5ba5069252":[1,0,0,4,1,5],
@@ -241,13 +249,5 @@ var NAVTREEINDEX2 =
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#abc29531252bca837835c0dcc6c445b96":[1,0,0,4,13,10],
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#abdd440f2871d84298fd2d919330a346f":[0,0,0,4,13,6],
 "classdotnamecpp_1_1utils_1_1IPathResolver.html#abdd440f2871d84298fd2d919330a346f":[1,0,0,4,13,6],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9":[0,0,0,4,13,2],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9":[1,0,0,4,13,2],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#adbdfd49f0663b2a17692e10668094caf":[0,0,0,4,13,8],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#adbdfd49f0663b2a17692e10668094caf":[1,0,0,4,13,8],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#afecd6b4a6b1f0efce6b42d8b317c2911":[0,0,0,4,13,5],
-"classdotnamecpp_1_1utils_1_1IPathResolver.html#afecd6b4a6b1f0efce6b42d8b317c2911":[1,0,0,4,13,5],
-"classdotnamecpp_1_1utils_1_1IPlatformInfo.html":[0,0,0,4,14],
-"classdotnamecpp_1_1utils_1_1IPlatformInfo.html":[1,0,0,4,14],
-"classdotnamecpp_1_1utils_1_1IPlatformInfo.html#a43160cbc1a000aec98a58c00310ff165":[0,0,0,4,14,3]
+"classdotnamecpp_1_1utils_1_1IPathResolver.html#ac0e0aff2c94ecab24ad35dbeb11872e9":[0,0,0,4,13,2]
 };

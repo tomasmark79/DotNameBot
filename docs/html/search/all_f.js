@@ -16,10 +16,15 @@ var searchData=
   ['result_3c_20void_2c_20e_20_3e_13',['Result&lt; void, E &gt;',['../classdotnamecpp_1_1utils_1_1Result_3_01void_00_01E_01_4.html',1,'dotnamecpp::utils']]],
   ['role_14',['Role',['../SlashCommand_8hpp.html#aedd2c94bc55186fc0ddb4369af2c5d92abbbabdbe1b262f75d99d62880b953be1',1,'SlashCommand.hpp']]],
   ['rssfeed_15',['RSSFeed',['../structdotnamecpp_1_1rss_1_1RSSFeed.html',1,'dotnamecpp::rss']]],
-  ['rssitem_16',['RSSItem',['../structdotnamecpp_1_1rss_1_1RSSItem.html',1,'dotnamecpp::rss::RSSItem'],['../structdotnamecpp_1_1rss_1_1RSSItem.html#aeb94586f1cc8bd06bee978ebf4b7580f',1,'dotnamecpp::rss::RSSItem::RSSItem()'],['../structdotnamecpp_1_1rss_1_1RSSItem.html#a11de5d9dae74ff0ee65d349ce6f21831',1,'dotnamecpp::rss::RSSItem::RSSItem(const std::string &amp;t, const std::string &amp;l, const std::string &amp;d, const std::string &amp;date, bool e, uint64_t dChId)']]],
-  ['rssmanager_17',['RssManager',['../classdotnamecpp_1_1rss_1_1RssManager.html',1,'dotnamecpp::rss::RssManager'],['../classdotnamecpp_1_1rss_1_1RssManager.html#a5f5b4ce3b332db46fbe72e3a6a6e7e42',1,'dotnamecpp::rss::RssManager::RssManager()']]],
-  ['rssmanager_2ecpp_18',['RssManager.cpp',['../RssManager_8cpp.html',1,'']]],
-  ['rssmanager_2ehpp_19',['RssManager.hpp',['../RssManager_8hpp.html',1,'']]],
-  ['rssurl_20',['RSSUrl',['../structdotnamecpp_1_1rss_1_1RSSUrl.html',1,'dotnamecpp::rss::RSSUrl'],['../structdotnamecpp_1_1rss_1_1RSSUrl.html#a084b31618ed1990a30644904649bf276',1,'dotnamecpp::rss::RSSUrl::RSSUrl()'],['../structdotnamecpp_1_1rss_1_1RSSUrl.html#a8601deb2701e945877cd4e56059c19d5',1,'dotnamecpp::rss::RSSUrl::RSSUrl(const std::string &amp;u, bool e=false, uint64_t dChId=0)']]],
-  ['run_21',['run',['../classdotnamecpp_1_1v1_1_1DotNameBotLib.html#abc0f7ffd4ef59f4d7f685917d2be3914',1,'dotnamecpp::v1::DotNameBotLib']]]
+  ['rssfeed_2ecpp_16',['RSSFeed.cpp',['../RSSFeed_8cpp.html',1,'']]],
+  ['rssfeed_2ehpp_17',['RSSFeed.hpp',['../RSSFeed_8hpp.html',1,'']]],
+  ['rssitem_18',['RSSItem',['../structdotnamecpp_1_1rss_1_1RSSItem.html',1,'dotnamecpp::rss::RSSItem'],['../structdotnamecpp_1_1rss_1_1RSSItem.html#aeb94586f1cc8bd06bee978ebf4b7580f',1,'dotnamecpp::rss::RSSItem::RSSItem()'],['../structdotnamecpp_1_1rss_1_1RSSItem.html#a2d00f19d642d60d961cc2417c2e11e2e',1,'dotnamecpp::rss::RSSItem::RSSItem(std::string &amp;t, std::string &amp;u, std::string &amp;d, std::string &amp;date, bool e, uint64_t dChId)']]],
+  ['rssitem_2ecpp_19',['RSSItem.cpp',['../RSSItem_8cpp.html',1,'']]],
+  ['rssitem_2ehpp_20',['RSSItem.hpp',['../RSSItem_8hpp.html',1,'']]],
+  ['rssmanager_21',['RssManager',['../classdotnamecpp_1_1rss_1_1RssManager.html',1,'dotnamecpp::rss::RssManager'],['../classdotnamecpp_1_1rss_1_1RssManager.html#a5f5b4ce3b332db46fbe72e3a6a6e7e42',1,'dotnamecpp::rss::RssManager::RssManager()']]],
+  ['rssmanager_2ecpp_22',['RssManager.cpp',['../RssManager_8cpp.html',1,'']]],
+  ['rssmanager_2ehpp_23',['RssManager.hpp',['../RssManager_8hpp.html',1,'']]],
+  ['rssurl_24',['RSSUrl',['../structdotnamecpp_1_1rss_1_1RSSUrl.html',1,'dotnamecpp::rss::RSSUrl'],['../structdotnamecpp_1_1rss_1_1RSSUrl.html#a084b31618ed1990a30644904649bf276',1,'dotnamecpp::rss::RSSUrl::RSSUrl()'],['../structdotnamecpp_1_1rss_1_1RSSUrl.html#aef9c1ca3f4750f0e9afb775c4a0af83b',1,'dotnamecpp::rss::RSSUrl::RSSUrl(std::string u, bool e=false, uint64_t dChId=0)']]],
+  ['rssurl_2ehpp_25',['RSSUrl.hpp',['../RSSUrl_8hpp.html',1,'']]],
+  ['run_26',['run',['../classdotnamecpp_1_1v1_1_1DotNameBotLib.html#abc0f7ffd4ef59f4d7f685917d2be3914',1,'dotnamecpp::v1::DotNameBotLib']]]
 ];

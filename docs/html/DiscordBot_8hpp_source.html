@@ -106,105 +106,109 @@ $(function(){initNavTree('DiscordBot_8hpp_source.html','',''); });
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="ServiceContainer_8hpp.html">ServiceContainer/ServiceContainer.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;<a class="code" href="IRssService_8hpp.html">Rss/IRssService.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;<a class="code" href="UtilsFactory_8hpp.html">Utils/UtilsFactory.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;EmojiesLib/EmojiesLib.hpp&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacedotnamecpp_1_1discordbot.html">dotnamecpp::discordbot</a> {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html">   20</a></span>  <span class="keyword">class </span><a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">DiscordBot</a> : <span class="keyword">public</span> <a class="code hl_function" href="classILifeCycle.html#a64e5d7091868eeb01bb2434da438081d">ILifeCycle</a> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">   22</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">DiscordBot</a>(<a class="code hl_class" href="classServiceContainer.html">ServiceContainer</a> &amp;services)</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        : logger_(services.getService&lt;<a class="code hl_namespace" href="namespacedotnamecpp.html">dotnamecpp</a>::<a class="code hl_namespace" href="namespacedotnamecpp_1_1logging.html">logging</a>::ILogger&gt;()),</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>          assetManager_(services.getService&lt;<a class="code hl_namespace" href="namespacedotnamecpp.html">dotnamecpp</a>::<a class="code hl_namespace" href="namespacedotnamecpp_1_1assets.html">assets</a>::IAssetManager&gt;()),</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>          emojiesLib_(services.getService&lt;dotname::EmojiesLib&gt;()) {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      <span class="keywordflow">if</span> (!logger_) {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires a logger&quot;</span>);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      }</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      <span class="keywordflow">if</span> (!assetManager_) {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires an asset manager&quot;</span>);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      <span class="keywordflow">if</span> (emojiesLib_) {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        logger_-&gt;infoStream() &lt;&lt; <span class="stringliteral">&quot;DiscordBot initialized with EmojiesLib, random emoji: &quot;</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                              &lt;&lt; emojiesLib_-&gt;getRandomEmoji();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires an EmojiesLib&quot;</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      <span class="comment">// CustomStrings loader is created on-demand</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      customStrings_ = <a class="code hl_function" href="classdotnamecpp_1_1utils_1_1UtilsFactory.html#aff59f9352b744e132ab2bbf5371eb52a">dotnamecpp::utils::UtilsFactory::createCustomStringsLoader</a>(assetManager_);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;<a class="code" href="RssManager_8hpp.html">Rss/RssManager.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="UtilsFactory_8hpp.html">Utils/UtilsFactory.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;EmojiesLib/EmojiesLib.hpp&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacedotnamecpp_1_1discordbot.html">dotnamecpp::discordbot</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html">   21</a></span>  <span class="keyword">class </span><a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">DiscordBot</a> : <span class="keyword">public</span> <a class="code hl_function" href="classILifeCycle.html#a64e5d7091868eeb01bb2434da438081d">ILifeCycle</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">   23</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">DiscordBot</a>(<a class="code hl_class" href="classServiceContainer.html">ServiceContainer</a> &amp;services)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        : logger_(services.getService&lt;<a class="code hl_namespace" href="namespacedotnamecpp.html">dotnamecpp</a>::<a class="code hl_namespace" href="namespacedotnamecpp_1_1logging.html">logging</a>::ILogger&gt;()),</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>          assetManager_(services.getService&lt;<a class="code hl_namespace" href="namespacedotnamecpp.html">dotnamecpp</a>::<a class="code hl_namespace" href="namespacedotnamecpp_1_1assets.html">assets</a>::IAssetManager&gt;()),</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>          emojiesLib_(services.getService&lt;dotname::EmojiesLib&gt;()),</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>          rssService_(services.getService&lt;<a class="code hl_namespace" href="namespacedotnamecpp.html">dotnamecpp</a>::<a class="code hl_namespace" href="namespacedotnamecpp_1_1rss.html">rss</a>::IRssService&gt;()) {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      <span class="keywordflow">if</span> (!logger_) {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires a logger&quot;</span>);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      }</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      <span class="keywordflow">if</span> (!assetManager_) {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires an asset manager&quot;</span>);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      <span class="keywordflow">if</span> (emojiesLib_) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        logger_-&gt;infoStream() &lt;&lt; <span class="stringliteral">&quot;DiscordBot initialized with EmojiesLib, random emoji: &quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                              &lt;&lt; emojiesLib_-&gt;getRandomEmoji();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;DiscordBot requires an EmojiesLib&quot;</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      <span class="comment">// CustomStrings loader is created on-demand</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      customStrings_ = <a class="code hl_function" href="classdotnamecpp_1_1utils_1_1UtilsFactory.html#aff59f9352b744e132ab2bbf5371eb52a">dotnamecpp::utils::UtilsFactory::createCustomStringsLoader</a>(assetManager_);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
 </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">   46</a></span>    <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">~DiscordBot</a>()<span class="keyword"> override </span>{ <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">stop</a>(); }</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// ILifeCycle interface declarations</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5c2963ad0b530b93f96f5646de023b69">initialize</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f6245ac4c780609c215c1081ff097b8">start</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">stop</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    [[nodiscard]]</div>
-<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">   81</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">isRunning</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      <span class="keywordflow">return</span> isRunning_.load();</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">   48</a></span>    <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">~DiscordBot</a>()<span class="keyword"> override </span>{ <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">stop</a>(); }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// ILifeCycle interface declarations</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5c2963ad0b530b93f96f5646de023b69">initialize</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f6245ac4c780609c215c1081ff097b8">start</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">stop</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    [[nodiscard]]</div>
+<div class="foldopen" id="foldopen00083" data-start="{" data-end="}">
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">   83</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">isRunning</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      <span class="keywordflow">return</span> isRunning_.load();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    }</div>
 </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    [[nodiscard]]</div>
-<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">   91</a></span>    std::string <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">getName</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;DiscordBot.hpp&quot;</span>;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    [[nodiscard]]</div>
+<div class="foldopen" id="foldopen00093" data-start="{" data-end="}">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">   93</a></span>    std::string <a class="code hl_function" href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">getName</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;DiscordBot.hpp&quot;</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    }</div>
 </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    std::unique_ptr&lt;dpp::cluster&gt; bot_;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    std::shared_ptr&lt;dotnamecpp::logging::ILogger&gt; logger_;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    std::shared_ptr&lt;dotnamecpp::assets::IAssetManager&gt; assetManager_;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    std::shared_ptr&lt;dotnamecpp::utils::ICustomStringsLoader&gt; customStrings_;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    std::shared_ptr&lt;dotname::EmojiesLib&gt; emojiesLib_;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    std::shared_ptr&lt;dotnamecpp::rss::IRssService&gt; rssService_;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">bool</span> getTokenFromFile(std::string &amp;token);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">void</span> handleSlashCommand(<span class="keyword">const</span> dpp::slashcommand_t &amp;event);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    std::atomic&lt;bool&gt; isRunning_{<span class="keyword">false</span>};</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    std::chrono::time_point&lt;std::chrono::system_clock&gt; startTime_;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">void</span> registerBulkSlashCommandsToDiscord();</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  };</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    std::unique_ptr&lt;dpp::cluster&gt; bot_;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    std::shared_ptr&lt;dotnamecpp::logging::ILogger&gt; logger_;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    std::shared_ptr&lt;dotnamecpp::assets::IAssetManager&gt; assetManager_;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    std::shared_ptr&lt;dotnamecpp::utils::ICustomStringsLoader&gt; customStrings_;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    std::shared_ptr&lt;dotname::EmojiesLib&gt; emojiesLib_;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    std::shared_ptr&lt;dotnamecpp::rss::IRssService&gt; rssService_;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">bool</span> getTokenFromFile(std::string &amp;token);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordtype">void</span> handleSlashCommand(<span class="keyword">const</span> dpp::slashcommand_t &amp;event);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    std::atomic&lt;bool&gt; isRunning_{<span class="keyword">false</span>};</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    std::chrono::time_point&lt;std::chrono::system_clock&gt; startTime_;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> registerBulkSlashCommandsToDiscord();</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  };</div>
 </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>} <span class="comment">// namespace dotnamecpp::discordbot</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>} <span class="comment">// namespace dotnamecpp::discordbot</span></div>
 <div class="ttc" id="aILifeCycle_8hpp_html"><div class="ttname"><a href="ILifeCycle_8hpp.html">ILifeCycle.hpp</a></div></div>
 <div class="ttc" id="aIRssService_8hpp_html"><div class="ttname"><a href="IRssService_8hpp.html">IRssService.hpp</a></div></div>
+<div class="ttc" id="aRssManager_8hpp_html"><div class="ttname"><a href="RssManager_8hpp.html">RssManager.hpp</a></div></div>
 <div class="ttc" id="aServiceContainer_8hpp_html"><div class="ttname"><a href="ServiceContainer_8hpp.html">ServiceContainer.hpp</a></div></div>
 <div class="ttc" id="aSlashCommand_8hpp_html"><div class="ttname"><a href="SlashCommand_8hpp.html">SlashCommand.hpp</a></div></div>
 <div class="ttc" id="aUtilsFactory_8hpp_html"><div class="ttname"><a href="UtilsFactory_8hpp.html">UtilsFactory.hpp</a></div></div>
 <div class="ttc" id="aclassILifeCycle_html_a64e5d7091868eeb01bb2434da438081d"><div class="ttname"><a href="classILifeCycle.html#a64e5d7091868eeb01bb2434da438081d">ILifeCycle::ILifeCycle</a></div><div class="ttdeci">ILifeCycle()=default</div></div>
 <div class="ttc" id="aclassServiceContainer_html"><div class="ttname"><a href="classServiceContainer.html">ServiceContainer</a></div><div class="ttdoc">Generic dependency injection container.</div><div class="ttdef"><b>Definition</b> ServiceContainer.hpp:15</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a54158b4a061d1a2ff4401602bcdded1c"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">dotnamecpp::discordbot::DiscordBot::isRunning</a></div><div class="ttdeci">bool isRunning() const override</div><div class="ttdoc">Check if the Discord bot is running.</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:81</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5c2963ad0b530b93f96f5646de023b69"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5c2963ad0b530b93f96f5646de023b69">dotnamecpp::discordbot::DiscordBot::initialize</a></div><div class="ttdeci">bool initialize() override</div><div class="ttdoc">Initialize the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:30</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5cac9d7eea641a37523ca99d8d38963c"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">dotnamecpp::discordbot::DiscordBot::stop</a></div><div class="ttdeci">bool stop() override</div><div class="ttdoc">Stop the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:113</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5f59e738c73cd0ae6516b5214ba37f60"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">dotnamecpp::discordbot::DiscordBot::DiscordBot</a></div><div class="ttdeci">DiscordBot(ServiceContainer &amp;services)</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:22</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5f6245ac4c780609c215c1081ff097b8"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f6245ac4c780609c215c1081ff097b8">dotnamecpp::discordbot::DiscordBot::start</a></div><div class="ttdeci">bool start() override</div><div class="ttdoc">Start the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:85</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_aafee82c8d5c93b399b478f28ea336e7a"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">dotnamecpp::discordbot::DiscordBot::~DiscordBot</a></div><div class="ttdeci">~DiscordBot() override</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:46</div></div>
-<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_ab1d753b20152be10d894158f585f63bd"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">dotnamecpp::discordbot::DiscordBot::getName</a></div><div class="ttdeci">std::string getName() const override</div><div class="ttdoc">Get the Name object.</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:91</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a54158b4a061d1a2ff4401602bcdded1c"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a54158b4a061d1a2ff4401602bcdded1c">dotnamecpp::discordbot::DiscordBot::isRunning</a></div><div class="ttdeci">bool isRunning() const override</div><div class="ttdoc">Check if the Discord bot is running.</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:83</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5c2963ad0b530b93f96f5646de023b69"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5c2963ad0b530b93f96f5646de023b69">dotnamecpp::discordbot::DiscordBot::initialize</a></div><div class="ttdeci">bool initialize() override</div><div class="ttdoc">Initialize the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:29</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5cac9d7eea641a37523ca99d8d38963c"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5cac9d7eea641a37523ca99d8d38963c">dotnamecpp::discordbot::DiscordBot::stop</a></div><div class="ttdeci">bool stop() override</div><div class="ttdoc">Stop the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:106</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5f59e738c73cd0ae6516b5214ba37f60"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f59e738c73cd0ae6516b5214ba37f60">dotnamecpp::discordbot::DiscordBot::DiscordBot</a></div><div class="ttdeci">DiscordBot(ServiceContainer &amp;services)</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:23</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_a5f6245ac4c780609c215c1081ff097b8"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#a5f6245ac4c780609c215c1081ff097b8">dotnamecpp::discordbot::DiscordBot::start</a></div><div class="ttdeci">bool start() override</div><div class="ttdoc">Start the Discord bot.</div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:78</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_aafee82c8d5c93b399b478f28ea336e7a"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#aafee82c8d5c93b399b478f28ea336e7a">dotnamecpp::discordbot::DiscordBot::~DiscordBot</a></div><div class="ttdeci">~DiscordBot() override</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:48</div></div>
+<div class="ttc" id="aclassdotnamecpp_1_1discordbot_1_1DiscordBot_html_ab1d753b20152be10d894158f585f63bd"><div class="ttname"><a href="classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd">dotnamecpp::discordbot::DiscordBot::getName</a></div><div class="ttdeci">std::string getName() const override</div><div class="ttdoc">Get the Name object.</div><div class="ttdef"><b>Definition</b> DiscordBot.hpp:93</div></div>
 <div class="ttc" id="aclassdotnamecpp_1_1utils_1_1UtilsFactory_html_aff59f9352b744e132ab2bbf5371eb52a"><div class="ttname"><a href="classdotnamecpp_1_1utils_1_1UtilsFactory.html#aff59f9352b744e132ab2bbf5371eb52a">dotnamecpp::utils::UtilsFactory::createCustomStringsLoader</a></div><div class="ttdeci">static std::shared_ptr&lt; ICustomStringsLoader &gt; createCustomStringsLoader(std::shared_ptr&lt; IAssetManager &gt; assetManager, const std::string &amp;filename=&quot;customstrings.json&quot;)</div><div class="ttdef"><b>Definition</b> UtilsFactory.cpp:57</div></div>
 <div class="ttc" id="anamespacedotnamecpp_1_1assets_html"><div class="ttname"><a href="namespacedotnamecpp_1_1assets.html">dotnamecpp::assets</a></div><div class="ttdef"><b>Definition</b> AssetManager.cpp:5</div></div>
-<div class="ttc" id="anamespacedotnamecpp_1_1discordbot_html"><div class="ttname"><a href="namespacedotnamecpp_1_1discordbot.html">dotnamecpp::discordbot</a></div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:4</div></div>
+<div class="ttc" id="anamespacedotnamecpp_1_1discordbot_html"><div class="ttname"><a href="namespacedotnamecpp_1_1discordbot.html">dotnamecpp::discordbot</a></div><div class="ttdef"><b>Definition</b> DiscordBot.cpp:3</div></div>
 <div class="ttc" id="anamespacedotnamecpp_1_1logging_html"><div class="ttname"><a href="namespacedotnamecpp_1_1logging.html">dotnamecpp::logging</a></div><div class="ttdef"><b>Definition</b> ILogger.hpp:15</div></div>
+<div class="ttc" id="anamespacedotnamecpp_1_1rss_html"><div class="ttname"><a href="namespacedotnamecpp_1_1rss.html">dotnamecpp::rss</a></div><div class="ttdef"><b>Definition</b> IRssService.hpp:6</div></div>
 <div class="ttc" id="anamespacedotnamecpp_html"><div class="ttname"><a href="namespacedotnamecpp.html">dotnamecpp</a></div><div class="ttdef"><b>Definition</b> DotNameBotLib.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
