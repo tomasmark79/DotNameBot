@@ -96,6 +96,29 @@ namespace dotnamecpp::discordbot {
     }
 
   private:
+    /**
+     * @brief Register bulk slash commands to Discord
+     *        More efficient way to register multiple commands at once
+     *
+     */
+    void registerBulkSlashCommandsToDiscord();
+
+    /**
+     * @brief Put a random feed timer
+     *
+     * @return true
+     * @return false
+     */
+    bool putRandomFeedTimer();
+
+    /**
+     * @brief Fetch feeds timer
+     *
+     * @return true
+     * @return false
+     */
+    bool fetchFeedsTimer();
+
     constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
 
     std::unique_ptr<dpp::cluster> bot_;
@@ -110,29 +133,12 @@ namespace dotnamecpp::discordbot {
     void handleSlashCommand(const dpp::slashcommand_t &event);
     static bool splitDiscordMessageIfNeeded(const std::string &message,
                                             std::vector<std::string> &outMessages);
-    bool logTheServed(rss::RSSItem &item);
+    void logTheServed(rss::RSSItem &item, std::function<void(bool)> onComplete);
     std::atomic<bool> isRunning_{false};
     std::chrono::time_point<std::chrono::system_clock> startTime_;
 
-    /**
-     * @brief Register bulk slash commands to Discord
-     *        More efficient way to register multiple commands at once
-     *
-     */
-    void registerBulkSlashCommandsToDiscord();
-
-    /**
-     * @brief Put a timer that periodically sends a random RSS feed item to a Discord channel 
-     * 
-     * @return true 
-     * @return false 
-     */
-     std::atomic<bool> isRunningTimer_{true};
-     bool putRandomFeedTimer();
-     
-     std::atomic<bool> isFetchFeedsTimerRunning_{true};
-     bool fetchFeedsTimer();
-     
-     std::vector<std::thread> threads_;
+    std::vector<std::thread> threads_;
+    std::atomic<bool> isRunningTimer_{true};
+    std::atomic<bool> isFetchFeedsTimerRunning_{true};
   };
 } // namespace dotnamecpp::discordbot

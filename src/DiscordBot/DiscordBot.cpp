@@ -210,9 +210,14 @@ namespace dotnamecpp::discordbot {
             std::string response = item.toMarkdownLink();
             event.edit_response(response);
 
-            if (!logTheServed(item)) {
-              logger_->error("Failed to log served RSS item.");
-            }
+            // Log the served item
+            logTheServed(item, [this](bool success) {
+              if (success) {
+                logger_->info("Served RSS item logged successfully.");
+              } else {
+                logger_->error("Failed to log served RSS item.");
+              }
+            });
           }
         }
 
@@ -389,24 +394,41 @@ namespace dotnamecpp::discordbot {
     return true;
   }
 
-  bool DiscordBot::logTheServed(rss::RSSItem &item) {
-    // TODO: define outside the magic number
+  void DiscordBot::logTheServed(rss::RSSItem &item, std::function<void(bool)> onComplete) {
     constexpr dpp::snowflake LOG_CHANNEL_ID = 1453787666201182359;
     dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
     msg.set_flags(dpp::m_suppress_embeds);
-    bool success = true;
-    bot_->message_create(msg, [&](const dpp::confirmation_callback_t &callback) {
+
+    bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
       if (callback.is_error()) {
         logger_->error("Failed to log served RSS item: " + callback.get_error().message);
-        success = false;
+        onComplete(false);
+      } else {
+        onComplete(true);
       }
     });
-    return success;
   }
+
+  // bool DiscordBot::logTheServed(rss::RSSItem &item) {
+  //   // TODO: define outside the magic number
+  //   constexpr dpp::snowflake LOG_CHANNEL_ID = 1453787666201182359;
+  //   dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
+  //   msg.set_flags(dpp::m_suppress_embeds);
+
+  //   bool isSuccess{false};
+  //   bot_->message_create(msg, [this](const dpp::confirmation_callback_t &callback) {
+  //     if (callback.is_error()) {
+  //       logger_->error("Failed to log served RSS item: " + callback.get_error().message);
+  //       return;
+  //     }
+  //   });
+  //   return isSuccess;
+  // }
 
   // TODO: take outside the magic number
   // Timer interval for publicate message is 10 messages per hour
-  constexpr int TICK_INTERVAL_SECONDS = 6 * 60;
+  // constexpr int TICK_INTERVAL_SECONDS = 6 * 60;
+  constexpr int TICK_INTERVAL_SECONDS = 10;
 
   bool DiscordBot::putRandomFeedTimer() {
     threads_.emplace_back([this]() -> void {
@@ -426,25 +448,31 @@ namespace dotnamecpp::discordbot {
           msg.set_flags(dpp::m_suppress_embeds);
         }
 
-        bot_->message_create(msg, [this, &item](const dpp::confirmation_callback_t &callback) {
+        bot_->message_create(msg, [this](const dpp::confirmation_callback_t &callback) {
           if (callback.is_error()) {
             logger_->error("Failed to create message: " + callback.get_error().message);
           }
 
           const auto &createdMessage = callback.get<dpp::message>();
-          bot_->message_crosspost(
-              createdMessage.id, createdMessage.channel_id,
-              [this, &item](const dpp::confirmation_callback_t &crosspostCallback) {
+          bot_->message_crosspost(createdMessage.id, createdMessage.channel_id,
+                                  [this](const dpp::confirmation_callback_t &crosspostCallback) {
             if (crosspostCallback.is_error()) {
               logger_->errorStream()
                   << "Failed to crosspost message: " << crosspostCallback.get_error().message;
             } else {
               logger_->infoStream() << "Message crossposted successfully.";
-              logTheServed(item);
             }
           });
         });
-      }
+        // Log the served item
+        logTheServed(item, [this](bool success) {
+          if (success) {
+            logger_->info("Served RSS item logged successfully.");
+          } else {
+            logger_->error("Failed to log served RSS item.");
+          }
+        });
+      } // while isRunningTimer_
     });
     return true;
   }
