@@ -147,6 +147,16 @@ namespace dotnamecpp::rss {
     return sourcesList.empty() ? "No RSS sources available." : sourcesList;
   }
 
+  std::string RssManager::listChannelUrlsAsString(uint64_t discordChannelId) {
+    std::string sourcesList;
+    for (const auto &url : urls_) {
+      if (url.discordChannelId == discordChannelId) {
+        sourcesList += "- " + url.url + (url.embedded ? " (embedded)" : " (non-embedded)") + "\n";
+      }
+    }
+    return sourcesList.empty() ? "No RSS sources available for this channel." : sourcesList;
+  }
+
   bool RssManager::loadUrls() {
     std::ifstream file(urlsPath_);
     if (!file.is_open()) {
@@ -314,33 +324,33 @@ namespace dotnamecpp::rss {
       return feed;
     }
 
-    // Parse channel info
+    // Parse Feed Header
     if (isAtom) {
-      // Atom feed info
+      // Atom
       if (auto *titleEl = channel->FirstChildElement("title")) {
-        feed.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
+        feed.headTitle = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
       }
       if (auto *subtitleEl = channel->FirstChildElement("subtitle")) {
-        feed.description = (subtitleEl->GetText() != nullptr) ? subtitleEl->GetText() : "";
+        feed.headDescription = (subtitleEl->GetText() != nullptr) ? subtitleEl->GetText() : "";
       }
       if (auto *linkEl = channel->FirstChildElement("link")) {
         const char *href = linkEl->Attribute("href");
-        feed.link = (href != nullptr) ? href : "";
+        feed.headLink = (href != nullptr) ? href : "";
       }
     } else {
-      // RSS feed info
+      // Rss
       if (auto *titleEl = channel->FirstChildElement("title")) {
-        feed.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
+        feed.headTitle = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
       }
       if (auto *descEl = channel->FirstChildElement("description")) {
-        feed.description = (descEl->GetText() != nullptr) ? descEl->GetText() : "";
+        feed.headDescription = (descEl->GetText() != nullptr) ? descEl->GetText() : "";
       }
       if (auto *linkEl = channel->FirstChildElement("link")) {
-        feed.link = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
+        feed.headLink = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
       }
     }
 
-    // Parse items
+    // Parse Feed Items
     [[maybe_unused]]
     int newItems = 0;
     const char *itemTag = isAtom ? "entry" : "item";
@@ -351,7 +361,7 @@ namespace dotnamecpp::rss {
       rssItem.discordChannelId = discordChannelId;
 
       if (isAtom) {
-        // Parse Atom entry
+        // Atom
         if (auto *titleEl = item->FirstChildElement("title")) {
           rssItem.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
         }
@@ -364,14 +374,13 @@ namespace dotnamecpp::rss {
         } else if (auto *contentEl = item->FirstChildElement("content")) {
           rssItem.description = (contentEl->GetText() != nullptr) ? contentEl->GetText() : "";
         }
-
         if (auto *updatedEl = item->FirstChildElement("updated")) {
           rssItem.pubDate = (updatedEl->GetText() != nullptr) ? updatedEl->GetText() : "";
         } else if (auto *publishedEl = item->FirstChildElement("published")) {
           rssItem.pubDate = (publishedEl->GetText() != nullptr) ? publishedEl->GetText() : "";
         }
       } else {
-        // Parse RSS item (existing code)
+        // Rss
         if (auto *titleEl = item->FirstChildElement("title")) {
           // Handle CDATA sections properly by getting all text content
           const char *text = titleEl->GetText();
@@ -400,6 +409,25 @@ namespace dotnamecpp::rss {
               rssItem.description = (textNode->Value() != nullptr) ? textNode->Value() : "";
             }
           }
+        }
+
+        // <media:content
+        // url="https://1gr.cz/fotky/idnes/24/063/cl6/IHA6058a4a762_shutterstock_1259282710.jpg"
+        // type="image/jpeg"/>
+        if (auto *mediaContentEl = item->FirstChildElement("media:content")) {
+          const char *mediaUrl = mediaContentEl->Attribute("url");
+          rssItem.rssMedia.url = (mediaUrl != nullptr) ? mediaUrl : "";
+          const char *mediaType = mediaContentEl->Attribute("type");
+          rssItem.rssMedia.type = (mediaType != nullptr) ? mediaType : "";
+        }
+
+        // <enclosure url="https://i.iinfo.cz/images/668/disky-1.jpg" length="78026"
+        // type="image/jpeg"/>
+        if (auto *enclosureEl = item->FirstChildElement("enclosure")) {
+          const char *encUrl = enclosureEl->Attribute("url");
+          rssItem.rssMedia.url = (encUrl != nullptr) ? encUrl : "";
+          const char *encType = enclosureEl->Attribute("type");
+          rssItem.rssMedia.type = (encType != nullptr) ? encType : "";
         }
         if (auto *dateEl = item->FirstChildElement("pubDate")) {
           rssItem.pubDate = (dateEl->GetText() != nullptr) ? dateEl->GetText() : "";

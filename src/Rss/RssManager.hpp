@@ -3,6 +3,7 @@
 #include <Rss/IRssService.hpp>
 #include <Rss/RSSFeed.hpp>
 #include <Rss/RSSItem.hpp>
+#include <Rss/RSSMedia.hpp>
 #include <Rss/RSSUrl.hpp>
 
 #include <Utils/UtilsFactory.hpp>
@@ -33,6 +34,7 @@ namespace dotnamecpp::rss {
     bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId = 0) override;
     bool remUrl(const std::string &url) override;
     [[nodiscard]] std::string listUrlsAsString() override;
+    [[nodiscard]] std::string listChannelUrlsAsString(uint64_t discordChannelId) override;
     [[nodiscard]] RSSItem getRandomItem() override;
     [[nodiscard]] RSSItem getRandomItemMatchingEmbedded(bool embedded) override;
     [[nodiscard]] size_t getItemCount() const override { return feed_.items.size(); }

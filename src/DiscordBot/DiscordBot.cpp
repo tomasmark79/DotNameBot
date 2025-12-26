@@ -226,23 +226,40 @@ namespace dotnamecpp::discordbot {
         }
 
         if (cmd_name == "getrandomfeed") {
-          event.thinking();
+          event.thinking(true);
+
           dotnamecpp::rss::RSSItem item = rssService_->getRandomItem();
           if (item.title.empty()) {
-            event.edit_response("No RSS items available at the moment.");
-          } else {
-            std::string response = item.toMarkdownLink();
-            event.edit_response(response);
-
-            // Log the served item
-            logTheServed(item, [this](bool success) {
-              if (success) {
-                logger_->info("Served RSS item logged successfully.");
-              } else {
-                logger_->error("Failed to log served RSS item.");
-              }
-            });
+            const std::string NoItemsMsg = "No RSS items available at the moment.";
+            logger_->info(NoItemsMsg);
+            event.edit_response(NoItemsMsg);
+            return;
           }
+          event.edit_response("Fetching a random RSS item...");
+
+          dpp::message msg;
+          if (item.embedded) {
+            msg = dpp::message(event.command.channel_id, item.toEmbed());
+          } else {
+            msg = dpp::message(event.command.channel_id, item.toMarkdownLink());
+            msg.set_flags(dpp::m_suppress_embeds);
+          }
+
+          this->postCrossPostedMessage(msg, [this, item](bool success) {
+            if (success) {
+              logger_->info("CrossPosted random RSS item to Discord: " + item.title);
+            } else {
+              logger_->error("Failed to crosspost random RSS item to Discord: " + item.title);
+            }
+          });
+
+          logTheServed(item, [this, item](bool success) {
+            if (success) {
+              logger_->info("Served RSS item logged successfully: " + item.title);
+            } else {
+              logger_->error("Failed to log served RSS item: " + item.title);
+            }
+          });
         }
 
         if (cmd_name == "addurl") {
@@ -418,10 +435,13 @@ namespace dotnamecpp::discordbot {
     return true;
   }
 
+  constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
+
   void DiscordBot::logTheServed(rss::RSSItem &item, const std::function<void(bool)> &onComplete) {
-    constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
+
     dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
 
+    // Prevent embed preview for markdown links always
     msg.set_flags(dpp::m_suppress_embeds);
 
     bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
@@ -471,9 +491,11 @@ namespace dotnamecpp::discordbot {
           continue;
         }
 
-        dpp::message msg(item.discordChannelId, item.toMarkdownLink());
-
-        if (!item.embedded) {
+        dpp::message msg;
+        if (item.embedded) {
+          msg = dpp::message(item.discordChannelId, item.toEmbed());
+        } else {
+          msg = dpp::message(item.discordChannelId, item.toMarkdownLink());
           msg.set_flags(dpp::m_suppress_embeds);
         }
 
