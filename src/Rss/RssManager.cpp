@@ -374,11 +374,26 @@ namespace dotnamecpp::rss {
         } else if (auto *contentEl = item->FirstChildElement("content")) {
           rssItem.description = (contentEl->GetText() != nullptr) ? contentEl->GetText() : "";
         }
+
+        // <image>
+        // <title>iSport.cz</title>
+        // <url>https://1958898586.rsc.cdn77.org/images/isportcz/dist/svg_fallback/logo-isport.png</url>
+        // <link>https://isport.blesk.cz</link>
+        // </image>
+        if (auto *imageEl = item->FirstChildElement("image")) {
+          if (auto *imgUrlEl = imageEl->FirstChildElement("url")) {
+            rssItem.rssMedia.url = (imgUrlEl->GetText() != nullptr) ? imgUrlEl->GetText() : "";
+          }
+          // Type is not usually provided in Atom <image>, set as empty
+          rssItem.rssMedia.type = "";
+        }
+
         if (auto *updatedEl = item->FirstChildElement("updated")) {
           rssItem.pubDate = (updatedEl->GetText() != nullptr) ? updatedEl->GetText() : "";
         } else if (auto *publishedEl = item->FirstChildElement("published")) {
           rssItem.pubDate = (publishedEl->GetText() != nullptr) ? publishedEl->GetText() : "";
         }
+
       } else {
         // Rss
         if (auto *titleEl = item->FirstChildElement("title")) {
@@ -397,17 +412,53 @@ namespace dotnamecpp::rss {
         if (auto *linkEl = item->FirstChildElement("link")) {
           rssItem.url = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
         }
+
+        // TODO: Previous simpler implementation, does not handle CDATA with HTML properly
+        // for sure
+        
+        // if (auto *descEl = item->FirstChildElement("description")) {
+        //   // Handle CDATA sections properly by getting all text content
+        //   const char *text = descEl->GetText();
+        //   if (text != nullptr) {
+        //     rssItem.description = text;
+        //   } else {
+        //     // If GetText() returns null, try to get text from child nodes (including CDATA)
+        //     auto *textNode = descEl->FirstChild();
+        //     if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+        //       rssItem.description = (textNode->Value() != nullptr) ? textNode->Value() : "";
+        //     }
+        //   }
+        // }
+
+        // <description><![CDATA[<img
+        // src="https://1884403144.rsc.cdn77.org/foto/sport-hokej-spengler-cup-2025-fribourg-sparta-eberle/MzMweDE4MC9jZW50ZXIvdG9wL3NtYXJ0L2ZpbHRlcnM6cXVhbGl0eSg4NSk6Zm9jYWwoMXgyNjoxMzk1eDgxMCkvaW1n/9704364.jpg?v=0&st=4S47btowDVyAyC_uF06gGsgo3PEIczgQwry2TVlqATo&ts=1600812000&e=0"
+        // /> Extraligové boje mění na konci roku za nejstarší klubový turnaj na světě. Hokejisté
+        // Sparty po přesunu do Švýcarska vstupují do Spengler Cupu. Prestižní akci v Davosu
+        // rozehrávají už od 15.10 proti Fribourgu, který před rokem vyhrál. Za Pražany poprvé hraje
+        // i nová posila v podobě finského útočníka Kristiana Vesalainena. ONLINE přenos z utkání
+        // sledujte na iSportu.]]></description>
+
         if (auto *descEl = item->FirstChildElement("description")) {
-          // Handle CDATA sections properly by getting all text content
-          const char *text = descEl->GetText();
-          if (text != nullptr) {
-            rssItem.description = text;
-          } else {
-            // If GetText() returns null, try to get text from child nodes (including CDATA)
-            auto *textNode = descEl->FirstChild();
-            if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
-              rssItem.description = (textNode->Value() != nullptr) ? textNode->Value() : "";
+          auto *textNode = descEl->FirstChild();
+          if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+            std::string descValue = textNode->Value() != nullptr ? textNode->Value() : "";
+
+            // Extract image from description if possible
+            std::smatch match;
+            std::regex imgRegex(R"(<img[^>]+src=["']([^"']+)["'][^>]*>)");
+            if (std::regex_search(descValue, match, imgRegex) && match.size() > 1) {
+              rssItem.rssMedia.url = match[1].str();
+              rssItem.rssMedia.type = "hybrid_type";
             }
+
+            // Remove img tag from description
+            std::string cleanDesc = std::regex_replace(descValue, imgRegex, "");
+
+            // Optional: trim whitespace
+            cleanDesc.erase(0, cleanDesc.find_first_not_of(" \t\n\r"));
+            cleanDesc.erase(cleanDesc.find_last_not_of(" \t\n\r") + 1);
+
+            rssItem.description = cleanDesc;
           }
         }
 
@@ -429,6 +480,7 @@ namespace dotnamecpp::rss {
           const char *encType = enclosureEl->Attribute("type");
           rssItem.rssMedia.type = (encType != nullptr) ? encType : "";
         }
+
         if (auto *dateEl = item->FirstChildElement("pubDate")) {
           rssItem.pubDate = (dateEl->GetText() != nullptr) ? dateEl->GetText() : "";
         }
