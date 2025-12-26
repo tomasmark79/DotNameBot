@@ -10,13 +10,12 @@ namespace dotnamecpp::rss {
    *
    */
   struct RSSFeed {
-    std::string title;
-    std::string description;
-    std::string link;
+    std::string headTitle;
+    std::string headDescription;
+    std::string headLink;
     std::vector<RSSItem> items;
     void addItem(const RSSItem &item);
-    [[nodiscard]]
-    size_t size() const;
+    [[nodiscard]] size_t size() const;
     void clear();
   };
 
