@@ -7,7 +7,13 @@
 namespace dotnamecpp::rss {
 
   /**
-   * @brief Represents an item from a RSS feed along with its metadata.
+   * @brief Enumeration for the types of embedding for RSS items.
+   *
+   */
+  enum class EmbeddedType { EMBEDDED_NONE = 0, EMBEDDED_AS_MARKDOWN = 1, EMBEDDED_AS_ADVANCED = 2 };
+
+  /**
+   * @brief Represents a single RSS item.
    *
    */
   struct RSSItem {
@@ -17,16 +23,18 @@ namespace dotnamecpp::rss {
     std::string pubDate;
     std::string hash;
     RSSMedia rssMedia;
-    bool embedded;
+    EmbeddedType embeddedType;
     uint64_t discordChannelId;
 
-    RSSItem() : rssMedia(std::string(), std::string()), embedded(false), discordChannelId(0) {
+    RSSItem()
+        : rssMedia(std::string(), std::string()), embeddedType(EmbeddedType::EMBEDDED_NONE),
+          discordChannelId(0) {
       // Default constructor - std:string members are default-initialized
     }
     RSSItem(std::string &title, std::string &url, std::string &description, RSSMedia &rssMedia,
-            std::string &pubDate, bool embedded, uint64_t discordChannelId)
+            std::string &pubDate, EmbeddedType embeddedType, uint64_t discordChannelId)
         : title(std::move(title)), url(std::move(url)), description(std::move(description)),
-          pubDate(std::move(pubDate)), rssMedia(std::move(rssMedia)), embedded(embedded),
+          pubDate(std::move(pubDate)), rssMedia(std::move(rssMedia)), embeddedType(embeddedType),
           discordChannelId(discordChannelId) {
 
       // Generate the hash for the RSS item
@@ -42,7 +50,8 @@ namespace dotnamecpp::rss {
 
     [[nodiscard]] std::string toDebug() const {
       return "Title: " + title + "\nURL: " + url + "\nDescription: " + description +
-             "\nPublication Date: " + pubDate + "\nEmbedded: " + (embedded ? "true" : "false") +
+             "\nPublication Date: " + pubDate +
+             "\nEmbeddedType: " + std::to_string(static_cast<int>(embeddedType)) +
              "\nDiscord Channel ID: " + std::to_string(discordChannelId) + "\nHash: " + hash +
              "\nMedia URL: " + rssMedia.url + "\nMedia Type: " + rssMedia.type;
     }

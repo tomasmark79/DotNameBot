@@ -238,11 +238,13 @@ namespace dotnamecpp::discordbot {
           event.edit_response("Fetching a random RSS item...");
 
           dpp::message msg;
-          if (item.embedded) {
-            msg = dpp::message(event.command.channel_id, item.toEmbed());
-          } else {
+          if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_NONE) {
             msg = dpp::message(event.command.channel_id, item.toMarkdownLink());
             msg.set_flags(dpp::m_suppress_embeds);
+          } else if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_AS_MARKDOWN) {
+            msg = dpp::message(event.command.channel_id, item.toMarkdownLink());
+          } else if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_AS_ADVANCED) {
+            msg = dpp::message(event.command.channel_id, item.toEmbed());
           }
 
           this->postCrossPostedMessage(msg, [this, item](bool success) {
@@ -265,7 +267,7 @@ namespace dotnamecpp::discordbot {
         if (cmd_name == "addurl") {
           event.thinking();
           auto urlParam = event.get_parameter("url");
-          auto embeddedParam = event.get_parameter("embedded");
+          auto embeddedParam = event.get_parameter("embedded_type");
 
           if (urlParam.index() == 0) {
             event.edit_response("Error: URL parameter is required.");
@@ -273,14 +275,15 @@ namespace dotnamecpp::discordbot {
           }
 
           std::string url = std::get<std::string>(urlParam);
-          bool embedded = false;
+
+          long embeddedType = 0;
           if (embeddedParam.index() != 0) {
-            embedded = std::get<bool>(embeddedParam);
+            embeddedType = std::get<long>(embeddedParam);
           }
 
-          if (rssService_->addUrl(url, embedded, event.command.channel_id)) {
+          if (rssService_->addUrl(url, embeddedType, event.command.channel_id)) {
             event.edit_response("Successfully added RSS/ATOM feed URL: " + url +
-                                (embedded ? " (embedded)" : " (non-embedded)"));
+                                " with embeddedType " + std::to_string(embeddedType));
           } else {
             event.edit_response("Failed to add RSS/ATOM feed URL: " + url);
           }
@@ -289,7 +292,7 @@ namespace dotnamecpp::discordbot {
         if (cmd_name == "modurl") {
           event.thinking();
           auto urlParam = event.get_parameter("url");
-          auto embeddedParam = event.get_parameter("embedded");
+          auto embeddedParam = event.get_parameter("embedded_type");
 
           if (urlParam.index() == 0) {
             event.edit_response("Error: URL parameter is required.");
@@ -297,14 +300,14 @@ namespace dotnamecpp::discordbot {
           }
 
           std::string url = std::get<std::string>(urlParam);
-          bool embedded = false;
+          long embeddedType = 0;
           if (embeddedParam.index() != 0) {
-            embedded = std::get<bool>(embeddedParam);
+            embeddedType = std::get<long>(embeddedParam);
           }
 
-          if (rssService_->modUrl(url, embedded, event.command.channel_id)) {
+          if (rssService_->modUrl(url, embeddedType, event.command.channel_id)) {
             event.edit_response("Successfully modified RSS/ATOM feed URL: " + url +
-                                (embedded ? " (embedded)" : " (non-embedded)"));
+                                " to embeddedType " + std::to_string(embeddedType));
           } else {
             event.edit_response("Failed to modify RSS/ATOM feed URL: " + url);
           }
@@ -492,11 +495,13 @@ namespace dotnamecpp::discordbot {
         }
 
         dpp::message msg;
-        if (item.embedded) {
-          msg = dpp::message(item.discordChannelId, item.toEmbed());
-        } else {
+        if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_NONE) {
           msg = dpp::message(item.discordChannelId, item.toMarkdownLink());
           msg.set_flags(dpp::m_suppress_embeds);
+        } else if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_AS_MARKDOWN) {
+          msg = dpp::message(item.discordChannelId, item.toMarkdownLink());
+        } else if (item.embeddedType == dotnamecpp::rss::EmbeddedType::EMBEDDED_AS_ADVANCED) {
+          msg = dpp::message(item.discordChannelId, item.toEmbed());
         }
 
         this->postCrossPostedMessage(msg, [this, item](bool success) {

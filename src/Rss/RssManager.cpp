@@ -36,7 +36,7 @@ namespace dotnamecpp::rss {
     // Avoid trailing slash in url paths is best practice
     if (!std::filesystem::exists(urlsPath_)) {
       nlohmann::json defaultUrls = nlohmann::json::array(
-          {{{"url", "https://blog.digitalspace.name/feed/atom"}, {"embedded", true}}});
+          {{{"url", "https://blog.digitalspace.name/feed/atom"}, {"embeddedType", 0}}});
 
       std::ofstream file(urlsPath_);
       if (!file.is_open()) {
@@ -75,7 +75,7 @@ namespace dotnamecpp::rss {
     feed_.clear();
     int totalItems = 0;
     for (const auto &rssUrl : urls_) {
-      int items = fetchUrlSource(rssUrl.url, rssUrl.embedded, rssUrl.discordChannelId);
+      int items = fetchUrlSource(rssUrl.url, rssUrl.embeddedType, rssUrl.discordChannelId);
       if (items > 0) {
         totalItems += items;
       }
@@ -85,7 +85,7 @@ namespace dotnamecpp::rss {
     return totalItems;
   }
 
-  bool RssManager::addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) {
+  bool RssManager::addUrl(const std::string &url, long embedded, uint64_t discordChannelId) {
     for (const auto &existingUrl : urls_) {
       if (existingUrl.url == url) {
         logger_->warningStream() << "URL already exists: " << url;
@@ -96,10 +96,10 @@ namespace dotnamecpp::rss {
     return saveUrls();
   }
 
-  bool RssManager::modUrl(const std::string &url, bool embedded, uint64_t discordChannelId) {
+  bool RssManager::modUrl(const std::string &url, long embeddedType, uint64_t discordChannelId) {
     for (auto &existingUrl : urls_) {
       if (existingUrl.url == url) {
-        existingUrl.embedded = embedded;
+        existingUrl.embeddedType = embeddedType;
         existingUrl.discordChannelId = discordChannelId;
         return saveUrls();
       }
@@ -123,7 +123,7 @@ namespace dotnamecpp::rss {
     nlohmann::json jsonData = nlohmann::json::array();
     for (const auto &url : urls_) {
       jsonData.push_back({{"url", url.url},
-                          {"embedded", url.embedded},
+                          {"embeddedType", url.embeddedType},
                           {"discordChannelId", url.discordChannelId}});
     }
     std::ofstream file(urlsPath_);
@@ -138,7 +138,7 @@ namespace dotnamecpp::rss {
     std::string sourcesList;
     sourcesList = "";
     for (const auto &url : urls_) {
-      sourcesList += "- " + url.url + (url.embedded ? " (embedded)" : " (non-embedded)");
+      sourcesList += "- " + url.url + "with embeddedType " + std::to_string(url.embeddedType);
       if (url.discordChannelId != 0) {
         sourcesList += " [Channel: " + std::to_string(url.discordChannelId) + "]";
       }
@@ -151,7 +151,8 @@ namespace dotnamecpp::rss {
     std::string sourcesList;
     for (const auto &url : urls_) {
       if (url.discordChannelId == discordChannelId) {
-        sourcesList += "- " + url.url + (url.embedded ? " (embedded)" : " (non-embedded)") + "\n";
+        sourcesList +=
+            "- " + url.url + "with embeddedType " + std::to_string(url.embeddedType) + "\n";
       }
     }
     return sourcesList.empty() ? "No RSS sources available for this channel." : sourcesList;
@@ -170,7 +171,7 @@ namespace dotnamecpp::rss {
     for (const auto &item : jsonData) {
       if (item.is_object() && item.contains("url")) {
         std::string url = item["url"].get<std::string>();
-        bool embedded = item.contains("embedded") ? item["embedded"].get<bool>() : false;
+        long embedded = item.contains("embeddedType") ? item["embeddedType"].get<long>() : 0;
         uint64_t discordChannelId = 0;
         if (item.contains("discordChannelId") && !item["discordChannelId"].is_null()) {
           discordChannelId = item["discordChannelId"].get<uint64_t>();
@@ -178,22 +179,12 @@ namespace dotnamecpp::rss {
         urls_.emplace_back(url, embedded, discordChannelId);
       } else if (item.is_string()) {
         // Backwards compatibility - treat strings as non-embedded
-        urls_.emplace_back(item.get<std::string>(), false);
+        urls_.emplace_back(item.get<std::string>(), 0);
       }
     }
 
     logger_->infoStream() << "Loaded " << urls_.size() << " RSS URLs.";
     return true;
-  }
-
-  size_t RssManager::getItemCountMatchingEmbedded(bool embedded) const {
-    size_t count = 0;
-    for (const auto &item : feed_.items) {
-      if (item.embedded == embedded) {
-        count++;
-      }
-    }
-    return count;
   }
 
   bool RssManager::loadSeenHashes() {
@@ -290,8 +281,8 @@ namespace dotnamecpp::rss {
     return buffer;
   }
 
-  RSSFeed RssManager::parseRSS(const std::string &xmlData, bool embedded, uint64_t discordChannelId,
-                               int &totalDuplicateItems) {
+  RSSFeed RssManager::parseRSS(const std::string &xmlData, long embeddedType,
+                               uint64_t discordChannelId, int &totalDuplicateItems) {
     RSSFeed feed;
     tinyxml2::XMLDocument doc;
     doc.Parse(xmlData.c_str());
@@ -357,7 +348,8 @@ namespace dotnamecpp::rss {
 
     for (auto *item = firstItem; item != nullptr; item = item->NextSiblingElement(itemTag)) {
       RSSItem rssItem;
-      rssItem.embedded = embedded;
+      // rssItem.embedded = embedded;
+      rssItem.embeddedType = static_cast<EmbeddedType>(embeddedType);
       rssItem.discordChannelId = discordChannelId;
 
       if (isAtom) {
@@ -517,14 +509,15 @@ namespace dotnamecpp::rss {
     return feed;
   }
 
-  int RssManager::fetchUrlSource(const std::string &url, bool embedded, uint64_t discordChannelId) {
+  int RssManager::fetchUrlSource(const std::string &url, long embeddedType,
+                                 uint64_t discordChannelId) {
     std::string xmlData = downloadFeed(url);
     if (xmlData.empty()) {
       return -1;
     }
 
     int totalDuplicateItems = 0;
-    RSSFeed newFeed = parseRSS(xmlData, embedded, discordChannelId, totalDuplicateItems);
+    RSSFeed newFeed = parseRSS(xmlData, embeddedType, discordChannelId, totalDuplicateItems);
 
     int addedItems = 0;
     for (const auto &item : newFeed.items) {
@@ -534,8 +527,7 @@ namespace dotnamecpp::rss {
 
     logger_->infoStream() << "New " << addedItems << " items added to the feed buffer."
                           << " Found " << totalDuplicateItems << " seen items."
-                          << " url: " << url << " (embedded: " << (embedded ? "true" : "false")
-                          << ")"
+                          << " url: " << url << " (embeddedType: " << embeddedType << ")"
                           << " (Buffer size: " << feed_.items.size() << ")";
     return addedItems;
   }
@@ -555,35 +547,6 @@ namespace dotnamecpp::rss {
 
     // Remove item from feed
     feed_.items.erase(feed_.items.begin() + index);
-
-    return item;
-  }
-
-  RSSItem RssManager::getRandomItemMatchingEmbedded(bool embedded = false) {
-    // Find items with matching embedded flag
-    std::vector<size_t> matchingIndices;
-    for (size_t i = 0; i < feed_.items.size(); ++i) {
-      if (feed_.items[i].embedded == embedded) {
-        matchingIndices.push_back(i);
-      }
-    }
-
-    if (matchingIndices.empty()) {
-      return RSSItem{};
-    }
-
-    // Pick random item from matching ones
-    std::uniform_int_distribution<size_t> dist(0, matchingIndices.size() - 1);
-    size_t randomIndex = dist(rng_);
-    size_t actualIndex = matchingIndices[randomIndex];
-
-    RSSItem item = feed_.items[actualIndex];
-
-    // Save hash immediately to prevent re-processing
-    saveSeenHash(item.hash);
-
-    // Remove item from feed
-    feed_.items.erase(feed_.items.begin() + actualIndex);
 
     return item;
   }

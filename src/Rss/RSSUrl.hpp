@@ -10,11 +10,11 @@ namespace dotnamecpp::rss {
    */
   struct RSSUrl {
     std::string url;
-    bool embedded;
+    long embeddedType;
     uint64_t discordChannelId;
-    RSSUrl() : embedded(false), discordChannelId(0) {}
-    RSSUrl(std::string u, bool e = false, uint64_t dChId = 0)
-        : url(std::move(u)), embedded(e), discordChannelId(dChId) {}
+    RSSUrl() : embeddedType(0), discordChannelId(0) {}
+    RSSUrl(std::string u, long e = 0, uint64_t dChId = 0)
+        : url(std::move(u)), embeddedType(e), discordChannelId(dChId) {}
   };
 
 } // namespace dotnamecpp::rss

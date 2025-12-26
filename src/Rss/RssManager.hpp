@@ -30,15 +30,13 @@ namespace dotnamecpp::rss {
     // Public interface implementations
     bool Initialize() override;
     int refetchRssFeeds() override;
-    bool addUrl(const std::string &url, bool embedded, uint64_t discordChannelId = 0) override;
-    bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId = 0) override;
+    bool addUrl(const std::string &url, long embeddedType, uint64_t discordChannelId = 0) override;
+    bool modUrl(const std::string &url, long embeddedType, uint64_t discordChannelId = 0) override;
     bool remUrl(const std::string &url) override;
     [[nodiscard]] std::string listUrlsAsString() override;
     [[nodiscard]] std::string listChannelUrlsAsString(uint64_t discordChannelId) override;
     [[nodiscard]] RSSItem getRandomItem() override;
-    [[nodiscard]] RSSItem getRandomItemMatchingEmbedded(bool embedded) override;
     [[nodiscard]] size_t getItemCount() const override { return feed_.items.size(); }
-    [[nodiscard]] size_t getItemCountMatchingEmbedded(bool embedded) const override;
 
   private:
     // Private helpers
@@ -46,11 +44,11 @@ namespace dotnamecpp::rss {
      * @brief Fetches the source of a URL
      *
      * @param url The URL to fetch
-     * @param embedded Whether the items should be marked as embedded
+     * @param embeddedType Whether the items should be marked as embedded
      * @param discordChannelId The Discord channel ID associated with the feed
      * @return int Returns added items count on success, -1 on failure
      */
-    int fetchUrlSource(const std::string &url, bool embedded = false,
+    int fetchUrlSource(const std::string &url, long embeddedType = 0,
                        uint64_t discordChannelId = 0);
 
     /**
@@ -136,12 +134,12 @@ namespace dotnamecpp::rss {
      * @brief Parses RSS feed XML data into an RSSFeed object
      *
      * @param xmlData The raw XML data of the RSS feed
-     * @param embedded Whether the items should be marked as embedded
+     * @param embeddedType Whether the items should be marked as embedded
      * @param discordChannelId The Discord channel ID associated with the feed
      * @param totalDuplicateItems Reference to an integer to count duplicate items
      * @return RSSFeed The parsed RSS feed
      */
-    RSSFeed parseRSS(const std::string &xmlData, bool embedded, uint64_t discordChannelId,
+    RSSFeed parseRSS(const std::string &xmlData, long embeddedType, uint64_t discordChannelId,
                      int &totalDuplicateItems);
 
     /**

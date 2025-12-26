@@ -59,14 +59,6 @@ namespace dotnamecpp::rss {
     [[nodiscard]] virtual RSSItem getRandomItem() = 0;
 
     /**
-     * @brief Get a random RSS item matching the embedded flag
-     *
-     * @param embedded Whether to match embedded items
-     * @return RSSItem
-     */
-    [[nodiscard]] virtual RSSItem getRandomItemMatchingEmbedded(bool embedded) = 0;
-
-    /**
      * @brief Get the total number of items in the feed buffer
      *
      * @return size_t
@@ -74,33 +66,25 @@ namespace dotnamecpp::rss {
     [[nodiscard]] virtual size_t getItemCount() const = 0;
 
     /**
-     * @brief Get the total number of items matching the embedded flag
-     *
-     * @param embedded Whether to match embedded items
-     * @return size_t
-     */
-    [[nodiscard]] virtual size_t getItemCountMatchingEmbedded(bool embedded) const = 0;
-
-    /**
      * @brief Add a new RSS URL to the list
      *
      * @param url The RSS feed URL
-     * @param embedded Whether items from this feed should be marked as embedded
+     * @param embeddedType Whether items from this feed should be marked as embedded
      * @param discordChannelId Optional Discord channel ID associated with this feed
      * @return true on success, otherwise false
      */
-    virtual bool addUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+    virtual bool addUrl(const std::string &url, long embeddedType, uint64_t discordChannelId) = 0;
 
     /**
      * @brief Modify an existing RSS URL in the list
      *
      * @param url The RSS feed URL
-     * @param embedded Whether items from this feed should be marked as embedded
+     * @param embeddedType Whether items from this feed should be marked as embedded
      * @param discordChannelId Optional Discord channel ID associated with this feed
      * @return true on success, otherwise false
      */
 
-    virtual bool modUrl(const std::string &url, bool embedded, uint64_t discordChannelId) = 0;
+    virtual bool modUrl(const std::string &url, long embeddedType, uint64_t discordChannelId) = 0;
     /**
      * @brief Remove an existing RSS URL from the list
      *
