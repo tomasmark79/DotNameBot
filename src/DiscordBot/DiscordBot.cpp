@@ -118,19 +118,23 @@ namespace dotnamecpp::discordbot {
   }
 
   bool DiscordBot::stop() {
-    // Atomic exchange: if already false (stopped), skip shutdown
-    if (!isRunning_.exchange(false)) {
-      return true;
-    }
+
+    // Signal timers to stop
+    isPRFTRunning_.store(false);
+    isFFTRunning_.store(false);
 
     // Join all worker threads
-    isRunningTimer_.store(false);
     for (auto &thread : threads_) {
       if (thread.joinable()) {
         thread.join();
       }
     }
     threads_.clear();
+
+    // Atomic exchange: if already false (stopped), skip shutdown
+    if (!isRunning_.exchange(false)) {
+      return true;
+    }
 
     if (bot_) {
       logger_->info("Shutting down Discord bot...");
@@ -394,9 +398,10 @@ namespace dotnamecpp::discordbot {
     return true;
   }
 
-  void DiscordBot::logTheServed(rss::RSSItem &item, std::function<void(bool)> onComplete) {
-    constexpr dpp::snowflake LOG_CHANNEL_ID = 1453787666201182359;
+  void DiscordBot::logTheServed(rss::RSSItem &item, const std::function<void(bool)> &onComplete) {
+    constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
     dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
+
     msg.set_flags(dpp::m_suppress_embeds);
 
     bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
@@ -409,37 +414,41 @@ namespace dotnamecpp::discordbot {
     });
   }
 
-  // bool DiscordBot::logTheServed(rss::RSSItem &item) {
-  //   // TODO: define outside the magic number
-  //   constexpr dpp::snowflake LOG_CHANNEL_ID = 1453787666201182359;
-  //   dpp::message msg(LOG_CHANNEL_ID, item.toMarkdownLink());
-  //   msg.set_flags(dpp::m_suppress_embeds);
-
-  //   bool isSuccess{false};
-  //   bot_->message_create(msg, [this](const dpp::confirmation_callback_t &callback) {
-  //     if (callback.is_error()) {
-  //       logger_->error("Failed to log served RSS item: " + callback.get_error().message);
-  //       return;
-  //     }
-  //   });
-  //   return isSuccess;
-  // }
-
-  // TODO: take outside the magic number
-  // Timer interval for publicate message is 10 messages per hour
-  // constexpr int TICK_INTERVAL_SECONDS = 6 * 60;
-  constexpr int TICK_INTERVAL_SECONDS = 10;
+  void DiscordBot::postCrossPostedMessage(const dpp::message &msg,
+                                          const std::function<void(bool)> &onComplete) {
+    bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
+      if (callback.is_error()) {
+        logger_->error("Failed to create message: " + callback.get_error().message);
+        onComplete(false);
+        return;
+      }
+      const auto &createdMessage = callback.get<dpp::message>();
+      bot_->message_crosspost(
+          createdMessage.id, createdMessage.channel_id,
+          [this, onComplete](const dpp::confirmation_callback_t &crosspostCallback) {
+        if (crosspostCallback.is_error()) {
+          logger_->errorStream() << "Failed to crosspost message: "
+                                 << crosspostCallback.get_error().message;
+          onComplete(false);
+          return;
+        }
+        logger_->infoStream() << "Message crossposted successfully.";
+        onComplete(true);
+      });
+    });
+  }
 
   bool DiscordBot::putRandomFeedTimer() {
     threads_.emplace_back([this]() -> void {
-      isRunningTimer_.store(true);
+      isPRFTRunning_.store(true);
 
-      while (isRunningTimer_.load()) {
-        std::this_thread::sleep_for(std::chrono::seconds(TICK_INTERVAL_SECONDS));
+      while (isPRFTRunning_.load()) {
+        std::this_thread::sleep_for(std::chrono::seconds(PUT_INTERVAL_SECONDS));
 
         dotnamecpp::rss::RSSItem item = rssService_->getRandomItem();
         if (item.title.empty()) {
           logger_->info("No RSS items available at the moment.");
+          continue;
         }
 
         dpp::message msg(item.discordChannelId, item.toMarkdownLink());
@@ -448,42 +457,31 @@ namespace dotnamecpp::discordbot {
           msg.set_flags(dpp::m_suppress_embeds);
         }
 
-        bot_->message_create(msg, [this](const dpp::confirmation_callback_t &callback) {
-          if (callback.is_error()) {
-            logger_->error("Failed to create message: " + callback.get_error().message);
-          }
-
-          const auto &createdMessage = callback.get<dpp::message>();
-          bot_->message_crosspost(createdMessage.id, createdMessage.channel_id,
-                                  [this](const dpp::confirmation_callback_t &crosspostCallback) {
-            if (crosspostCallback.is_error()) {
-              logger_->errorStream()
-                  << "Failed to crosspost message: " << crosspostCallback.get_error().message;
-            } else {
-              logger_->infoStream() << "Message crossposted successfully.";
-            }
-          });
-        });
-        // Log the served item
-        logTheServed(item, [this](bool success) {
+        this->postCrossPostedMessage(msg, [this, item](bool success) {
           if (success) {
-            logger_->info("Served RSS item logged successfully.");
+            logger_->info("CrossPosted random RSS item to Discord: " + item.title);
           } else {
-            logger_->error("Failed to log served RSS item.");
+            logger_->error("Failed to crosspost random RSS item to Discord: " + item.title);
           }
         });
+
+        logTheServed(item, [this, item](bool success) {
+          if (success) {
+            logger_->info("Served RSS item logged successfully: " + item.title);
+          } else {
+            logger_->error("Failed to log served RSS item: " + item.title);
+          }
+        });
+
       } // while isRunningTimer_
     });
     return true;
   }
 
-  // TODO: take outside the magic number
-  constexpr int FETCH_INTERVAL_SECONDS = 60 * 60; // 60 minutes
-
   bool DiscordBot::fetchFeedsTimer() {
     threads_.emplace_back([this]() -> void {
-      isFetchFeedsTimerRunning_.store(true);
-      while (isFetchFeedsTimerRunning_.load()) {
+      isFFTRunning_.store(true);
+      while (isFFTRunning_.load()) {
         std::this_thread::sleep_for(std::chrono::seconds(FETCH_INTERVAL_SECONDS));
 
         int itemsFetched = rssService_->refetchRssFeeds();

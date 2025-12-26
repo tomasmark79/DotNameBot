@@ -19,6 +19,10 @@
 
 namespace dotnamecpp::discordbot {
 
+  constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
+  constexpr int FETCH_INTERVAL_SECONDS = 3600; // 1 hour
+  constexpr int PUT_INTERVAL_SECONDS = 30;
+
   class DiscordBot : public ILifeCycle {
   public:
     explicit DiscordBot(ServiceContainer &services)
@@ -119,9 +123,60 @@ namespace dotnamecpp::discordbot {
      */
     bool fetchFeedsTimer();
 
-    constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
+    /**
+     * @brief Split a Discord message if it exceeds the maximum length
+     *
+     * @param message
+     * @param outMessages
+     * @return true
+     * @return false
+     */
+    static bool splitDiscordMessageIfNeeded(const std::string &message,
+                                            std::vector<std::string> &outMessages);
 
+    /**
+     * @brief Log the served RSS item
+     *
+     * @param item The RSS item to log
+     * @param onComplete Callback to invoke when logging is complete
+     */
+    void logTheServed(rss::RSSItem &item, const std::function<void(bool)> &onComplete);
+
+    /**
+     * @brief Post a cross-posted message to Discord
+     *
+     * @param msg The message to post
+     * @param onComplete Callback to invoke when posting is complete
+     * @return true
+     * @return false
+     */
+    void postCrossPostedMessage(const dpp::message &msg,
+                                const std::function<void(bool)> &onComplete = nullptr);
+
+    /**
+     * @brief Handle a slash command event
+     *
+     * @param event The slash command event to handle
+     */
+    void handleSlashCommand(const dpp::slashcommand_t &event);
+
+    /**
+     * @brief Get the Token From File object
+     *
+     * @param token
+     * @return true
+     * @return false
+     */
+    bool getTokenFromFile(std::string &token);
+    
+    std::chrono::time_point<std::chrono::system_clock> startTime_;
+    
+    std::vector<std::thread> threads_;
+    std::atomic<bool> isPRFTRunning_{true};
+    std::atomic<bool> isFFTRunning_{true};
+    
     std::unique_ptr<dpp::cluster> bot_;
+    std::atomic<bool> isRunning_{false};
 
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
     std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
@@ -129,16 +184,6 @@ namespace dotnamecpp::discordbot {
     std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
 
-    bool getTokenFromFile(std::string &token);
-    void handleSlashCommand(const dpp::slashcommand_t &event);
-    static bool splitDiscordMessageIfNeeded(const std::string &message,
-                                            std::vector<std::string> &outMessages);
-    void logTheServed(rss::RSSItem &item, std::function<void(bool)> onComplete);
-    std::atomic<bool> isRunning_{false};
-    std::chrono::time_point<std::chrono::system_clock> startTime_;
 
-    std::vector<std::thread> threads_;
-    std::atomic<bool> isRunningTimer_{true};
-    std::atomic<bool> isFetchFeedsTimerRunning_{true};
   };
 } // namespace dotnamecpp::discordbot
