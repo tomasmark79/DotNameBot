@@ -14,9 +14,9 @@ namespace dotnamecpp::rss {
     std::string headDescription;
     std::string headLink;
     std::vector<RSSItem> items;
-    void addItem(const RSSItem &item);
-    [[nodiscard]] size_t size() const;
-    void clear();
+    void addItem(const RSSItem &item) { items.push_back(item); };
+    [[nodiscard]] size_t size() const { return items.size(); }
+    void clear() { items.clear(); };
   };
 
 } // namespace dotnamecpp::rss
