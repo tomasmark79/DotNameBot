@@ -192,10 +192,30 @@ namespace dotnamecpp::discordbot {
           event.thinking();
           std::string urlsList = rssService_->listUrlsAsString();
           if (urlsList.empty()) {
+            event.edit_response("No RSS/ATOM feed URLs registered.");
             return;
           }
 
           event.edit_response("Registered RSS/ATOM feed URLs:\n");
+          std::vector<std::string> splitMessages;
+          if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
+            for (const auto &msgPart : splitMessages) {
+              dpp::message msg(event.command.channel_id, msgPart);
+              bot_->message_create(msg);
+            }
+          }
+        }
+        if (cmd_name == "listchannelurls") {
+          event.thinking();
+          uint64_t channelId = event.command.channel_id;
+          std::string urlsList = rssService_->listChannelUrlsAsString(channelId);
+          if (urlsList.empty()) {
+            event.edit_response("No RSS/ATOM feed URLs registered for this channel.");
+            return;
+          }
+
+          event.edit_response("Registered RSS/ATOM feed URLs for channel " +
+                              std::to_string(channelId) + ":\n");
           std::vector<std::string> splitMessages;
           if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
             for (const auto &msgPart : splitMessages) {

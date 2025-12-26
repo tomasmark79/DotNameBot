@@ -44,6 +44,14 @@ namespace dotnamecpp::rss {
     [[nodiscard]] virtual std::string listUrlsAsString() = 0;
 
     /**
+     * @brief List all stored RSS URLs for a specific Discord channel
+     *
+     * @param discordChannelId The Discord channel ID to filter URLs
+     * @return std::string A formatted string listing all RSS URLs for the specified channel
+     */
+    [[nodiscard]] virtual std::string listChannelUrlsAsString(uint64_t discordChannelId) = 0;
+
+    /**
      * @brief Get a random RSS item from the feed buffer
      *
      * @return RSSItem

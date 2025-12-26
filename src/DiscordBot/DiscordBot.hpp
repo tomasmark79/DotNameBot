@@ -168,13 +168,13 @@ namespace dotnamecpp::discordbot {
      * @return false
      */
     bool getTokenFromFile(std::string &token);
-    
+
     std::chrono::time_point<std::chrono::system_clock> startTime_;
-    
+
     std::vector<std::thread> threads_;
     std::atomic<bool> isPRFTRunning_{true};
     std::atomic<bool> isFFTRunning_{true};
-    
+
     std::unique_ptr<dpp::cluster> bot_;
     std::atomic<bool> isRunning_{false};
 
@@ -183,7 +183,5 @@ namespace dotnamecpp::discordbot {
     std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
     std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
-
-
   };
 } // namespace dotnamecpp::discordbot
