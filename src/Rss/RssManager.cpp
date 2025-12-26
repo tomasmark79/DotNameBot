@@ -380,6 +380,7 @@ namespace dotnamecpp::rss {
         // <url>https://1958898586.rsc.cdn77.org/images/isportcz/dist/svg_fallback/logo-isport.png</url>
         // <link>https://isport.blesk.cz</link>
         // </image>
+
         if (auto *imageEl = item->FirstChildElement("image")) {
           if (auto *imgUrlEl = imageEl->FirstChildElement("url")) {
             rssItem.rssMedia.url = (imgUrlEl->GetText() != nullptr) ? imgUrlEl->GetText() : "";
@@ -413,48 +414,34 @@ namespace dotnamecpp::rss {
           rssItem.url = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
         }
 
-        // TODO: Previous simpler implementation, does not handle CDATA with HTML properly
-        // for sure
-        
-        // if (auto *descEl = item->FirstChildElement("description")) {
-        //   // Handle CDATA sections properly by getting all text content
-        //   const char *text = descEl->GetText();
-        //   if (text != nullptr) {
-        //     rssItem.description = text;
-        //   } else {
-        //     // If GetText() returns null, try to get text from child nodes (including CDATA)
-        //     auto *textNode = descEl->FirstChild();
-        //     if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
-        //       rssItem.description = (textNode->Value() != nullptr) ? textNode->Value() : "";
-        //     }
-        //   }
-        // }
-
-        // <description><![CDATA[<img
-        // src="https://1884403144.rsc.cdn77.org/foto/sport-hokej-spengler-cup-2025-fribourg-sparta-eberle/MzMweDE4MC9jZW50ZXIvdG9wL3NtYXJ0L2ZpbHRlcnM6cXVhbGl0eSg4NSk6Zm9jYWwoMXgyNjoxMzk1eDgxMCkvaW1n/9704364.jpg?v=0&st=4S47btowDVyAyC_uF06gGsgo3PEIczgQwry2TVlqATo&ts=1600812000&e=0"
-        // /> Extraligové boje mění na konci roku za nejstarší klubový turnaj na světě. Hokejisté
-        // Sparty po přesunu do Švýcarska vstupují do Spengler Cupu. Prestižní akci v Davosu
-        // rozehrávají už od 15.10 proti Fribourgu, který před rokem vyhrál. Za Pražany poprvé hraje
-        // i nová posila v podobě finského útočníka Kristiana Vesalainena. ONLINE přenos z utkání
-        // sledujte na iSportu.]]></description>
-
         if (auto *descEl = item->FirstChildElement("description")) {
           auto *textNode = descEl->FirstChild();
-          if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
-            std::string descValue = textNode->Value() != nullptr ? textNode->Value() : "";
+          if (textNode != nullptr && textNode->Value() != nullptr) {
+            std::string descValue = textNode->Value();
 
-            // Extract image from description if possible
-            std::smatch match;
-            std::regex imgRegex(R"(<img[^>]+src=["']([^"']+)["'][^>]*>)");
-            if (std::regex_search(descValue, match, imgRegex) && match.size() > 1) {
-              rssItem.rssMedia.url = match[1].str();
-              rssItem.rssMedia.type = "hybrid_type";
+            // Decode HTML entities first
+            descValue = decodeHtmlEntities(descValue);
+
+            // Now extract CDATA content if present
+            std::regex cdataRegex(R"(<!\[CDATA\[(.*?)\]\]>)");
+            std::smatch cdataMatch;
+            if (std::regex_search(descValue, cdataMatch, cdataRegex) && cdataMatch.size() > 1) {
+              descValue = cdataMatch[1].str();
             }
 
-            // Remove img tag from description
-            std::string cleanDesc = std::regex_replace(descValue, imgRegex, "");
+            // Extract image if present
+            std::smatch imgMatch;
+            std::regex imgRegex(R"(<img[^>]+src=["']([^"']+)["'][^>]*>)");
+            if (std::regex_search(descValue, imgMatch, imgRegex) && imgMatch.size() > 1) {
+              rssItem.rssMedia.url = imgMatch[1].str();
+              rssItem.rssMedia.type = "image/";
+            }
 
-            // Optional: trim whitespace
+            // Remove all HTML tags
+            std::regex htmlTagRegex("<[^>]*>");
+            std::string cleanDesc = std::regex_replace(descValue, htmlTagRegex, "");
+
+            // Trim whitespace
             cleanDesc.erase(0, cleanDesc.find_first_not_of(" \t\n\r"));
             cleanDesc.erase(cleanDesc.find_last_not_of(" \t\n\r") + 1);
 
@@ -465,15 +452,28 @@ namespace dotnamecpp::rss {
         // <media:content
         // url="https://1gr.cz/fotky/idnes/24/063/cl6/IHA6058a4a762_shutterstock_1259282710.jpg"
         // type="image/jpeg"/>
+
+        // <media:content
+        // url="https://itsfoss.com/content/images/2025/12/cachyos-server-edition-plans-banner.png"
+        // medium="image"/>
+
         if (auto *mediaContentEl = item->FirstChildElement("media:content")) {
           const char *mediaUrl = mediaContentEl->Attribute("url");
           rssItem.rssMedia.url = (mediaUrl != nullptr) ? mediaUrl : "";
+
           const char *mediaType = mediaContentEl->Attribute("type");
           rssItem.rssMedia.type = (mediaType != nullptr) ? mediaType : "";
+          if (rssItem.rssMedia.type.empty()) {
+            const char *mediaMedium = mediaContentEl->Attribute("medium");
+            if (mediaMedium != nullptr && std::string(mediaMedium) == "image") {
+              rssItem.rssMedia.type = "image/";
+            }
+          }
         }
 
         // <enclosure url="https://i.iinfo.cz/images/668/disky-1.jpg" length="78026"
         // type="image/jpeg"/>
+
         if (auto *enclosureEl = item->FirstChildElement("enclosure")) {
           const char *encUrl = enclosureEl->Attribute("url");
           rssItem.rssMedia.url = (encUrl != nullptr) ? encUrl : "";
@@ -639,5 +639,38 @@ namespace dotnamecpp::rss {
 
   std::string RssManager::getItemAsMarkdown(const RSSItem &item) { return item.toMarkdownLink(); }
   void RssManager::clearFeedBuffer() { feed_.clear(); }
+
+  std::string RssManager::decodeHtmlEntities(const std::string &str) {
+    std::string result = str;
+
+    // Basic HTML entities
+    size_t pos = 0;
+    while ((pos = result.find("&lt;", pos)) != std::string::npos) {
+      result.replace(pos, 4, "<");
+      pos += 1;
+    }
+    pos = 0;
+    while ((pos = result.find("&gt;", pos)) != std::string::npos) {
+      result.replace(pos, 4, ">");
+      pos += 1;
+    }
+    pos = 0;
+    while ((pos = result.find("&amp;", pos)) != std::string::npos) {
+      result.replace(pos, 5, "&");
+      pos += 1;
+    }
+    pos = 0;
+    while ((pos = result.find("&quot;", pos)) != std::string::npos) {
+      result.replace(pos, 6, "\"");
+      pos += 1;
+    }
+    pos = 0;
+    while ((pos = result.find("&apos;", pos)) != std::string::npos) {
+      result.replace(pos, 6, "'");
+      pos += 1;
+    }
+
+    return result;
+  }
 
 } // namespace dotnamecpp::rss

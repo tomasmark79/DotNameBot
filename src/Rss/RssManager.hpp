@@ -130,7 +130,7 @@ namespace dotnamecpp::rss {
      *
      * @return bool
      */
-    bool saveAllSeenHashes(); // Save all hashes at once
+    bool saveAllSeenHashes();
 
     /**
      * @brief Parses RSS feed XML data into an RSSFeed object
@@ -151,6 +151,14 @@ namespace dotnamecpp::rss {
      * @return std::string The raw XML data of the RSS feed
      */
     std::string downloadFeed(const std::string &url);
+
+    /**
+     * @brief Decodes HTML entities in a string
+     *
+     * @param str The input string containing HTML entities
+     * @return std::string The decoded string
+     */
+    static std::string decodeHtmlEntities(const std::string &str);
 
     // Data members
     bool isInitialized_{false};

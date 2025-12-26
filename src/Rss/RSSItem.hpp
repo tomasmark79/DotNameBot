@@ -56,7 +56,7 @@ namespace dotnamecpp::rss {
         e.add_field("Published", pubDate, false);
       }
       if (!rssMedia.url.empty()) {
-        if (rssMedia.type.find("image/") == 0 || rssMedia.type.find("hybrid_type") == 0) {
+        if (rssMedia.type.find("image/") == 0) {
           e.set_image(rssMedia.url);
         } else {
           e.add_field("Media", "[" + rssMedia.url + "](" + rssMedia.url + ")", false);
