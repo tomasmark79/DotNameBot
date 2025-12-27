@@ -62,7 +62,7 @@ namespace dotnamecpp::discordbot {
         std::ostringstream oss;
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
-        bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "since: " + time_str));
+        bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_competing, "boot<T>: " + time_str));
 
         // Initial RSS fetch
         int itemsFetched = rssService_->refetchRssFeeds();
@@ -76,6 +76,11 @@ namespace dotnamecpp::discordbot {
         // Start the periodic random feed timer
         if (!putRandomFeedTimer()) {
           logger_->error("Failed to start random feed timer.");
+        }
+
+        // Start the periodic fetch feeds timer
+        if (!fetchFeedsTimer()) {
+          logger_->error("Failed to start fetch feeds timer.");
         }
       });
 
@@ -437,8 +442,6 @@ namespace dotnamecpp::discordbot {
 
     return true;
   }
-
-  constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
 
   void DiscordBot::logTheServed(rss::RSSItem &item, const std::function<void(bool)> &onComplete) {
 

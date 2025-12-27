@@ -20,6 +20,7 @@
 namespace dotnamecpp::discordbot {
 
   constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
+  constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
   constexpr int FETCH_INTERVAL_SECONDS = 3600; // 1 hour
   constexpr int PUT_INTERVAL_SECONDS = 30;
 
