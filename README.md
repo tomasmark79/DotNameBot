@@ -10,14 +10,16 @@ Universal Bot Application
 
 ### Implemented features
 
-- Discord bot
+- Discord bot support
 - RSS/ATOM feed reader
 
-### Screenshots
+### Discord Server as RSS/Atom Aggregator
 
-![DotNameBot Screenshot](screenshot-discord.png)
-
-
+[Invite to Discord Server](https://discord-feeder.digitalspace.name)
+- DotNameBot is running at 24/7 and aggregates various RSS/Atom feeds
+- Feeds are posted to designated channels in the Discord server
+- Users can subscribe to specific feeds or categories
+- Supports rich embeds for better presentation of feed items
 
 ## Architecture
 
