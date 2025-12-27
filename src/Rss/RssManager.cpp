@@ -138,7 +138,7 @@ namespace dotnamecpp::rss {
     std::string sourcesList;
     sourcesList = "";
     for (const auto &url : urls_) {
-      sourcesList += "- " + url.url + "with embeddedType " + std::to_string(url.embeddedType);
+      sourcesList += "- " + url.url + " with embeddedType " + std::to_string(url.embeddedType);
       if (url.discordChannelId != 0) {
         sourcesList += " [Channel: " + std::to_string(url.discordChannelId) + "]";
       }
@@ -152,7 +152,7 @@ namespace dotnamecpp::rss {
     for (const auto &url : urls_) {
       if (url.discordChannelId == discordChannelId) {
         sourcesList +=
-            "- " + url.url + "with embeddedType " + std::to_string(url.embeddedType) + "\n";
+            "- " + url.url + " with embeddedType " + std::to_string(url.embeddedType) + "\n";
       }
     }
     return sourcesList.empty() ? "No RSS sources available for this channel." : sourcesList;
