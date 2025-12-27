@@ -62,7 +62,8 @@ namespace dotnamecpp::discordbot {
         std::ostringstream oss;
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
-        bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_competing, "boot<T>: " + time_str));
+        bot_->set_presence(
+            dpp::presence(dpp::ps_online, dpp::at_competing, "boot<T>: " + time_str));
 
         // Initial RSS fetch
         int itemsFetched = rssService_->refetchRssFeeds();
