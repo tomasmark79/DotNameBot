@@ -1,5 +1,4 @@
 #include "CustomStringsLoader.hpp"
-
 #include <fmt/core.h>
 
 namespace dotnamecpp::utils {
@@ -10,13 +9,12 @@ namespace dotnamecpp::utils {
       : assetManager_(std::move(assetManager)), jsonSerializer_(std::move(jsonSerializer)),
         filename_(std::move(filename)) {
     if (!assetManager_ || !jsonSerializer_) {
-      throw std::invalid_argument("CustomStringsLoader requires valid asset manager and JSON "
-                                  "serializer");
+      throw std::invalid_argument(
+          "CustomStringsLoader requires valid asset manager and JSON serializer");
     }
   }
 
   Result<nlohmann::json, JsonError> CustomStringsLoader::load() const {
-    // Check if asset exists
     if (!assetManager_->assetExists(filename_)) {
       return JsonError{
           .code = JsonErrorCode::FileNotFound,
@@ -24,9 +22,9 @@ namespace dotnamecpp::utils {
           .details = filename_,
       };
     }
+
     auto assetPath = assetManager_->resolveAsset(filename_);
 
-    // Load and parse JSON
     return jsonSerializer_->loadFromFile(assetPath);
   }
 
@@ -68,6 +66,39 @@ namespace dotnamecpp::utils {
     return std::nullopt;
   }
 
+  std::optional<std::string> CustomStringsLoader::getPath(const std::string &id) const {
+    auto item = findById(id);
+    if (!item) {
+      return std::nullopt;
+    }
+
+    try {
+      if (item->contains("data") && (*item)["data"].contains("path")) {
+        return (*item)["data"]["path"].get<std::string>();
+      }
+    } catch (const std::exception &) {
+      return std::nullopt;
+    }
+
+    return std::nullopt;
+  }
+
+  std::optional<std::string> CustomStringsLoader::getCustomKey(const std::string &id,
+                                                               const std::string &key) const {
+    auto item = findById(id);
+    if (!item) {
+      return std::nullopt;
+    }
+    try {
+      if (item->contains("data") && (*item)["data"].contains(key)) {
+        return (*item)["data"][key].get<std::string>();
+      }
+    } catch (const std::exception &) {
+      return std::nullopt;
+    }
+    return std::nullopt;
+  }
+
   std::optional<std::string>
       CustomStringsLoader::getLocalizedString(const std::string &id,
                                               const std::string &locale) const {
@@ -95,105 +126,6 @@ namespace dotnamecpp::utils {
     }
 
     return std::nullopt;
-  }
-
-  std::optional<std::string> CustomStringsLoader::getEmail(const std::string &id) const {
-    auto item = findById(id);
-    if (!item) {
-      return std::nullopt;
-    }
-
-    try {
-      if (item->contains("data") && (*item)["data"].contains("email")) {
-        return (*item)["data"]["email"].get<std::string>();
-      }
-    } catch (const std::exception &) {
-      return std::nullopt;
-    }
-
-    return std::nullopt;
-  }
-
-  std::optional<std::string> CustomStringsLoader::getUrl(const std::string &id) const {
-    auto item = findById(id);
-    if (!item) {
-      return std::nullopt;
-    }
-
-    try {
-      if (item->contains("data") && (*item)["data"].contains("url")) {
-        return (*item)["data"]["url"].get<std::string>();
-      }
-    } catch (const std::exception &) {
-      return std::nullopt;
-    }
-
-    return std::nullopt;
-  }
-
-  std::optional<std::string> CustomStringsLoader::getTel(const std::string &id) const {
-    auto item = findById(id);
-    if (!item) {
-      return std::nullopt;
-    }
-
-    try {
-      if (item->contains("data") && (*item)["data"].contains("tel")) {
-        return (*item)["data"]["tel"].get<std::string>();
-      }
-    } catch (const std::exception &) {
-      return std::nullopt;
-    }
-
-    return std::nullopt;
-  }
-
-  std::optional<std::string> CustomStringsLoader::getPath(const std::string &id) const {
-    auto item = findById(id);
-    if (!item) {
-      return std::nullopt;
-    }
-
-    try {
-      if (item->contains("data") && (*item)["data"].contains("path")) {
-        return (*item)["data"]["path"].get<std::string>();
-      }
-    } catch (const std::exception &) {
-      return std::nullopt;
-    }
-
-    return std::nullopt;
-  }
-
-  std::string CustomStringsLoader::getCustomStringSign() const {
-    std::string result;
-
-    // Get author info
-    if (auto author = getLocalizedString("author")) {
-      result += "Author: " + *author + "\n";
-    }
-
-    // Get email
-    if (auto email = getEmail("author")) {
-      result += "Email: " + *email + "\n";
-    }
-
-    // Get website
-    if (auto website = getUrl("website")) {
-      result += "Website: " + *website + "\n";
-    }
-
-    // Get GitHub
-    if (auto github = getUrl("github")) {
-      result += "GitHub: " + *github + "\n";
-    }
-
-    // Get phone
-    if (auto phone = getTel("contact")) {
-      result += "Phone: " + *phone + "\n";
-    }
-
-    return result.empty() ? "No custom strings available" : result;
   }
 
 } // namespace dotnamecpp::utils
