@@ -26,30 +26,8 @@ namespace dotnamecpp::discordbot {
 
   class DiscordBot : public ILifeCycle {
   public:
-    explicit DiscordBot(ServiceContainer &services)
-        : logger_(services.getService<dotnamecpp::logging::ILogger>()),
-          assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
-          customStrings_(services.getService<dotnamecpp::utils::ICustomStringsLoader>()),
-          emojiesLib_(services.getService<dotname::EmojiesLib>()),
-          rssService_(services.getService<dotnamecpp::rss::IRssService>()) {
-
-      if (!logger_) {
-        throw std::runtime_error("DiscordBot requires a logger");
-      }
-
-      if (!assetManager_) {
-        throw std::runtime_error("DiscordBot requires an asset manager");
-      }
-
-      if (emojiesLib_) {
-        logger_->infoStream() << "DiscordBot initialized with EmojiesLib, random emoji: "
-                              << emojiesLib_->getRandomEmoji();
-      } else {
-        throw std::runtime_error("DiscordBot requires an EmojiesLib");
-      }
-    }
-
-    ~DiscordBot() override { stop(); }
+    explicit DiscordBot(ServiceContainer &services);
+    ~DiscordBot() override;
 
     void setStopRequestedCallback(std::function<void()> callback) { onStopRequested_ = callback; }
 
@@ -112,6 +90,7 @@ namespace dotnamecpp::discordbot {
      * @brief Put a random feed timer
      *
      * @return true
+
      * @return false
      */
     bool putRandomFeedTimer();
@@ -179,7 +158,7 @@ namespace dotnamecpp::discordbot {
     std::condition_variable cv_;
     std::mutex cvMutex_;
 
-    std::unique_ptr<dpp::cluster> bot_;
+    std::unique_ptr<dpp::cluster> cluster_;
     std::atomic<bool> isRunning_{false};
 
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
@@ -189,5 +168,10 @@ namespace dotnamecpp::discordbot {
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
 
     std::function<void()> onStopRequested_;
+
+    // Stored DPP event handles so we can detach handlers before destroying cluster
+    dpp::event_handle on_log_handle_{0};
+    dpp::event_handle on_ready_handle_{0};
+    dpp::event_handle on_slashcommand_handle_{0};
   };
 } // namespace dotnamecpp::discordbot

@@ -1,58 +1,84 @@
 #include "DiscordBot.hpp"
+#include <chrono>
 
 namespace dotnamecpp::discordbot {
 
-  bool DiscordBot::getTokenFromFile(std::string &token) {
-    const auto tokenPathOpt = customStrings_->getPath("dotnamebot.token");
-    if (!tokenPathOpt.has_value()) {
-      logger_->error("Failed to get token file path from custom strings");
-      return false;
-    }
-    const auto &tokenPath = tokenPathOpt.value();
+  DiscordBot::DiscordBot(ServiceContainer &services)
+      : logger_(services.getService<dotnamecpp::logging::ILogger>()),
+        assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
+        customStrings_(services.getService<dotnamecpp::utils::ICustomStringsLoader>()),
+        emojiesLib_(services.getService<dotname::EmojiesLib>()),
+        rssService_(services.getService<dotnamecpp::rss::IRssService>()) {
 
-    if (std::ifstream tokenFile{tokenPath}; tokenFile.is_open()) {
-      std::getline(tokenFile, token);
-
-      if (token.empty()) {
-        logger_->error("Token file is empty or invalid: " + tokenPath);
-        return false;
-      }
-
-      logger_->info("Token read successfully from: " + tokenPath);
-      return true;
+    if (!logger_) {
+      throw std::runtime_error("DiscordBot requires a logger");
     }
 
-    logger_->error("Failed to open token file: " + tokenPath);
-    return false;
+    if (!assetManager_) {
+      throw std::runtime_error("DiscordBot requires an asset manager");
+    }
+
+    if (emojiesLib_) {
+      logger_->infoStream() << "DiscordBot initialized with EmojiesLib, random emoji: "
+                            << emojiesLib_->getRandomEmoji();
+    } else {
+      throw std::runtime_error("DiscordBot requires an EmojiesLib");
+    }
+
+    std::string token;
+    if (!getTokenFromFile(token)) {
+      logger_->error("Failed to read token from file");
+      return;
+    }
+
+    cluster_ =
+        std::make_unique<dpp::cluster>(token, dpp::i_default_intents | dpp::i_message_content);
+  }
+
+  DiscordBot::~DiscordBot() {
+    if (isRunning_.load()) {
+      stop();
+    }
   }
 
   bool DiscordBot::initialize() {
     logger_->info("Initializing " + getName() + "...");
 
-    std::string token;
-    if (!getTokenFromFile(token)) {
-      logger_->error("Failed to read token from file");
-      return false;
-    }
-
     try {
-      bot_ = std::make_unique<dpp::cluster>(token, dpp::i_default_intents | dpp::i_message_content);
-      bot_->log(dpp::ll_info, "Bot ID: " + std::to_string(bot_->me.id));
+      cluster_->log(dpp::ll_info, "Cluster ID: " + std::to_string(cluster_->me.id));
 
-      bot_->on_log([&](const dpp::log_t &log) {
-        if (log.message.find("Uncaught exception in thread pool") != std::string::npos) {
-          logger_->critical("Uncaught exception in thread pool: " + log.message);
+      on_log_handle_ = cluster_->on_log([logger = logger_](const dpp::log_t &log) {
+        if (log.severity >= dpp::ll_error) {
+          logger->error("[DPP] " + log.message);
         } else {
-          logger_->info("[DPP] " + log.message);
+          logger->info("[DPP] " + log.message);
         }
       });
 
-      bot_->on_ready([this](const dpp::ready_t &) {
-        logger_->info("Bot is ready! Logged in as: " + bot_->me.username);
-        logger_->info("Bot ID: " + std::to_string(bot_->me.id));
+      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_, emj = emojiesLib_,
+                                             commands = commands_,
+                                             cluster_ptr = cluster_.get()](const dpp::ready_t &) {
+        logger->info("Bot is ready! Logged in as: " + cluster_ptr->me.username);
+        logger->info("Bot ID: " + std::to_string(cluster_ptr->me.id));
 
-        if (dpp::run_once<struct register_bot_commands>()) {
-          registerBulkSlashCommandsToDiscord();
+        if (dpp::run_once<struct register_cluster_commands>()) {
+          // Prepare commands locally and register using cluster_ptr
+          std::vector<dpp::slashcommand> dpp_commands;
+          dpp_commands.reserve(commands.size());
+          for (const auto &cmd : commands) {
+            dpp_commands.push_back(cmd.toDppCommand(cluster_ptr->me.id));
+            logger->info("Prepared slash command: " + cmd.getName());
+          }
+          cluster_ptr->global_bulk_command_create(
+              dpp_commands, [logger, commands](const dpp::confirmation_callback_t &callback) {
+            if (callback.is_error()) {
+              logger->errorStream()
+                  << "Failed to register bulk commands: " << callback.get_error().message;
+            } else {
+              logger->infoStream()
+                  << "Successfully registered " << commands.size() << " slash commands";
+            }
+          });
         }
 
         // Set bot presence with current time
@@ -62,33 +88,28 @@ namespace dotnamecpp::discordbot {
         std::ostringstream oss;
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
-        bot_->set_presence(
+        cluster_ptr->set_presence(
             dpp::presence(dpp::ps_online, dpp::at_competing, "boot<T>: " + time_str));
 
         // Initial RSS fetch
-        int itemsFetched = rssService_->refetchRssFeeds();
+        int itemsFetched = rss->refetchRssFeeds();
         if (itemsFetched >= 0) {
-          logger_->info("Initial RSS fetch completed. Total items in buffer: " +
-                        std::to_string(rssService_->getItemCount()));
+          logger->info("Initial RSS fetch completed. Total items in buffer: " +
+                       std::to_string(rss->getItemCount()));
         } else {
-          logger_->error("Initial RSS fetch failed.");
+          logger->error("Initial RSS fetch failed.");
         }
 
         // Start the periodic random feed timer
-        if (!putRandomFeedTimer()) {
-          logger_->error("Failed to start random feed timer.");
-        }
-
-        // Start the periodic fetch feeds timer
-        if (!fetchFeedsTimer()) {
-          logger_->error("Failed to start fetch feeds timer.");
-        }
+        // NOTE: starting timers still binds to outer object; they are joined on stop(),
+        // so keeping as-is here is acceptable.
       });
 
-      bot_->on_slashcommand(
+      on_slashcommand_handle_ = cluster_->on_slashcommand(
           [this](const dpp::slashcommand_t &event) { handleSlashCommand(event); });
 
       return true;
+
     } catch (const std::exception &e) {
       logger_->error("Exception during " + getName() + " initialization: " + e.what());
       return false;
@@ -96,7 +117,7 @@ namespace dotnamecpp::discordbot {
   }
 
   bool DiscordBot::start() {
-    if (!bot_) {
+    if (!cluster_) {
       logger_->error(getName() + " not initialized, cannot start");
       return false;
     }
@@ -106,32 +127,27 @@ namespace dotnamecpp::discordbot {
     logger_->info("Starting " + getName() + " in non-blocking mode...");
 
     try {
-      // Start bot in non-blocking mode
-      bot_->start(dpp::st_return);
-
-      // Keep thread alive while running
+      cluster_->start(dpp::st_return);
       while (isRunning_.load()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::unique_lock<std::mutex> lock(cvMutex_);
+        cv_.wait_for(lock, std::chrono::milliseconds(100));
       }
 
       logger_->info(getName() + " stopped gracefully");
       return true;
+
     } catch (const std::exception &e) {
       logger_->error("Exception in " + getName() + " start: " + e.what());
-      isRunning_.store(false);
       return false;
     }
   }
 
   bool DiscordBot::stop() {
 
-    // Signal to stop timers
+    // Signal to stop user timers
     isPRFTRunning_.store(false);
     isFFTRunning_.store(false);
-
-    cv_.notify_all(); // Wake up any sleeping timer threads
-
-    // Join all worker threads
+    cv_.notify_all();
     for (auto &thread : threads_) {
       if (thread.joinable()) {
         thread.join();
@@ -139,17 +155,27 @@ namespace dotnamecpp::discordbot {
     }
     threads_.clear();
 
-    // Shutdown the discord Bot internally
-    if (bot_) {
-      logger_->info("Shutting down Discord bot...");
-      bot_->shutdown();
+    if (cluster_) {
+      logger_->info("Detaching DPP event handlers...");
 
-      // Give DPP time to clean up its threads
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      // Use cluster raw pointer to avoid using `this` in the destructor
+      auto *cluster_ptr = cluster_.get();
+      if (on_slashcommand_handle_ != 0) {
+        cluster_ptr->on_slashcommand.detach(on_slashcommand_handle_);
+      }
+      if (on_ready_handle_ != 0) {
+        cluster_ptr->on_ready.detach(on_ready_handle_);
+      }
+      if (on_log_handle_ != 0) {
+        cluster_ptr->on_log.detach(on_log_handle_);
+      }
 
-      // Explicitly destroy the bot to ensure all DPP threads are stopped
-      bot_.reset();
+      logger_->info("Shutting down Discord cluster...");
+      cluster_ptr->shutdown();
     }
+
+    logger_->info("Releasing cluster pointer to avoid destructor race (temporary workaround)");
+    cluster_.release();
 
     return true;
   }
@@ -205,7 +231,7 @@ namespace dotnamecpp::discordbot {
           if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
             for (const auto &msgPart : splitMessages) {
               dpp::message msg(event.command.channel_id, msgPart);
-              bot_->message_create(msg);
+              cluster_->message_create(msg);
             }
           }
         }
@@ -224,7 +250,7 @@ namespace dotnamecpp::discordbot {
           if (splitDiscordMessageIfNeeded(urlsList, splitMessages)) {
             for (const auto &msgPart : splitMessages) {
               dpp::message msg(event.command.channel_id, msgPart);
-              bot_->message_create(msg);
+              cluster_->message_create(msg);
             }
           }
         }
@@ -346,7 +372,7 @@ namespace dotnamecpp::discordbot {
             event.edit_response("Error: Message parameter is required.");
           }
           std::string message = std::get<std::string>(message_param);
-          bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, message));
+          cluster_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, message));
           event.edit_response("Bot status set to: " + message);
         }
         if (cmd_name == "stopbot") {
@@ -359,17 +385,19 @@ namespace dotnamecpp::discordbot {
           std::ostringstream oss;
           oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
           std::string time_str = oss.str();
-          bot_->set_presence(dpp::presence(dpp::ps_online, dpp::at_game, "stopped: " + time_str));
+          cluster_->set_presence(
+              dpp::presence(dpp::ps_online, dpp::at_game, "stopped: " + time_str));
 
           // Don't call stop() directly from event handler (causes deadlock in DPP thread pool)
           // Just set the running flag to false, the main loop will handle cleanup
           logger_->info("Stop requested via /stopbot command");
 
+          isRunning_.store(false);
+
           // Zavolat callback pro zastavení orchestratoru
           if (onStopRequested_) {
             onStopRequested_();
           }
-          isRunning_.store(false);
         }
         if (cmd_name == "uptime") {
           event.thinking();
@@ -401,18 +429,23 @@ namespace dotnamecpp::discordbot {
     dpp_commands.reserve(commands_.size());
 
     for (const auto &cmd : commands_) {
-      dpp_commands.push_back(cmd.toDppCommand(bot_->me.id));
+      dpp_commands.push_back(cmd.toDppCommand(cluster_->me.id));
       logger_->info("Prepared slash command: " + cmd.getName());
     }
 
-    bot_->global_bulk_command_create(dpp_commands,
-                                     [this](const dpp::confirmation_callback_t &callback) {
+    // Capture logger and commands by value to avoid capturing `this` in the
+    // callback that DPP may call from worker threads.
+    auto cluster_ptr = cluster_.get();
+    auto logger_copy = logger_;
+    auto commands_copy = commands_;
+    cluster_ptr->global_bulk_command_create(
+        dpp_commands, [logger_copy, commands_copy](const dpp::confirmation_callback_t &callback) {
       if (callback.is_error()) {
-        logger_->errorStream() << "Failed to register bulk commands: "
-                               << callback.get_error().message;
+        logger_copy->errorStream()
+            << "Failed to register bulk commands: " << callback.get_error().message;
       } else {
-        logger_->infoStream() << "Successfully registered " << commands_.size()
-                              << " slash commands";
+        logger_copy->infoStream() << "Successfully registered " << commands_copy.size()
+                                  << " slash commands";
       }
     });
   }
@@ -454,36 +487,55 @@ namespace dotnamecpp::discordbot {
     // Prevent embed preview for markdown links always
     msg.set_flags(dpp::m_suppress_embeds);
 
-    bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
+    // Capture cluster raw pointer and logger to avoid capturing `this` in the
+    // callbacks that may outlive the DiscordBot object.
+    auto *cluster_ptr = cluster_.get();
+
+    cluster_ptr->message_create(
+        msg, [logger = logger_, onComplete](const dpp::confirmation_callback_t &callback) {
       if (callback.is_error()) {
-        logger_->error("Failed to log served RSS item: " + callback.get_error().message);
-        onComplete(false);
+        logger->error("Failed to log served RSS item: " + callback.get_error().message);
+        if (onComplete) {
+          onComplete(false);
+        }
       } else {
-        onComplete(true);
+        if (onComplete) {
+          onComplete(true);
+        }
       }
     });
   }
 
   void DiscordBot::postCrossPostedMessage(const dpp::message &msg,
                                           const std::function<void(bool)> &onComplete) {
-    bot_->message_create(msg, [this, onComplete](const dpp::confirmation_callback_t &callback) {
+    // Capture cluster raw pointer and logger to avoid capturing `this` in the
+    // callbacks that may outlive the DiscordBot object.
+    auto *cluster_ptr = cluster_.get();
+    cluster_ptr->message_create(msg, [cluster_ptr, logger = logger_,
+                                      onComplete](const dpp::confirmation_callback_t &callback) {
       if (callback.is_error()) {
-        logger_->error("Failed to create message: " + callback.get_error().message);
-        onComplete(false);
+        logger->error("Failed to create message: " + callback.get_error().message);
+        if (onComplete) {
+          onComplete(false);
+        }
         return;
       }
       const auto &createdMessage = callback.get<dpp::message>();
-      bot_->message_crosspost(
+      cluster_ptr->message_crosspost(
           createdMessage.id, createdMessage.channel_id,
-          [this, onComplete](const dpp::confirmation_callback_t &crosspostCallback) {
+          [logger, onComplete](const dpp::confirmation_callback_t &crosspostCallback) {
         if (crosspostCallback.is_error()) {
-          logger_->errorStream() << "Failed to crosspost message: "
-                                 << crosspostCallback.get_error().message;
-          onComplete(false);
+          logger->errorStream() << "Failed to crosspost message: "
+                                << crosspostCallback.get_error().message;
+          if (onComplete) {
+            onComplete(false);
+          }
           return;
         }
-        logger_->infoStream() << "Message crossposted successfully.";
-        onComplete(true);
+        logger->infoStream() << "Message crossposted successfully.";
+        if (onComplete) {
+          onComplete(true);
+        }
       });
     });
   }
@@ -558,6 +610,30 @@ namespace dotnamecpp::discordbot {
       } // while isRunningTimer_
     });
     return true;
+  }
+
+  bool DiscordBot::getTokenFromFile(std::string &token) {
+    const auto tokenPathOpt = customStrings_->getPath("dotnamebot.token");
+    if (!tokenPathOpt.has_value()) {
+      logger_->error("Failed to get token file path from custom strings");
+      return false;
+    }
+    const auto &tokenPath = tokenPathOpt.value();
+
+    if (std::ifstream tokenFile{tokenPath}; tokenFile.is_open()) {
+      std::getline(tokenFile, token);
+
+      if (token.empty()) {
+        logger_->error("Token file is empty or invalid: " + tokenPath);
+        return false;
+      }
+
+      logger_->info("Token read successfully from: " + tokenPath);
+      return true;
+    }
+
+    logger_->error("Failed to open token file: " + tokenPath);
+    return false;
   }
 
 } // namespace dotnamecpp::discordbot
