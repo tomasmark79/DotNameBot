@@ -90,23 +90,20 @@ namespace dotnamecpp::discordbot {
         std::string time_str = oss.str();
         cluster_ptr->set_presence(
             dpp::presence(dpp::ps_online, dpp::at_competing, "boot<T>: " + time_str));
-
-        // Initial RSS fetch
-        int itemsFetched = rss->refetchRssFeeds();
-        if (itemsFetched >= 0) {
-          logger->info("Initial RSS fetch completed. Total items in buffer: " +
-                       std::to_string(rss->getItemCount()));
-        } else {
-          logger->error("Initial RSS fetch failed.");
-        }
-
-        // Start the periodic random feed timer
-        // NOTE: starting timers still binds to outer object; they are joined on stop(),
-        // so keeping as-is here is acceptable.
       });
 
       on_slashcommand_handle_ = cluster_->on_slashcommand(
           [this](const dpp::slashcommand_t &event) { handleSlashCommand(event); });
+
+      // Start the periodic random feed timer
+      if (!putRandomFeedTimer()) {
+        logger_->error("Failed to start random feed timer.");
+      }
+
+      // Start the periodic fetch feeds timer
+      if (!fetchFeedsTimer()) {
+        logger_->error("Failed to start fetch feeds timer.");
+      }
 
       return true;
 
@@ -548,7 +545,7 @@ namespace dotnamecpp::discordbot {
 
         // Interruptible sleep
         std::unique_lock<std::mutex> lock(cvMutex_);
-        cv_.wait_for(lock, std::chrono::seconds(FETCH_INTERVAL_SECONDS),
+        cv_.wait_for(lock, std::chrono::seconds(PUT_INTERVAL_SECONDS),
                      [this]() { return !isPRFTRunning_.load(); });
 
         dotnamecpp::rss::RSSItem item = rssService_->getRandomItem();
