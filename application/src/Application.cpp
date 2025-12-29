@@ -3,18 +3,16 @@
 #include <cxxopts.hpp>
 #include <iostream>
 
-// Application application using DotNameBotLib
-// All components initialized via UtilsFactory
+const std::string appName = "DotNameBot";
 
 int main(int argc, char **argv) {
-  // appname
-  const std::string appName = "DotNameBot";
+
   using namespace dotnamecpp;
   using namespace dotnamecpp::logging;
   using namespace dotnamecpp::utils;
 
   try {
-    // Parse command-line options
+    // cxxopts
     cxxopts::Options options(appName, "DotName C++ Application");
     options.add_options()("h,help", "Print usage");
     options.add_options()("w,write2file", "Write output to file",
@@ -26,52 +24,35 @@ int main(int argc, char **argv) {
       return EXIT_SUCCESS;
     }
 
-    // Get executable path
-    auto platformInfo = UtilsFactory::createPlatformInfo();
-    auto execPathResult = platformInfo->getExecutablePath();
-    if (!execPathResult.hasValue()) {
-      std::cerr << "Failed to get executable path: " << execPathResult.error().toString() << '\n';
-      return EXIT_FAILURE;
-    }
-
-    // Initialize logger
-    LoggerConfig loggerConfig{.level = Level::LOG_INFO,
+    auto utilsComponents = UtilsFactory::createAppComponents(
+        appName, LoggerConfig{.level = Level::LOG_INFO,
                               .enableFileLogging = result["write2file"].as<bool>(),
                               .logFilePath = "application.log",
                               .colorOutput = true,
-                              .appPrefix = appName};
-    auto logger = UtilsFactory::createLogger(LoggerType::Console, loggerConfig);
+                              .appPrefix = appName});
 
-    // Initialize assets
-    auto assetManager = UtilsFactory::createAssetManager(execPathResult.value(), appName);
+    auto &logger = utilsComponents.logger;
+    [[maybe_unused]] auto &assetManager = utilsComponents.assetManager;
+    auto &platformInfo = utilsComponents.platformInfo;
+    auto &customStringsLoader = utilsComponents.customStringsLoader;
 
-    if (!assetManager->validate()) {
-      logger->errorStream() << "Failed to validate assets: " << assetManager->getAssetsPath();
+    const std::string na = "[Not Found]";
+    logger->infoStream() << customStringsLoader->getLocalizedString("Author", "en").value_or(na);
+    logger->infoStream() << customStringsLoader->getLocalizedString("GitHub", "en").value_or(na)
+                         << " - "
+                         << customStringsLoader->getCustomKey("GitHub", "url").value_or(na);
+
+    logger->infoStream() << platformInfo->getPlatformName() << " platform detected.";
+
+    logger->infoStream() << appName + " started ...";
+
+    auto library = std::make_unique<dotnamecpp::v1::DotNameBotLib>(utilsComponents);
+    if (!library->isInitialized()) {
+      logger->errorStream() << "Library initialization failed";
       return EXIT_FAILURE;
     }
 
-    logger->infoStream() << "Assets initialized: " << assetManager->getAssetsPath();
-
-    // Run application logic
-    logger->infoStream() << appName << " running...";
-
-    // Initialize library
-    auto library = std::make_unique<v1::DotNameBotLib>(logger, assetManager);
-
-    constexpr const char *libOk = "Library initialized successfully";
-#if __cplusplus >= 202002L
-    // Available in C++20 and later
-    logger->infoWithLocation(libOk);
-#else
-    logger->infoStream() << libOk;
-#endif
-    constexpr int runEndless = 0;
-    if (!library->run(runEndless)) {
-      logger->errorStream() << "Failed to run library";
-      return EXIT_FAILURE;
-    }
-
-    logger->infoStream() << appName << " shutting down";
+    logger->infoStream() << appName << " ... shutting down";
     return EXIT_SUCCESS;
 
   } catch (const std::exception &e) {

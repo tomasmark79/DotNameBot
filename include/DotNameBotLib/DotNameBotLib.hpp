@@ -2,10 +2,6 @@
 
 #include <DotNameBotLib/version.h> // cmake configuration will generate this file
 #include <Utils/UtilsFactory.hpp>
-#include <atomic>
-#include <filesystem>
-#include <memory>
-#include <string>
 
 #include <EmojiesLib/EmojiesLib.hpp>
 #include <Orchestrator/Orchestrator.hpp>
@@ -13,114 +9,39 @@
 #include <Rss/IRssService.hpp>
 #include <ServiceContainer/ServiceContainer.hpp>
 
+#include <memory>
+
 namespace dotnamecpp::v1 {
+  using namespace dotnamecpp::utils;
   class DotNameBotLib {
 
   public:
-    /**
-     * @brief Construct a new object
-     *
-     * @param logger
-     * @param assetManager
-     */
-    DotNameBotLib(std::shared_ptr<logging::ILogger> logger,
-                  std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager);
-
-    /**
-     * @brief Destroy the object
-     *
-     * Automatically stops any running worker threads
-     */
+    DotNameBotLib(const UtilsFactory::AppComponents &utilsComponents);
     ~DotNameBotLib();
 
-    /**
-     * @brief Copy and move operations are deleted
-     *
-     * This class manages unique resources (services, orchestrator)
-     * and should not be copied or moved.
-     */
     DotNameBotLib(const DotNameBotLib &other) = delete;
     DotNameBotLib &operator=(const DotNameBotLib &other) = delete;
     DotNameBotLib(DotNameBotLib &&other) = delete;
     DotNameBotLib &operator=(DotNameBotLib &&other) = delete;
 
-    // ============================================================================
-    // Main API
-    // ============================================================================
+    [[nodiscard]] bool startOrchestration();
+    [[nodiscard]] bool isInitialized() const noexcept;
 
-    /**
-     * @brief Run the bot orchestrator
-     *
-     * This is the main entry point for running the bots.
-     * Blocks until the specified duration expires or stop() is called.
-     *
-     * @param durationSeconds Duration to run in seconds (0 = run indefinitely, <0 = single
-     * iteration)
-     * @return true if successful
-     * @return false if an error occurred or not initialized
-     */
-    bool run(int durationSeconds = 0);
+      private:
+    bool isInitialized_{false};
+    static constexpr const char *libName_ = "DotNameBotLib v" DOTNAMEBOTLIB_VERSION;
 
-    /**
-     * @brief Stop all running bots
-     *
-     * Signals the orchestrator to stop all bots gracefully.
-     * Can be called from within the application or externally.
-     */
-    void stop();
-
-    // ============================================================================
-    // Query Methods
-    // ============================================================================
-
-    /**
-     * @brief Check if the library is properly initialized
-     *
-     * @return true if initialized and ready to use
-     * @return false if initialization failed
-     */
-    [[nodiscard]]
-    bool isInitialized() const noexcept;
-
-    /**
-     * @brief Get the assets directory path
-     *
-     * @return const std::filesystem::path& Path to assets
-     */
-    [[nodiscard]]
-    const std::filesystem::path &getAssetsPath() const noexcept;
-
-    /**
-     * @brief Get access to the service container for custom implementations
-     *
-     * Use this to register additional services or retrieve existing ones
-     * before calling run()
-     *
-     * @return ServiceContainer& Reference to the service container
-     */
-    ServiceContainer &getServices() noexcept;
-
-    /**
-     * @brief Get access to the bot orchestrator for custom bot registration
-     *
-     * Use this to add custom bots before calling run()
-     *
-     * @return Orchestrator<ILifeCycle>& Reference to the orchestrator
-     */
-    Orchestrator<ILifeCycle> &getOrchestrator() noexcept;
-
-  private:
-    const std::string libName_ = "DotNameBotLib v." DOTNAMEBOTLIB_VERSION;
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
     std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
-    std::filesystem::path assetsPath_;
-    bool isInitialized_ = false;
-    std::atomic<bool> shouldStop_{false};
-    std::atomic<bool> isRunning_{false};
+    std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
+
     std::unique_ptr<ServiceContainer> services_;
     std::unique_ptr<Orchestrator<ILifeCycle>> botOrchestrator_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
     std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
+
+    std::atomic<bool> isOrchestrating_{false};
+    std::thread orchestrationThread_;
   };
 
 } // namespace dotnamecpp::v1
