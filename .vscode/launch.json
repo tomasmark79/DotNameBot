@@ -23,6 +23,27 @@
             "preLaunchTask": "Direct Build"
         },
         {
+            "name": "Debug Application by CClang",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/application/x86_64_linux_clang/debug/bin/DotNameBot",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/application/x86_64_linux_clang/debug/bin/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+            
+        },
+        {
             "name": "Dbg Release Application",
             "type": "cppdbg",
             "request": "launch",
