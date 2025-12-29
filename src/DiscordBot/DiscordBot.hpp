@@ -29,6 +29,7 @@ namespace dotnamecpp::discordbot {
     explicit DiscordBot(ServiceContainer &services)
         : logger_(services.getService<dotnamecpp::logging::ILogger>()),
           assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
+          customStrings_(services.getService<dotnamecpp::utils::ICustomStringsLoader>()),
           emojiesLib_(services.getService<dotname::EmojiesLib>()),
           rssService_(services.getService<dotnamecpp::rss::IRssService>()) {
 
@@ -46,12 +47,11 @@ namespace dotnamecpp::discordbot {
       } else {
         throw std::runtime_error("DiscordBot requires an EmojiesLib");
       }
-
-      // CustomStrings loader is created on-demand
-      customStrings_ = dotnamecpp::utils::UtilsFactory::createCustomStringsLoader(assetManager_);
     }
 
     ~DiscordBot() override { stop(); }
+
+    void setStopRequestedCallback(std::function<void()> callback) { onStopRequested_ = callback; }
 
     // ILifeCycle interface declarations
 
@@ -176,6 +176,9 @@ namespace dotnamecpp::discordbot {
     std::atomic<bool> isPRFTRunning_{true};
     std::atomic<bool> isFFTRunning_{true};
 
+    std::condition_variable cv_;
+    std::mutex cvMutex_;
+
     std::unique_ptr<dpp::cluster> bot_;
     std::atomic<bool> isRunning_{false};
 
@@ -184,5 +187,7 @@ namespace dotnamecpp::discordbot {
     std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
     std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
+
+    std::function<void()> onStopRequested_;
   };
 } // namespace dotnamecpp::discordbot
