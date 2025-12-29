@@ -27,7 +27,7 @@ namespace dotnamecpp::v1 {
     [[nodiscard]] bool startOrchestration();
     [[nodiscard]] bool isInitialized() const noexcept;
 
-      private:
+  private:
     bool isInitialized_{false};
     static constexpr const char *libName_ = "DotNameBotLib v" DOTNAMEBOTLIB_VERSION;
 
