@@ -8,29 +8,47 @@ const std::vector<SlashCommand> commands_ = {
     {"emoji", "get emoji", "simple"},
     {"addurl",
      "add another RSS/ATOM feed URL",
-     {{OptionType::String, "url", "URL of the RSS/ATOM feed", true, {}, {}, {}},
-      {OptionType::Integer,
-       "embedded_type",
-       "Whether the feed should be embeddedType 0,1,2",
-       false,
-       {},
-       {},
-       {}}},
+     {{.type = OptionType::String,
+       .name = "url",
+       .description = "URL of the RSS/ATOM feed",
+       .required = true,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}},
+      {.type = OptionType::Integer,
+       .name = "embedded_type",
+       .description = "Whether the feed should be embeddedType 0,1,2",
+       .required = false,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}}},
      "rss"},
     {"modurl",
      "modify an existing RSS/ATOM feed URL",
-     {{OptionType::String, "url", "Existing URL of the RSS/ATOM feed", true, {}, {}, {}},
-      {OptionType::Integer,
-       "embedded_type",
-       "Whether the feed should be embeddedType 0,1,2",
-       false,
-       {},
-       {},
-       {}}},
+     {{.type = OptionType::String,
+       .name = "url",
+       .description = "Existing URL of the RSS/ATOM feed",
+       .required = true,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}},
+      {.type = OptionType::Integer,
+       .name = "embedded_type",
+       .description = "Whether the feed should be embeddedType 0,1,2",
+       .required = false,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}}},
      "rss"},
     {"remurl",
      "remove an existing RSS/ATOM feed URL",
-     {{OptionType::String, "url", "Existing URL of the RSS/ATOM feed", true, {}, {}, {}}},
+     {{.type = OptionType::String,
+       .name = "url",
+       .description = "Existing URL of the RSS/ATOM feed",
+       .required = true,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}}},
      "rss"},
     {"refetch", "refetch RSS/ATOM feeds", "rss"},
     {"listurls", "get list of RSS/ATOM feed URLs", "rss"},
@@ -41,7 +59,13 @@ const std::vector<SlashCommand> commands_ = {
     {"stopbot", "stop the bot", "botself"},
     {"setstatus",
      "set bot status message",
-     {{OptionType::String, "message", "The status message", true, {}, {}, {}}},
+     {{.type = OptionType::String,
+       .name = "message",
+       .description = "The status message",
+       .required = true,
+       .choices = {},
+       .minValue = {},
+       .maxValue = {}}},
      "botself"}};
 
 dpp::slashcommand SlashCommand::toDppCommand(dpp::snowflake bot_id) const {
@@ -55,8 +79,12 @@ dpp::slashcommand SlashCommand::toDppCommand(dpp::snowflake bot_id) const {
       dpp_opt.add_choice(dpp::command_option_choice(choice_name, choice_value));
     }
 
-    if (opt.minValue) dpp_opt.set_min_value(*opt.minValue);
-    if (opt.maxValue) dpp_opt.set_max_value(*opt.maxValue);
+    if (opt.minValue) {
+      dpp_opt.set_min_value(*opt.minValue);
+    }
+    if (opt.maxValue) {
+      dpp_opt.set_max_value(*opt.maxValue);
+    }
 
     cmd.add_option(dpp_opt);
   }
