@@ -125,9 +125,11 @@ namespace dotnamecpp::discordbot {
 
   bool DiscordBot::stop() {
 
-    // Signal timers to stop
+    // Signal to stop timers
     isPRFTRunning_.store(false);
     isFFTRunning_.store(false);
+
+    cv_.notify_all(); // Wake up any sleeping timer threads
 
     // Join all worker threads
     for (auto &thread : threads_) {
@@ -137,11 +139,7 @@ namespace dotnamecpp::discordbot {
     }
     threads_.clear();
 
-    // Atomic exchange: if already false (stopped), skip shutdown
-    if (!isRunning_.exchange(false)) {
-      return true;
-    }
-
+    // Shutdown the discord Bot internally
     if (bot_) {
       logger_->info("Shutting down Discord bot...");
       bot_->shutdown();
@@ -366,6 +364,11 @@ namespace dotnamecpp::discordbot {
           // Don't call stop() directly from event handler (causes deadlock in DPP thread pool)
           // Just set the running flag to false, the main loop will handle cleanup
           logger_->info("Stop requested via /stopbot command");
+
+          // Zavolat callback pro zastavení orchestratoru
+          if (onStopRequested_) {
+            onStopRequested_();
+          }
           isRunning_.store(false);
         }
         if (cmd_name == "uptime") {
@@ -490,7 +493,11 @@ namespace dotnamecpp::discordbot {
       isPRFTRunning_.store(true);
 
       while (isPRFTRunning_.load()) {
-        std::this_thread::sleep_for(std::chrono::seconds(PUT_INTERVAL_SECONDS));
+
+        // Interruptible sleep
+        std::unique_lock<std::mutex> lock(cvMutex_);
+        cv_.wait_for(lock, std::chrono::seconds(FETCH_INTERVAL_SECONDS),
+                     [this]() { return !isPRFTRunning_.load(); });
 
         dotnamecpp::rss::RSSItem item = rssService_->getRandomItem();
         if (item.title.empty()) {
@@ -532,8 +539,8 @@ namespace dotnamecpp::discordbot {
   bool DiscordBot::fetchFeedsTimer() {
     threads_.emplace_back([this]() -> void {
       isFFTRunning_.store(true);
+
       while (isFFTRunning_.load()) {
-        std::this_thread::sleep_for(std::chrono::seconds(FETCH_INTERVAL_SECONDS));
 
         int itemsFetched = rssService_->refetchRssFeeds();
         if (itemsFetched >= 0) {
@@ -542,7 +549,13 @@ namespace dotnamecpp::discordbot {
         } else {
           logger_->error("Periodic RSS fetch failed.");
         }
-      }
+
+        // Interruptible sleep
+        std::unique_lock<std::mutex> lock(cvMutex_);
+        cv_.wait_for(lock, std::chrono::seconds(FETCH_INTERVAL_SECONDS),
+                     [this]() { return !isFFTRunning_.load(); });
+
+      } // while isRunningTimer_
     });
     return true;
   }
