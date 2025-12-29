@@ -28,7 +28,7 @@ namespace dotnamecpp::discordbot {
     std::string token;
     if (!getTokenFromFile(token)) {
       logger_->error("Failed to read token from file");
-      return;
+      throw std::runtime_error("DiscordBot requires a valid token");
     }
 
     cluster_ =
