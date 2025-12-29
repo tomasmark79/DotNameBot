@@ -74,7 +74,7 @@ find_package(cpr REQUIRED)
 CPMAddPackage(
     NAME dpp
     GITHUB_REPOSITORY brainboxdotcc/DPP
-    GIT_TAG v10.1.3
+    GIT_TAG v10.1.4
     OPTIONS "BUILD_SHARED_LIBS ON" "DPP_BUILD_TEST OFF" "DPP_INSTALL OFF" "DPP_NO_CORO OFF"
             "CONAN_EXPORTED ON")
 # equivalent to: "DPP_INSTALL ON" in CPM for DPP Target - kept for example
@@ -157,7 +157,7 @@ packageProject(
     INCLUDE_DIR "/include"
     INCLUDE_DESTINATION "include"
     INCLUDE_HEADER_PATTERN "*.h;*.hpp;*.hh;*.hxx"
-    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7;dpp#10.1.3;Emojies@main"
+    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7;dpp#10.1.4;Emojies@main"
     VERSION_HEADER "${LIBRARY_NAME}/version.h"
     EXPORT_HEADER "${LIBRARY_NAME}/export.h"
     NAMESPACE ${LIBRARY_NAMESPACE}
