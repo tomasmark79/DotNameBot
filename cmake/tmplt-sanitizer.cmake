@@ -29,12 +29,18 @@ function(apply_thread_sanitizer TARGET_NAME)
 endfunction()
 
 function(apply_memory_sanitizer TARGET_NAME)
-    target_compile_options(${TARGET_NAME} PRIVATE -fsanitize=memory)
-    if (NOT APPLE)
-        target_link_options(${TARGET_NAME} PRIVATE -fsanitize=memory -static-libmsan)
-    else()
-        target_link_options(${TARGET_NAME} PRIVATE -fsanitize=memory -static-libmsan)
+    # MemorySanitizer (MSan) requires Clang/LLVM and is not generally supported
+    # on Apple platforms or with uninstrumented system libraries. Fail early
+    # to avoid confusing builds on unsupported toolchains.
+    if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        message(FATAL_ERROR "MemorySanitizer requires Clang/LLVM (set CMAKE_CXX_COMPILER to clang++)")
     endif()
+    if(APPLE)
+        message(FATAL_ERROR "MemorySanitizer is not supported on Apple platforms in this project")
+    endif()
+    target_compile_options(${TARGET_NAME} PRIVATE -fsanitize=memory -fno-omit-frame-pointer)
+    target_link_options(${TARGET_NAME} PRIVATE -fsanitize=memory)
+    set(ENV{MSAN_OPTIONS} "verbosity=1:log_threads=1")
 endfunction()
 
 function(apply_sanitizers TARGET_NAME)
