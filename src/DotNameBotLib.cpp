@@ -18,8 +18,7 @@ namespace dotnamecpp::v1 {
     }
 
     // another services
-    emojiesLib_ = std::make_shared<dotname::EmojiesLib>(
-        /* there is no dependency injection yet */ assetManager_->getAssetsPath().string());
+    emojiModuleLib_ = std::make_shared<dotnamecpp::v1::EmojiModuleLib>(utilsComponents);
     rssService_ = std::make_shared<dotnamecpp::rss::RssManager>(logger_, assetManager_);
 
     // Register services to service container
@@ -27,7 +26,7 @@ namespace dotnamecpp::v1 {
     services_->registerService(logger_);
     services_->registerService(assetManager_);
     services_->registerService(customStrings_);
-    services_->registerService(emojiesLib_);
+    services_->registerService(emojiModuleLib_);
     services_->registerService(rssService_);
 
     logger_->infoStream() << "Total services registered: " << services_->getServiceCount();

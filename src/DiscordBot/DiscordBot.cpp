@@ -7,7 +7,7 @@ namespace dotnamecpp::discordbot {
       : logger_(services.getService<dotnamecpp::logging::ILogger>()),
         assetManager_(services.getService<dotnamecpp::assets::IAssetManager>()),
         customStrings_(services.getService<dotnamecpp::utils::ICustomStringsLoader>()),
-        emojiesLib_(services.getService<dotname::EmojiesLib>()),
+        emojiModuleLib_(services.getService<dotnamecpp::v1::EmojiModuleLib>()),
         rssService_(services.getService<dotnamecpp::rss::IRssService>()) {
 
     if (!logger_) {
@@ -18,11 +18,11 @@ namespace dotnamecpp::discordbot {
       throw std::runtime_error("DiscordBot requires an asset manager");
     }
 
-    if (emojiesLib_) {
-      logger_->infoStream() << "DiscordBot initialized with EmojiesLib, random emoji: "
-                            << emojiesLib_->getRandomEmoji();
+    if (emojiModuleLib_) {
+      logger_->infoStream() << "DiscordBot initialized with EmojiModuleLib, random emoji: "
+                            << emojiModuleLib_->getRandomEmoji();
     } else {
-      throw std::runtime_error("DiscordBot requires an EmojiesLib");
+      throw std::runtime_error("DiscordBot requires an EmojiModuleLib");
     }
 
     std::string token;
@@ -55,7 +55,7 @@ namespace dotnamecpp::discordbot {
         }
       });
 
-      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_, emj = emojiesLib_,
+      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_, emj = emojiModuleLib_,
                                              commands = commands_,
                                              cluster_ptr = cluster_.get()](const dpp::ready_t &) {
         logger->info("Bot is ready! Logged in as: " + cluster_ptr->me.username);
@@ -202,7 +202,7 @@ namespace dotnamecpp::discordbot {
         }
         if (cmd_name == "emoji") {
           event.thinking();
-          event.edit_response(emojiesLib_->getRandomEmoji());
+          event.edit_response(emojiModuleLib_->getRandomEmoji());
         }
       } else if (handler_type == "rss") {
         if (cmd_name == "refetch") {

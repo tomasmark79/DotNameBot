@@ -15,7 +15,7 @@
 #include <memory>
 #include <string>
 
-#include <EmojiesLib/EmojiesLib.hpp>
+#include <EmojiModuleLib/EmojiModuleLib.hpp>
 
 namespace dotnamecpp::discordbot {
 
@@ -164,7 +164,7 @@ namespace dotnamecpp::discordbot {
     std::shared_ptr<dotnamecpp::logging::ILogger> logger_;
     std::shared_ptr<dotnamecpp::assets::IAssetManager> assetManager_;
     std::shared_ptr<dotnamecpp::utils::ICustomStringsLoader> customStrings_;
-    std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
+    std::shared_ptr<dotnamecpp::v1::EmojiModuleLib> emojiModuleLib_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
 
     std::function<void()> onStopRequested_;

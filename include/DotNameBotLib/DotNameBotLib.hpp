@@ -3,7 +3,7 @@
 #include <DotNameBotLib/version.h> // cmake configuration will generate this file
 #include <Utils/UtilsFactory.hpp>
 
-#include <EmojiesLib/EmojiesLib.hpp>
+#include <EmojiModuleLib/EmojiModuleLib.hpp>
 #include <Orchestrator/Orchestrator.hpp>
 
 #include <Rss/IRssService.hpp>
@@ -38,7 +38,7 @@ namespace dotnamecpp::v1 {
     std::unique_ptr<ServiceContainer> services_;
     std::unique_ptr<Orchestrator<ILifeCycle>> botOrchestrator_;
     std::shared_ptr<dotnamecpp::rss::IRssService> rssService_;
-    std::shared_ptr<dotname::EmojiesLib> emojiesLib_;
+    std::shared_ptr<dotnamecpp::v1::EmojiModuleLib> emojiModuleLib_;
 
     std::atomic<bool> isOrchestrating_{false};
     std::thread orchestrationThread_;

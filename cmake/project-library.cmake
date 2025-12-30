@@ -52,14 +52,13 @@ if(NOT TARGET nlohmann_json AND NOT TARGET nlohmann_json::nlohmann_json)
     endif()
 endif()
 
-# Emojies - will reuse nlohmann_json from above if needed
 CPMAddPackage(
-    NAME Emojies
-    GITHUB_REPOSITORY tomasmark79/Emojies
+    NAME EmojiModule
+    GITHUB_REPOSITORY tomasmark79/EmojiModule
     GIT_TAG main
-    OPTIONS "BUILD_LIBRARY ON" "BUILD_STANDALONE OFF")
-file(COPY ${Emojies_SOURCE_DIR}/assets/emoji-test.txt
-     DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/assets)
+    # file(COPY ${EmojiModule_SOURCE_DIR}/assets/emoji-test.txt DESTINATION
+    # ${CMAKE_CURRENT_SOURCE_DIR}/assets)
+)
 
 find_package(tinyxml2 REQUIRED)
 find_package(ZLIB REQUIRED)
@@ -144,7 +143,7 @@ target_link_libraries(
     PRIVATE OpenSSL::Crypto
     PUBLIC tinyxml2::tinyxml2
     PUBLIC CURL::libcurl
-    PUBLIC EmojiesLib
+    PUBLIC EmojiModuleLib
     PUBLIC dpp)
 
 # ==============================================================================
@@ -157,7 +156,7 @@ packageProject(
     INCLUDE_DIR "/include"
     INCLUDE_DESTINATION "include"
     INCLUDE_HEADER_PATTERN "*.h;*.hpp;*.hh;*.hxx"
-    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7;dpp#10.1.4;Emojies@main"
+    DEPENDENCIES "fmt#12.1.0;nlohmann_json#3.12.0;CPMLicenses.cmake@0.0.7;dpp#10.1.4;EmojiModuleLib@main"
     VERSION_HEADER "${LIBRARY_NAME}/version.h"
     EXPORT_HEADER "${LIBRARY_NAME}/export.h"
     NAMESPACE ${LIBRARY_NAMESPACE}
