@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Dbg Debug Application",
+            "name": "Dbg Default debug Application",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/application/default/debug/bin/DotNameBot",
@@ -23,7 +23,27 @@
             "preLaunchTask": "Direct Build"
         },
         {
-            "name": "Debug Application by CClang",
+            "name": "Dbg Default release Application",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/application/default/release/bin/DotNameBot",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/application/default/release/bin/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Dbg x86_64_linux_clang debug Application",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/application/x86_64_linux_clang/debug/bin/DotNameBot",
@@ -41,16 +61,15 @@
                     "ignoreFailures": true
                 }
             ]
-            
         },
         {
-            "name": "Dbg Release Application",
+            "name": "Dbg x86_64_linux_clang release Application",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/application/default/release/bin/DotNameBot",
+            "program": "${workspaceFolder}/build/application/x86_64_linux_clang/release/bin/DotNameBot",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/application/default/release/bin/",
+            "cwd": "${workspaceFolder}/build/application/x86_64_linux_clang/release/bin/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

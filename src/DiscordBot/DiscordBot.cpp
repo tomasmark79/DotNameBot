@@ -55,8 +55,8 @@ namespace dotnamecpp::discordbot {
         }
       });
 
-      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_, emj = emojiModuleLib_,
-                                             commands = commands_,
+      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_,
+                                             emj = emojiModuleLib_, commands = commands_,
                                              cluster_ptr = cluster_.get()](const dpp::ready_t &) {
         logger->info("Bot is ready! Logged in as: " + cluster_ptr->me.username);
         logger->info("Bot ID: " + std::to_string(cluster_ptr->me.id));

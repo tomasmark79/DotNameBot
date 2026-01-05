@@ -151,6 +151,7 @@ public:
       if (addNewLine_) {
         logFile_ << "\n";
       }
+      logFile_.flush(); // Force immediate write to disk
     }
   };
 
@@ -276,7 +277,7 @@ public:
   }
 
 private:
-  std::string headerName_ = "DotNameBotLib";
+  std::string headerName_ = "DotNameLib";
   bool includeName_ = true;
   bool includeTime_ = true;
   bool includeCaller_ = true;

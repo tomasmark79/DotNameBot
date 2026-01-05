@@ -1,4 +1,4 @@
-# MIT License Copyright (c) 2024-2025 Tomáš Mark
+# MIT License Copyright (c) 2024-2026 Tomáš Mark
 
 # ==============================================================================
 # Common project settings and options
@@ -38,8 +38,8 @@ set(TEST_NAMESPACE dotname)
 # Common build options
 # ==============================================================================
 
-option(ENABLE_GTESTS "Build and run unit tests" OFF)
-option(ENABLE_CCACHE "Use ccache compiler cache" ON)
+option(ENABLE_GTESTS "Build and run unit tests" ON)
+option(ENABLE_CCACHE "Use ccache compiler cache" OFF)
 option(BUILD_SHARED_LIBS "Build shared (.so) libraries" OFF)
 option(USE_STATIC_RUNTIME "Link C++ runtime statically" OFF)
 option(ENABLE_IPO "Enable link-time optimization" OFF)

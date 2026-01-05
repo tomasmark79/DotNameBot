@@ -16,7 +16,7 @@ namespace dotnamecpp::v1 {
   class DotNameBotLib {
 
   public:
-    DotNameBotLib(const UtilsFactory::AppComponents &utilsComponents);
+    DotNameBotLib(const UtilsFactory::ApplicationContext &context);
     ~DotNameBotLib();
 
     DotNameBotLib(const DotNameBotLib &other) = delete;

@@ -1,8 +1,8 @@
-# MIT License Copyright (c) 2024-2025 Tomáš Mark
+# MIT License Copyright (c) 2024-2026 Tomáš Mark
 
 function(apply_address_sanitizer TARGET_NAME)
     target_compile_options(${TARGET_NAME} PRIVATE -fsanitize=address -fno-omit-frame-pointer)
-    if (NOT APPLE)
+    if(NOT APPLE)
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=address -static-libasan)
     else()
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=address)
@@ -12,7 +12,7 @@ endfunction()
 
 function(apply_undefined_sanitizer TARGET_NAME)
     target_compile_options(${TARGET_NAME} PRIVATE -fsanitize=undefined)
-    if (NOT APPLE)
+    if(NOT APPLE)
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=undefined -static-libubsan)
     else()
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=undefined)
@@ -21,7 +21,7 @@ endfunction()
 
 function(apply_thread_sanitizer TARGET_NAME)
     target_compile_options(${TARGET_NAME} PRIVATE -fsanitize=thread)
-    if (NOT APPLE)
+    if(NOT APPLE)
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=thread -static-libtsan)
     else()
         target_link_options(${TARGET_NAME} PRIVATE -fsanitize=thread -static-libtsan)
@@ -29,11 +29,10 @@ function(apply_thread_sanitizer TARGET_NAME)
 endfunction()
 
 function(apply_memory_sanitizer TARGET_NAME)
-    # MemorySanitizer (MSan) requires Clang/LLVM and is not generally supported
-    # on Apple platforms or with uninstrumented system libraries. Fail early
-    # to avoid confusing builds on unsupported toolchains.
+    # MSan requires Clang/LLVM and is not generally supported on Apple platforms
     if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        message(FATAL_ERROR "MemorySanitizer requires Clang/LLVM (set CMAKE_CXX_COMPILER to clang++)")
+        message(
+            FATAL_ERROR "MemorySanitizer requires Clang/LLVM (set CMAKE_CXX_COMPILER to clang++)")
     endif()
     if(APPLE)
         message(FATAL_ERROR "MemorySanitizer is not supported on Apple platforms in this project")
@@ -65,7 +64,9 @@ function(apply_sanitizers TARGET_NAME)
 
         if(SANITIZE_MEMORY)
             if(SANITIZE_ADDRESS OR SANITIZE_THREAD)
-                message(FATAL_ERROR "Memory sanitizer is not compatible with Address or Thread sanitizer")
+                message(
+                    FATAL_ERROR
+                        "Memory sanitizer is not compatible with Address or Thread sanitizer")
             endif()
             apply_memory_sanitizer(${TARGET_NAME})
         endif()

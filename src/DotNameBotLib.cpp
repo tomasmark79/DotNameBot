@@ -6,26 +6,30 @@
 
 namespace dotnamecpp::v1 {
 
-  DotNameBotLib::DotNameBotLib(const UtilsFactory::AppComponents &utilsComponents)
-      : logger_(utilsComponents.logger ? utilsComponents.logger
-                                       : std::make_shared<dotnamecpp::logging::NullLogger>()),
-        assetManager_(utilsComponents.assetManager),
-        customStrings_(utilsComponents.customStringsLoader) {
-
+  DotNameBotLib::DotNameBotLib(const UtilsFactory::ApplicationContext &context)
+      : logger_(context.logger ? context.logger
+                               : std::make_shared<dotnamecpp::logging::NullLogger>()),
+        assetManager_(context.assetManager) {
     if (!assetManager_ || !assetManager_->validate()) {
       logger_->errorStream() << "Invalid or missing asset manager";
       return;
     }
 
-    // another services
-    emojiModuleLib_ = std::make_shared<dotnamecpp::v1::EmojiModuleLib>(utilsComponents);
+    // EmojiModule initialization
+    emojiModuleLib_ = std::make_shared<dotnamecpp::v1::EmojiModuleLib>(context);
+
+    // RSS Service initialization
     rssService_ = std::make_shared<dotnamecpp::rss::RssManager>(logger_, assetManager_);
 
-    // Register services to service container
+    // Service container setup
     services_ = std::make_unique<ServiceContainer>();
-    services_->registerService(logger_);
-    services_->registerService(assetManager_);
-    services_->registerService(customStrings_);
+
+    // Register core services
+    services_->registerService(context.logger);
+    services_->registerService(context.assetManager);
+    services_->registerService(context.customStringsLoader);
+
+    // Register library services
     services_->registerService(emojiModuleLib_);
     services_->registerService(rssService_);
 
