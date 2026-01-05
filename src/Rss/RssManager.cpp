@@ -281,6 +281,7 @@ namespace dotnamecpp::rss {
     return buffer;
   }
 
+  // TODO: Improve parsing robustness and support more RSS/Atom variants
   RSSFeed RssManager::parseRSS(const std::string &xmlData, long embeddedType,
                                uint64_t discordChannelId, int &totalDuplicateItems) {
     RSSFeed feed;
@@ -369,7 +370,7 @@ namespace dotnamecpp::rss {
 
         // <image>
         // <title>iSport.cz</title>
-        // <url>https://1958898586.rsc.cdn77.org/images/isportcz/dist/svg_fallback/logo-isport.png</url>
+        // <url>https://picture.png</url>
         // <link>https://isport.blesk.cz</link>
         // </image>
 
@@ -442,11 +443,11 @@ namespace dotnamecpp::rss {
         }
 
         // <media:content
-        // url="https://1gr.cz/fotky/idnes/24/063/cl6/IHA6058a4a762_shutterstock_1259282710.jpg"
+        // url="https://picture.jpg"
         // type="image/jpeg"/>
 
         // <media:content
-        // url="https://itsfoss.com/content/images/2025/12/cachyos-server-edition-plans-banner.png"
+        // url="https://picture.png"
         // medium="image"/>
 
         if (auto *mediaContentEl = item->FirstChildElement("media:content")) {
@@ -463,9 +464,8 @@ namespace dotnamecpp::rss {
           }
         }
 
-        // <enclosure url="https://i.iinfo.cz/images/668/disky-1.jpg" length="78026"
+        // <enclosure url="https://picture.jpg" length="78026"
         // type="image/jpeg"/>
-
         if (auto *enclosureEl = item->FirstChildElement("enclosure")) {
           const char *encUrl = enclosureEl->Attribute("url");
           rssItem.rssMedia.url = (encUrl != nullptr) ? encUrl : "";
@@ -476,7 +476,17 @@ namespace dotnamecpp::rss {
         if (auto *dateEl = item->FirstChildElement("pubDate")) {
           rssItem.pubDate = (dateEl->GetText() != nullptr) ? dateEl->GetText() : "";
         }
-      }
+
+        // <szn:image>
+        // <szn:url>https://picture.jpg</szn:url>
+        // </szn:image>
+        if (auto *sznImageEl = item->FirstChildElement("szn:image")) {
+          if (auto *sznUrlEl = sznImageEl->FirstChildElement("szn:url")) {
+            rssItem.rssMedia.url = (sznUrlEl->GetText() != nullptr) ? sznUrlEl->GetText() : "";
+          }
+          rssItem.rssMedia.type = "image/"; // Type is not usually provided, set as image
+        }
+      } // End RSS vs Atom parsing
 
       if (rssItem.title.empty() || rssItem.url.empty()) {
         continue;
@@ -485,7 +495,7 @@ namespace dotnamecpp::rss {
       rssItem.generateHash(); // Generate hash from original, unprocessed data
 
       // Skip if already seen
-      if (seenHashes_.find(rssItem.hash) != seenHashes_.end()) {
+      if (seenHashes_.contains(rssItem.hash)) {
         totalDuplicateItems++;
         continue;
       }
