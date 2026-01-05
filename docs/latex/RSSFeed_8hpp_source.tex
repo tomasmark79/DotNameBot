@@ -10,16 +10,15 @@
 \DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1rss}{dotnamecpp::rss}}\ \{}
 \DoxyCodeLine{00007\ }
 \DoxyCodeLine{00012\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed}{RSSFeed}}\ \{}
-\DoxyCodeLine{00013\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a59998068ba1fb0a0408ea50eb5754566}{title}};}
-\DoxyCodeLine{00014\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac28db8f79282cbbaf8facd155ca74906}{description}};}
-\DoxyCodeLine{00015\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a1a93ee65d55dcbee1eba6aa7f2929dce}{link}};}
+\DoxyCodeLine{00013\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_aa38178f54e3cee04098e6fff4d342378}{headTitle}};}
+\DoxyCodeLine{00014\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a9c4fa0cd23efeb078681d8374c8bd1f4}{headDescription}};}
+\DoxyCodeLine{00015\ \ \ \ \ std::string\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_aa5c773fb1e234f556cb578f995ce9e0a}{headLink}};}
 \DoxyCodeLine{00016\ \ \ \ \ std::vector<RSSItem>\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a99cb75140e207b3cc22242bd69b6d8dc}{items}};}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a3b6eec652a2bc8a2ab296fc1f867500a}{addItem}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \&item);}
-\DoxyCodeLine{00018\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a978e7dbf5752cf06fcc91126a09eb0b8}{size}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac3da735f258f22ba1438387d0abffac1}{clear}}();}
-\DoxyCodeLine{00021\ \ \ \};}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a3b6eec652a2bc8a2ab296fc1f867500a}{addItem}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \&item)\ \{\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a99cb75140e207b3cc22242bd69b6d8dc}{items}}.push\_back(item);\ \};}
+\DoxyCodeLine{00018\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a978e7dbf5752cf06fcc91126a09eb0b8}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a99cb75140e207b3cc22242bd69b6d8dc}{items}}.size();\ \}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_ac3da735f258f22ba1438387d0abffac1}{clear}}()\ \{\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSFeed_a99cb75140e207b3cc22242bd69b6d8dc}{items}}.clear();\ \};}
+\DoxyCodeLine{00020\ \ \ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
 
 \end{DoxyCode}

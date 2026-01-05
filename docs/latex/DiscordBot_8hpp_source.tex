@@ -19,86 +19,84 @@
 \DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <EmojiesLib/EmojiesLib.hpp>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <EmojiModuleLib/EmojiModuleLib.hpp>}}
 \DoxyCodeLine{00019\ }
 \DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1discordbot}{dotnamecpp::discordbot}}\ \{}
 \DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f59e738c73cd0ae6516b5214ba37f60}{DiscordBot}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \{}
-\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f59e738c73cd0ae6516b5214ba37f60}{DiscordBot}}(\mbox{\hyperlink{classServiceContainer}{ServiceContainer}}\ \&services)}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ :\ logger\_(services.getService<\mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}::\mbox{\hyperlink{namespacedotnamecpp_1_1logging}{logging}}::ILogger>()),}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ assetManager\_(services.getService<\mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}::\mbox{\hyperlink{namespacedotnamecpp_1_1assets}{assets}}::IAssetManager>()),}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ emojiesLib\_(services.getService<dotname::EmojiesLib>()),}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ rssService\_(services.getService<\mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}::\mbox{\hyperlink{namespacedotnamecpp_1_1rss}{rss}}::IRssService>())\ \{}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!logger\_)\ \{}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}DiscordBot\ requires\ a\ logger"{}});}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_DISCORD\_MESSAGE\_LENGTH\ =\ 2000;}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{constexpr}\ dpp::snowflake\ \mbox{\hyperlink{namespacedotnamecpp_1_1discordbot_a469c5a381a866bb42722b60a38aebc65}{LOG\_CHANNEL\_ID}}\ =\ 1454003952533242010;}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespacedotnamecpp_1_1discordbot_a44952ed85704fdac88bdbe8238ae3fc3}{FETCH\_INTERVAL\_SECONDS}}\ =\ 3600;\ \textcolor{comment}{//\ 1\ hour}}
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{namespacedotnamecpp_1_1discordbot_a094fd4031cbd1b8900a0f6d7bf202542}{PUT\_INTERVAL\_SECONDS}}\ =\ 30;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f59e738c73cd0ae6516b5214ba37f60}{DiscordBot}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classILifeCycle_a64e5d7091868eeb01bb2434da438081d}{ILifeCycle}}\ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f59e738c73cd0ae6516b5214ba37f60}{DiscordBot}}(\mbox{\hyperlink{classServiceContainer}{ServiceContainer}}\ \&services);}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_aafee82c8d5c93b399b478f28ea336e7a}{\string~DiscordBot}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_adecefc632a43651a9352820b31299507}{setStopRequestedCallback}}(std::function<\textcolor{keywordtype}{void}()>\ callback)\ \{\ onStopRequested\_\ =\ callback;\ \}}
 \DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!assetManager\_)\ \{}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}DiscordBot\ requires\ an\ asset\ manager"{}});}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (emojiesLib\_)\ \{}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ logger\_-\/>infoStream()\ <<\ \textcolor{stringliteral}{"{}DiscordBot\ initialized\ with\ EmojiesLib,\ random\ emoji:\ "{}}}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ emojiesLib\_-\/>getRandomEmoji();}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}DiscordBot\ requires\ an\ EmojiesLib"{}});}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{comment}{//\ CustomStrings\ loader\ is\ created\ on-\/demand}}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ customStrings\_\ =\ \mbox{\hyperlink{classdotnamecpp_1_1utils_1_1UtilsFactory_aff59f9352b744e132ab2bbf5371eb52a}{dotnamecpp::utils::UtilsFactory::createCustomStringsLoader}}(assetManager\_);}
-\DoxyCodeLine{00047\ \ \ \ \ \}}
-\DoxyCodeLine{00048\ }
-\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_aafee82c8d5c93b399b478f28ea336e7a}{\string~DiscordBot}}()\textcolor{keyword}{\ override\ }\{\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5cac9d7eea641a37523ca99d8d38963c}{stop}}();\ \}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ ILifeCycle\ interface\ declarations}}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5c2963ad0b530b93f96f5646de023b69}{initialize}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f6245ac4c780609c215c1081ff097b8}{start}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5cac9d7eea641a37523ca99d8d38963c}{stop}}()\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00083\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a54158b4a061d1a2ff4401602bcdded1c}{isRunning}}()\textcolor{keyword}{\ const\ override\ }\{}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ isRunning\_.load();}
-\DoxyCodeLine{00086\ \ \ \ \ \}}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00093\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00094\ \ \ \ \ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_ab1d753b20152be10d894158f585f63bd}{getName}}()\textcolor{keyword}{\ const\ override\ }\{}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DiscordBot.hpp"{}};}
-\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ ILifeCycle\ interface\ declarations}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5c2963ad0b530b93f96f5646de023b69}{initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5f6245ac4c780609c215c1081ff097b8}{start}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a5cac9d7eea641a37523ca99d8d38963c}{stop}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00066\ \ \ \ \ [[nodiscard]]}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_a54158b4a061d1a2ff4401602bcdded1c}{isRunning}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ isRunning\_.load();}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00076\ \ \ \ \ [[nodiscard]]}
+\DoxyCodeLine{00077\ \ \ \ \ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1discordbot_1_1DiscordBot_ab1d753b20152be10d894158f585f63bd}{getName}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DiscordBot.hpp"{}};}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ registerBulkSlashCommandsToDiscord();}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ putRandomFeedTimer();}
 \DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ registerBulkSlashCommandsToDiscord();}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ fetchFeedsTimer();}
 \DoxyCodeLine{00105\ }
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ putRandomFeedTimer();}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{bool}\ fetchFeedsTimer();}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_DISCORD\_MESSAGE\_LENGTH\ =\ 2000;}
-\DoxyCodeLine{00123\ }
-\DoxyCodeLine{00124\ \ \ \ \ std::unique\_ptr<dpp::cluster>\ bot\_;}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger\_;}
-\DoxyCodeLine{00127\ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager\_;}
-\DoxyCodeLine{00128\ \ \ \ \ std::shared\_ptr<dotnamecpp::utils::ICustomStringsLoader>\ customStrings\_;}
-\DoxyCodeLine{00129\ \ \ \ \ std::shared\_ptr<dotname::EmojiesLib>\ emojiesLib\_;}
-\DoxyCodeLine{00130\ \ \ \ \ std::shared\_ptr<dotnamecpp::rss::IRssService>\ rssService\_;}
-\DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ getTokenFromFile(std::string\ \&token);}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ handleSlashCommand(\textcolor{keyword}{const}\ dpp::slashcommand\_t\ \&event);}
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ splitDiscordMessageIfNeeded(\textcolor{keyword}{const}\ std::string\ \&message,}
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ \&outMessages);}
-\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ logTheServed(\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{rss::RSSItem}}\ \&item,\ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool})>\ onComplete);}
-\DoxyCodeLine{00137\ \ \ \ \ std::atomic<bool>\ isRunning\_\{\textcolor{keyword}{false}\};}
-\DoxyCodeLine{00138\ \ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ startTime\_;}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \ \ \ \ std::vector<std::thread>\ threads\_;}
-\DoxyCodeLine{00141\ \ \ \ \ std::atomic<bool>\ isRunningTimer\_\{\textcolor{keyword}{true}\};}
-\DoxyCodeLine{00142\ \ \ \ \ std::atomic<bool>\ isFetchFeedsTimerRunning\_\{\textcolor{keyword}{true}\};}
-\DoxyCodeLine{00143\ \ \ \};}
-\DoxyCodeLine{00144\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::discordbot}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ splitDiscordMessageIfNeeded(\textcolor{keyword}{const}\ std::string\ \&message,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ \&outMessages);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ logTheServed(\mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{rss::RSSItem}}\ \&item,\ \textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool})>\ \&onComplete);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ postCrossPostedMessage(\textcolor{keyword}{const}\ dpp::message\ \&msg,}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{bool})>\ \&onComplete\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ handleSlashCommand(\textcolor{keyword}{const}\ dpp::slashcommand\_t\ \&event);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ getTokenFromFile(std::string\ \&token);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ std::chrono::time\_point<std::chrono::system\_clock>\ startTime\_;}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ std::vector<std::thread>\ threads\_;}
+\DoxyCodeLine{00155\ \ \ \ \ std::atomic<bool>\ isPRFTRunning\_\{\textcolor{keyword}{true}\};}
+\DoxyCodeLine{00156\ \ \ \ \ std::atomic<bool>\ isFFTRunning\_\{\textcolor{keyword}{true}\};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ std::condition\_variable\ cv\_;}
+\DoxyCodeLine{00159\ \ \ \ \ std::mutex\ cvMutex\_;}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ std::unique\_ptr<dpp::cluster>\ cluster\_;}
+\DoxyCodeLine{00162\ \ \ \ \ std::atomic<bool>\ isRunning\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger\_;}
+\DoxyCodeLine{00165\ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager\_;}
+\DoxyCodeLine{00166\ \ \ \ \ std::shared\_ptr<dotnamecpp::utils::ICustomStringsLoader>\ customStrings\_;}
+\DoxyCodeLine{00167\ \ \ \ \ std::shared\_ptr<dotnamecpp::v1::EmojiModuleLib>\ emojiModuleLib\_;}
+\DoxyCodeLine{00168\ \ \ \ \ std::shared\_ptr<dotnamecpp::rss::IRssService>\ rssService\_;}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ std::function<void()>\ onStopRequested\_;}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{comment}{//\ Stored\ DPP\ event\ handles\ so\ we\ can\ detach\ handlers\ before\ destroying\ cluster}}
+\DoxyCodeLine{00173\ \ \ \ \ dpp::event\_handle\ on\_log\_handle\_\{0\};}
+\DoxyCodeLine{00174\ \ \ \ \ dpp::event\_handle\ on\_ready\_handle\_\{0\};}
+\DoxyCodeLine{00175\ \ \ \ \ dpp::event\_handle\ on\_slashcommand\_handle\_\{0\};}
+\DoxyCodeLine{00176\ \ \ \};}
+\DoxyCodeLine{00177\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::discordbot}}
 
 \end{DoxyCode}

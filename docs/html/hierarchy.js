@@ -1,6 +1,6 @@
 var hierarchy =
 [
-    [ "dotnamecpp::utils::UtilsFactory::AppComponents", "structdotnamecpp_1_1utils_1_1UtilsFactory_1_1AppComponents.html", null ],
+    [ "dotnamecpp::utils::UtilsFactory::ApplicationContext", "structdotnamecpp_1_1utils_1_1UtilsFactory_1_1ApplicationContext.html", null ],
     [ "dotnamecpp::assets::AssetManagerFactory", "classdotnamecpp_1_1assets_1_1AssetManagerFactory.html", null ],
     [ "SlashCommand::CommandOption", "structSlashCommand_1_1CommandOption.html", null ],
     [ "dotnamecpp::v1::DotNameBotLib", "classdotnamecpp_1_1v1_1_1DotNameBotLib.html", null ],
@@ -62,6 +62,7 @@ var hierarchy =
     [ "dotnamecpp::utils::Result< void, E >", "classdotnamecpp_1_1utils_1_1Result_3_01void_00_01E_01_4.html", null ],
     [ "dotnamecpp::rss::RSSFeed", "structdotnamecpp_1_1rss_1_1RSSFeed.html", null ],
     [ "dotnamecpp::rss::RSSItem", "structdotnamecpp_1_1rss_1_1RSSItem.html", null ],
+    [ "dotnamecpp::rss::RSSMedia", "structdotnamecpp_1_1rss_1_1RSSMedia.html", null ],
     [ "dotnamecpp::rss::RSSUrl", "structdotnamecpp_1_1rss_1_1RSSUrl.html", null ],
     [ "ServiceContainer", "classServiceContainer.html", null ],
     [ "SlashCommand", "classSlashCommand.html", null ],
@@ -70,6 +71,5 @@ var hierarchy =
       [ "ConsoleLoggerTest", "classConsoleLoggerTest.html", null ],
       [ "FileReaderTest", "classFileReaderTest.html", null ]
     ] ],
-    [ "dotnamecpp::utils::UtilsFactory::UtilsBundle", "structdotnamecpp_1_1utils_1_1UtilsFactory_1_1UtilsBundle.html", null ],
     [ "dotnamecpp::utils::UtilsFactory", "classdotnamecpp_1_1utils_1_1UtilsFactory.html", null ]
 ];

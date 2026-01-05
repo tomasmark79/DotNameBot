@@ -1,13 +1,9 @@
 <map id="dotnamecpp::v1::DotNameBotLib::operator=" name="dotnamecpp::v1::DotNameBotLib::operator=">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,105,204,148"/>
-<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ae52e0d55f95c209a522a006a93a84df9" title="Construct a new object." alt="" coords="252,5,450,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,102,251,58,267,51,269,56,253,62,152,107"/>
-<area shape="rect" id="Node000004" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ab68e0404a5a6e9d8ab37b5e276a3d305" title="Get the assets directory path." alt="" coords="252,72,450,115"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,111,236,106,237,111,205,116"/>
-<area shape="rect" id="Node000005" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a2a23b105d66905c1a4dbbb1dd0ae0ebc" title="Get access to the bot orchestrator for custom bot registration." alt="" coords="252,139,450,181"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="205,137,237,142,236,147,204,143"/>
-<area shape="rect" id="Node000006" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a1a291f6a6400a3cd1e88f14343c64084" title="Get access to the service container for custom implementations." alt="" coords="252,205,450,248"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="152,146,253,191,269,197,267,202,251,196,150,151"/>
-<area shape="rect" id="Node000003" href="$classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b" title="Add a lifecycle&#45;managed entity (bot, service, etc.)" alt="" coords="498,13,620,40"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,24,482,24,482,29,450,29"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,27,204,69"/>
+<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a63804da7fabebf5d7a06691687a8ec0d" title=" " alt="" coords="252,27,450,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,45,236,45,236,51,204,51"/>
+<area shape="rect" id="Node000003" href="$classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b" title="Add a lifecycle&#45;managed entity (bot, service, etc.)" alt="" coords="536,5,658,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,34,520,25,521,30,451,39"/>
+<area shape="rect" id="Node000004" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a815e934c0126c1b5f89b46011bfd22b3" title=" " alt="" coords="498,56,696,99"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="451,57,483,61,482,66,450,62"/>
 </map>

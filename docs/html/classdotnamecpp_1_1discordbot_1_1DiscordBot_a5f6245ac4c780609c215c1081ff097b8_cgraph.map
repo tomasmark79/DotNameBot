@@ -1,5 +1,6 @@
 <map id="dotnamecpp::discordbot::DiscordBot::start" name="dotnamecpp::discordbot::DiscordBot::start">
-<area shape="rect" id="Node000001" title="Start the Discord bot." alt="" coords="5,5,166,48"/>
-<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd" title="Get the Name object." alt="" coords="214,5,374,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,24,198,24,198,29,166,29"/>
+<area shape="rect" id="Node000001" title="Start the Discord bot." alt="" coords="5,29,166,72"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="46,29,44,19,51,10,65,5,86,3,108,5,121,11,119,16,106,10,85,8,66,10,54,15,49,21,51,28"/>
+<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1discordbot_1_1DiscordBot.html#ab1d753b20152be10d894158f585f63bd" title="Get the Name object." alt="" coords="214,29,374,72"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,48,198,48,198,53,166,53"/>
 </map>

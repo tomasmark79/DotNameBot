@@ -110,7 +110,7 @@ Inheritance diagram for dotnamecpp::rss::IRssService:</div>
 <div class="dynheader">
 Collaboration diagram for dotnamecpp::rss::IRssService:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classdotnamecpp_1_1rss_1_1IRssService__coll__graph.svg" width="246" height="534"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="classdotnamecpp_1_1rss_1_1IRssService__coll__graph.svg" width="215" height="480"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -123,18 +123,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac9fc9b2b5b01dc129c504bc99ecf9dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refetch all RSS feeds from the stored URLs.  <br /></td></tr>
 <tr class="memitem:a5faa2a922fcd6d9996aedc71f36e4552" id="r_a5faa2a922fcd6d9996aedc71f36e4552"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5faa2a922fcd6d9996aedc71f36e4552">listUrlsAsString</a> ()=0</td></tr>
 <tr class="memdesc:a5faa2a922fcd6d9996aedc71f36e4552"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all stored RSS URLs.  <br /></td></tr>
+<tr class="memitem:a8a0db56df9dbdb4e552d77c5fdc8aa42" id="r_a8a0db56df9dbdb4e552d77c5fdc8aa42"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a0db56df9dbdb4e552d77c5fdc8aa42">listChannelUrlsAsString</a> (uint64_t discordChannelId)=0</td></tr>
+<tr class="memdesc:a8a0db56df9dbdb4e552d77c5fdc8aa42"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all stored RSS URLs for a specific Discord channel.  <br /></td></tr>
 <tr class="memitem:a9406e7e0b635a11fdff9c9c3345084f1" id="r_a9406e7e0b635a11fdff9c9c3345084f1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9406e7e0b635a11fdff9c9c3345084f1">getRandomItem</a> ()=0</td></tr>
 <tr class="memdesc:a9406e7e0b635a11fdff9c9c3345084f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random RSS item from the feed buffer.  <br /></td></tr>
-<tr class="memitem:a591471575f17b596689d27a3a107d044" id="r_a591471575f17b596689d27a3a107d044"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a591471575f17b596689d27a3a107d044">getRandomItemMatchingEmbedded</a> (bool embedded)=0</td></tr>
-<tr class="memdesc:a591471575f17b596689d27a3a107d044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random RSS item matching the embedded flag.  <br /></td></tr>
 <tr class="memitem:af993b4985d7d70f9b23e641a347af2f3" id="r_af993b4985d7d70f9b23e641a347af2f3"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af993b4985d7d70f9b23e641a347af2f3">getItemCount</a> () const =0</td></tr>
 <tr class="memdesc:af993b4985d7d70f9b23e641a347af2f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of items in the feed buffer.  <br /></td></tr>
-<tr class="memitem:ab48f5dd0482ec2883bff9e4291e5d691" id="r_ab48f5dd0482ec2883bff9e4291e5d691"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab48f5dd0482ec2883bff9e4291e5d691">getItemCountMatchingEmbedded</a> (bool embedded) const =0</td></tr>
-<tr class="memdesc:ab48f5dd0482ec2883bff9e4291e5d691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of items matching the embedded flag.  <br /></td></tr>
-<tr class="memitem:a59636f4ea502dcc58ec0b43d58878548" id="r_a59636f4ea502dcc58ec0b43d58878548"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59636f4ea502dcc58ec0b43d58878548">addUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId)=0</td></tr>
-<tr class="memdesc:a59636f4ea502dcc58ec0b43d58878548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new RSS URL to the list.  <br /></td></tr>
-<tr class="memitem:a9fbc3525ab5c9d46ed5d097da40c143f" id="r_a9fbc3525ab5c9d46ed5d097da40c143f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fbc3525ab5c9d46ed5d097da40c143f">modUrl</a> (const std::string &amp;url, bool embedded, uint64_t discordChannelId)=0</td></tr>
-<tr class="memdesc:a9fbc3525ab5c9d46ed5d097da40c143f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an existing RSS URL in the list.  <br /></td></tr>
+<tr class="memitem:ab26f4cfc8b7bd3d2e5e0728162042ea9" id="r_ab26f4cfc8b7bd3d2e5e0728162042ea9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab26f4cfc8b7bd3d2e5e0728162042ea9">addUrl</a> (const std::string &amp;url, long embeddedType, uint64_t discordChannelId)=0</td></tr>
+<tr class="memdesc:ab26f4cfc8b7bd3d2e5e0728162042ea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new RSS URL to the list.  <br /></td></tr>
+<tr class="memitem:a9b0a01853f1504a58f63d3603fa3a27c" id="r_a9b0a01853f1504a58f63d3603fa3a27c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b0a01853f1504a58f63d3603fa3a27c">modUrl</a> (const std::string &amp;url, long embeddedType, uint64_t discordChannelId)=0</td></tr>
+<tr class="memdesc:a9b0a01853f1504a58f63d3603fa3a27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an existing RSS URL in the list.  <br /></td></tr>
 <tr class="memitem:a755763e4366f71421e2f0c6756dfd3ad" id="r_a755763e4366f71421e2f0c6756dfd3ad"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a755763e4366f71421e2f0c6756dfd3ad">remUrl</a> (const std::string &amp;url)=0</td></tr>
 <tr class="memdesc:a755763e4366f71421e2f0c6756dfd3ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an existing RSS URL from the list.  <br /></td></tr>
 </table>
@@ -170,8 +168,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a59636f4ea502dcc58ec0b43d58878548" name="a59636f4ea502dcc58ec0b43d58878548"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59636f4ea502dcc58ec0b43d58878548">&#9670;&#160;</a></span>addUrl()</h2>
+<a id="ab26f4cfc8b7bd3d2e5e0728162042ea9" name="ab26f4cfc8b7bd3d2e5e0728162042ea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26f4cfc8b7bd3d2e5e0728162042ea9">&#9670;&#160;</a></span>addUrl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +185,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>embedded</em></span>, </td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>embeddedType</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -206,14 +204,14 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The RSS feed URL </td></tr>
-    <tr><td class="paramname">embedded</td><td>Whether items from this feed should be marked as embedded </td></tr>
+    <tr><td class="paramname">embeddedType</td><td>Whether items from this feed should be marked as embedded </td></tr>
     <tr><td class="paramname">discordChannelId</td><td>Optional Discord channel ID associated with this feed </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success, otherwise false </dd></dl>
 
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a27e3979a7d81f8b7a309461f2d4a8b68">dotnamecpp::rss::RssManager</a>.</p>
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a32d89fbd378bb4beadb3ce87ef683fc1">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>
@@ -247,42 +245,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab48f5dd0482ec2883bff9e4291e5d691" name="ab48f5dd0482ec2883bff9e4291e5d691"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab48f5dd0482ec2883bff9e4291e5d691">&#9670;&#160;</a></span>getItemCountMatchingEmbedded()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual size_t dotnamecpp::rss::IRssService::getItemCountMatchingEmbedded </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>embedded</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the total number of items matching the embedded flag. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">embedded</td><td>Whether to match embedded items </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>size_t </dd></dl>
-
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#aaf4027ab3775c4174fea7c1647635286">dotnamecpp::rss::RssManager</a>.</p>
-
-</div>
-</div>
 <a id="a9406e7e0b635a11fdff9c9c3345084f1" name="a9406e7e0b635a11fdff9c9c3345084f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9406e7e0b635a11fdff9c9c3345084f1">&#9670;&#160;</a></span>getRandomItem()</h2>
 
@@ -307,45 +269,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get a random RSS item from the feed buffer. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html" title="Represents an item from a RSS feed along with its metadata.">RSSItem</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html" title="Represents a single RSS item.">RSSItem</a> </dd></dl>
 
 <p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#aca0ba13d4a29203c10adf306920632f4">dotnamecpp::rss::RssManager</a>.</p>
-
-</div>
-</div>
-<a id="a591471575f17b596689d27a3a107d044" name="a591471575f17b596689d27a3a107d044"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a591471575f17b596689d27a3a107d044">&#9670;&#160;</a></span>getRandomItemMatchingEmbedded()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html">RSSItem</a> dotnamecpp::rss::IRssService::getRandomItemMatchingEmbedded </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>embedded</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get a random RSS item matching the embedded flag. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">embedded</td><td>Whether to match embedded items </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structdotnamecpp_1_1rss_1_1RSSItem.html" title="Represents an item from a RSS feed along with its metadata.">RSSItem</a> </dd></dl>
-
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#aaea4cb356ec1cbbb0459a31c58b40c7c">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>
@@ -379,6 +305,42 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a8a0db56df9dbdb4e552d77c5fdc8aa42" name="a8a0db56df9dbdb4e552d77c5fdc8aa42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a0db56df9dbdb4e552d77c5fdc8aa42">&#9670;&#160;</a></span>listChannelUrlsAsString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string dotnamecpp::rss::IRssService::listChannelUrlsAsString </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>discordChannelId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>List all stored RSS URLs for a specific Discord channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">discordChannelId</td><td>The Discord channel ID to filter URLs </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::string A formatted string listing all RSS URLs for the specified channel </dd></dl>
+
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a8788d9df1063b52d921457ac0e348bc3">dotnamecpp::rss::RssManager</a>.</p>
+
+</div>
+</div>
 <a id="a5faa2a922fcd6d9996aedc71f36e4552" name="a5faa2a922fcd6d9996aedc71f36e4552"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5faa2a922fcd6d9996aedc71f36e4552">&#9670;&#160;</a></span>listUrlsAsString()</h2>
 
@@ -409,8 +371,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9fbc3525ab5c9d46ed5d097da40c143f" name="a9fbc3525ab5c9d46ed5d097da40c143f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fbc3525ab5c9d46ed5d097da40c143f">&#9670;&#160;</a></span>modUrl()</h2>
+<a id="a9b0a01853f1504a58f63d3603fa3a27c" name="a9b0a01853f1504a58f63d3603fa3a27c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b0a01853f1504a58f63d3603fa3a27c">&#9670;&#160;</a></span>modUrl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,7 +388,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>embedded</em></span>, </td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>embeddedType</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -445,14 +407,14 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The RSS feed URL </td></tr>
-    <tr><td class="paramname">embedded</td><td>Whether items from this feed should be marked as embedded </td></tr>
+    <tr><td class="paramname">embeddedType</td><td>Whether items from this feed should be marked as embedded </td></tr>
     <tr><td class="paramname">discordChannelId</td><td>Optional Discord channel ID associated with this feed </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success, otherwise false </dd></dl>
 
-<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a9484e21d6d887ce165dd7274f3cd1515">dotnamecpp::rss::RssManager</a>.</p>
+<p>Implemented in <a class="el" href="classdotnamecpp_1_1rss_1_1RssManager.html#a1399fe7933ea2bf9dc56f06f922c51ec">dotnamecpp::rss::RssManager</a>.</p>
 
 </div>
 </div>

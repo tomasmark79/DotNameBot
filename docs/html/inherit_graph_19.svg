@@ -11,10 +11,10 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="structdotnamecpp_1_1utils_1_1LoggerConfig.html" target="_top" xlink:title="Configuration options for creating a logger.">
+<g id="a_Node000000"><a xlink:href="structdotnamecpp_1_1utils_1_1JsonError.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="99.25,-32 0,-32 0,0 99.25,0 99.25,-32"/>
 <text xml:space="preserve" text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">dotnamecpp::utils::</text>
-<text xml:space="preserve" text-anchor="middle" x="49.62" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">LoggerConfig</text>
+<text xml:space="preserve" text-anchor="middle" x="49.62" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">JsonError</text>
 </a>
 </g>
 </g>

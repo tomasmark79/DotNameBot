@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fileerrorcode_0',['FileErrorCode',['../namespacedotnamecpp_1_1utils.html#a83c62c0f3ca5d2558b4c6aa4f610db1d',1,'dotnamecpp::utils']]]
+  ['embeddedtype_0',['EmbeddedType',['../namespacedotnamecpp_1_1rss.html#ad5cd4b20e38bc0acbc1c639e8af5277c',1,'dotnamecpp::rss']]]
 ];

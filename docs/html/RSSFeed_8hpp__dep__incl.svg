@@ -23,17 +23,17 @@
 <g id="Node000001" class="node">
 <title>Node1</title>
 <g id="a_Node000001"><a xlink:title=" ">
-<polygon fill="#999999" stroke="#666666" points="217.38,-188 102.38,-188 102.38,-168 217.38,-168 217.38,-188"/>
-<text xml:space="preserve" text-anchor="middle" x="159.88" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RSSFeed.hpp</text>
+<polygon fill="#999999" stroke="#666666" points="287.38,-188 172.38,-188 172.38,-168 287.38,-168 287.38,-188"/>
+<text xml:space="preserve" text-anchor="middle" x="229.88" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RSSFeed.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="RSSFeed_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="148.38,-132 33.38,-132 33.38,-112 148.38,-112 148.38,-132"/>
-<text xml:space="preserve" text-anchor="middle" x="90.88" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RSSFeed.cpp</text>
+<g id="a_Node000002"><a xlink:href="RssManager_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="293.75,-132 166,-132 166,-112 293.75,-112 293.75,-132"/>
+<text xml:space="preserve" text-anchor="middle" x="229.88" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RssManager.hpp</text>
 </a>
 </g>
 </g>
@@ -41,35 +41,71 @@
 <g id="edge1_Node000001_Node000002" class="edge">
 <title>Node1&#45;&gt;Node2</title>
 <g id="a_edge1_Node000001_Node000002"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M139.02,-160.68C127.15,-151.39 112.71,-140.09 102.76,-132.3"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="136.63,-163.25 146.66,-166.66 140.95,-157.74 136.63,-163.25"/>
+<path fill="none" stroke="#63b8ff" d="M229.88,-156.13C229.88,-147.9 229.88,-138.85 229.88,-132.3"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="226.38,-156.08 229.88,-166.08 233.38,-156.08 226.38,-156.08"/>
 </a>
 </g>
 </g>
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="RssManager_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="293.75,-132 166,-132 166,-112 293.75,-112 293.75,-132"/>
-<text xml:space="preserve" text-anchor="middle" x="229.88" y="-118.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RssManager.hpp</text>
+<g id="a_Node000003"><a xlink:href="DiscordBot_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="201.75,-76 50,-76 50,-56 201.75,-56 201.75,-76"/>
+<text xml:space="preserve" text-anchor="middle" x="125.88" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DiscordBot/DiscordBot.hpp</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node3 -->
-<g id="edge2_Node000001_Node000003" class="edge">
-<title>Node1&#45;&gt;Node3</title>
-<g id="a_edge2_Node000001_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M181.03,-160.68C193.07,-151.39 207.73,-140.09 217.82,-132.3"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="179.05,-157.79 173.27,-166.67 183.32,-163.33 179.05,-157.79"/>
+<!-- Node2&#45;&gt;Node3 -->
+<g id="edge2_Node000002_Node000003" class="edge">
+<title>Node2&#45;&gt;Node3</title>
+<g id="a_edge2_Node000002_Node000003"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M201.65,-106.35C183.35,-96.84 160.04,-84.74 144.13,-76.48"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="199.93,-109.39 210.42,-110.9 203.15,-103.18 199.93,-109.39"/>
+</a>
+</g>
+</g>
+<!-- Node5 -->
+<g id="Node000005" class="node">
+<title>Node5</title>
+<g id="a_Node000005"><a xlink:href="DotNameBotLib_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="290.38,-20 169.38,-20 169.38,0 290.38,0 290.38,-20"/>
+<text xml:space="preserve" text-anchor="middle" x="229.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DotNameBotLib.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node2&#45;&gt;Node5 -->
+<g id="edge5_Node000002_Node000005" class="edge">
+<title>Node2&#45;&gt;Node5</title>
+<g id="a_edge5_Node000002_Node000005"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M229.88,-100.31C229.88,-76.36 229.88,-37.95 229.88,-20.35"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="226.38,-100.11 229.88,-110.11 233.38,-100.11 226.38,-100.11"/>
+</a>
+</g>
+</g>
+<!-- Node6 -->
+<g id="Node000006" class="node">
+<title>Node6</title>
+<g id="a_Node000006"><a xlink:href="RssManager_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="385.75,-76 258,-76 258,-56 385.75,-56 385.75,-76"/>
+<text xml:space="preserve" text-anchor="middle" x="321.88" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RssManager.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node2&#45;&gt;Node6 -->
+<g id="edge6_Node000002_Node000006" class="edge">
+<title>Node2&#45;&gt;Node6</title>
+<g id="a_edge6_Node000002_Node000006"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M255.75,-105.81C271.8,-96.39 291.92,-84.58 305.72,-76.48"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="254.06,-102.75 247.21,-110.83 257.6,-108.78 254.06,-102.75"/>
 </a>
 </g>
 </g>
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="DiscordBot_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="201.75,-76 50,-76 50,-56 201.75,-56 201.75,-76"/>
-<text xml:space="preserve" text-anchor="middle" x="125.88" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DiscordBot/DiscordBot.hpp</text>
+<g id="a_Node000004"><a xlink:href="DiscordBot_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="151.75,-20 0,-20 0,0 151.75,0 151.75,-20"/>
+<text xml:space="preserve" text-anchor="middle" x="75.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DiscordBot/DiscordBot.cpp</text>
 </a>
 </g>
 </g>
@@ -77,69 +113,15 @@
 <g id="edge3_Node000003_Node000004" class="edge">
 <title>Node3&#45;&gt;Node4</title>
 <g id="a_edge3_Node000003_Node000004"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M201.65,-106.35C183.35,-96.84 160.04,-84.74 144.13,-76.48"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="199.93,-109.39 210.42,-110.9 203.15,-103.18 199.93,-109.39"/>
-</a>
-</g>
-</g>
-<!-- Node6 -->
-<g id="Node000006" class="node">
-<title>Node6</title>
-<g id="a_Node000006"><a xlink:href="DotNameBotLib_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="290.38,-20 169.38,-20 169.38,0 290.38,0 290.38,-20"/>
-<text xml:space="preserve" text-anchor="middle" x="229.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DotNameBotLib.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node6 -->
-<g id="edge6_Node000003_Node000006" class="edge">
-<title>Node3&#45;&gt;Node6</title>
-<g id="a_edge6_Node000003_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M229.88,-100.31C229.88,-76.36 229.88,-37.95 229.88,-20.35"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="226.38,-100.11 229.88,-110.11 233.38,-100.11 226.38,-100.11"/>
-</a>
-</g>
-</g>
-<!-- Node7 -->
-<g id="Node000007" class="node">
-<title>Node7</title>
-<g id="a_Node000007"><a xlink:href="RssManager_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="385.75,-76 258,-76 258,-56 385.75,-56 385.75,-76"/>
-<text xml:space="preserve" text-anchor="middle" x="321.88" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/Rss/RssManager.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node7 -->
-<g id="edge7_Node000003_Node000007" class="edge">
-<title>Node3&#45;&gt;Node7</title>
-<g id="a_edge7_Node000003_Node000007"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M255.75,-105.81C271.8,-96.39 291.92,-84.58 305.72,-76.48"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="254.06,-102.75 247.21,-110.83 257.6,-108.78 254.06,-102.75"/>
-</a>
-</g>
-</g>
-<!-- Node5 -->
-<g id="Node000005" class="node">
-<title>Node5</title>
-<g id="a_Node000005"><a xlink:href="DiscordBot_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="151.75,-20 0,-20 0,0 151.75,0 151.75,-20"/>
-<text xml:space="preserve" text-anchor="middle" x="75.88" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/DiscordBot/DiscordBot.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node4&#45;&gt;Node5 -->
-<g id="edge4_Node000004_Node000005" class="edge">
-<title>Node4&#45;&gt;Node5</title>
-<g id="a_edge4_Node000004_Node000005"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M109.47,-47.29C101.13,-38.28 91.34,-27.7 84.48,-20.3"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="106.78,-49.52 116.14,-54.48 111.91,-44.77 106.78,-49.52"/>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node6 -->
-<g id="edge5_Node000004_Node000006" class="edge">
-<title>Node4&#45;&gt;Node6</title>
-<g id="a_edge5_Node000004_Node000006"><a xlink:title=" ">
+<!-- Node3&#45;&gt;Node5 -->
+<g id="edge4_Node000003_Node000005" class="edge">
+<title>Node3&#45;&gt;Node5</title>
+<g id="a_edge4_Node000003_Node000005"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M154.1,-50.35C172.4,-40.84 195.71,-28.74 211.62,-20.48"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="152.6,-47.18 145.33,-54.9 155.82,-53.39 152.6,-47.18"/>
 </a>

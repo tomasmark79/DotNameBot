@@ -1,7 +1,9 @@
 <map id="dotnamecpp::v1::DotNameBotLib::operator=" name="dotnamecpp::v1::DotNameBotLib::operator=">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,204,48"/>
-<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#ae52e0d55f95c209a522a006a93a84df9" title="Construct a new object." alt="" coords="252,5,450,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,24,236,24,236,29,204,29"/>
-<area shape="rect" id="Node000003" href="$classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b" title="Add a lifecycle&#45;managed entity (bot, service, etc.)" alt="" coords="498,13,620,40"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,24,482,24,482,29,450,29"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,27,204,69"/>
+<area shape="rect" id="Node000002" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a63804da7fabebf5d7a06691687a8ec0d" title=" " alt="" coords="252,27,450,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,45,236,45,236,51,204,51"/>
+<area shape="rect" id="Node000003" href="$classOrchestrator.html#af145638b5eec3c1fb5befa8440a6c85b" title="Add a lifecycle&#45;managed entity (bot, service, etc.)" alt="" coords="536,5,658,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,34,520,25,521,30,451,39"/>
+<area shape="rect" id="Node000004" href="$classdotnamecpp_1_1v1_1_1DotNameBotLib.html#a815e934c0126c1b5f89b46011bfd22b3" title=" " alt="" coords="498,56,696,99"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="451,57,483,61,482,66,450,62"/>
 </map>

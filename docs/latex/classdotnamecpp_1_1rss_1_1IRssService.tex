@@ -26,7 +26,7 @@ Collaboration diagram for dotnamecpp\+::rss\+::IRss\+Service\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=256pt]{classdotnamecpp_1_1rss_1_1IRssService__coll__graph}
+\includegraphics[width=233pt]{classdotnamecpp_1_1rss_1_1IRssService__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
@@ -40,17 +40,15 @@ virtual int \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ac9fc9b2b5b01
 \begin{DoxyCompactList}\small\item\em Refetch all RSS feeds from the stored URLs. \end{DoxyCompactList}\item 
 virtual std\+::string \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a5faa2a922fcd6d9996aedc71f36e4552}{list\+Urls\+As\+String}} ()=0
 \begin{DoxyCompactList}\small\item\em List all stored RSS URLs. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a8a0db56df9dbdb4e552d77c5fdc8aa42}{list\+Channel\+Urls\+As\+String}} (uint64\+\_\+t discord\+Channel\+Id)=0
+\begin{DoxyCompactList}\small\item\em List all stored RSS URLs for a specific Discord channel. \end{DoxyCompactList}\item 
 virtual \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}} \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9406e7e0b635a11fdff9c9c3345084f1}{get\+Random\+Item}} ()=0
 \begin{DoxyCompactList}\small\item\em Get a random RSS item from the feed buffer. \end{DoxyCompactList}\item 
-virtual \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}} \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a591471575f17b596689d27a3a107d044}{get\+Random\+Item\+Matching\+Embedded}} (bool embedded)=0
-\begin{DoxyCompactList}\small\item\em Get a random RSS item matching the embedded flag. \end{DoxyCompactList}\item 
 virtual size\+\_\+t \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_af993b4985d7d70f9b23e641a347af2f3}{get\+Item\+Count}} () const =0
 \begin{DoxyCompactList}\small\item\em Get the total number of items in the feed buffer. \end{DoxyCompactList}\item 
-virtual size\+\_\+t \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ab48f5dd0482ec2883bff9e4291e5d691}{get\+Item\+Count\+Matching\+Embedded}} (bool embedded) const =0
-\begin{DoxyCompactList}\small\item\em Get the total number of items matching the embedded flag. \end{DoxyCompactList}\item 
-virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a59636f4ea502dcc58ec0b43d58878548}{add\+Url}} (const std\+::string \&url, bool embedded, uint64\+\_\+t discord\+Channel\+Id)=0
+virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ab26f4cfc8b7bd3d2e5e0728162042ea9}{add\+Url}} (const std\+::string \&url, long embedded\+Type, uint64\+\_\+t discord\+Channel\+Id)=0
 \begin{DoxyCompactList}\small\item\em Add a new RSS URL to the list. \end{DoxyCompactList}\item 
-virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f}{mod\+Url}} (const std\+::string \&url, bool embedded, uint64\+\_\+t discord\+Channel\+Id)=0
+virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9b0a01853f1504a58f63d3603fa3a27c}{mod\+Url}} (const std\+::string \&url, long embedded\+Type, uint64\+\_\+t discord\+Channel\+Id)=0
 \begin{DoxyCompactList}\small\item\em Modify an existing RSS URL in the list. \end{DoxyCompactList}\item 
 virtual bool \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad}{rem\+Url}} (const std\+::string \&url)=0
 \begin{DoxyCompactList}\small\item\em Remove an existing RSS URL from the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -79,11 +77,11 @@ Destroy the \doxylink{classdotnamecpp_1_1rss_1_1IRssService}{IRss\+Service} obje
 \label{doc-func-members}
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_doc-func-members}
 \doxysubsection{Member Function Documentation}
-\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a59636f4ea502dcc58ec0b43d58878548}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!addUrl@{addUrl}}
+\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_ab26f4cfc8b7bd3d2e5e0728162042ea9}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!addUrl@{addUrl}}
 \index{addUrl@{addUrl}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
 \doxysubsubsection{\texorpdfstring{addUrl()}{addUrl()}}
-{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a59636f4ea502dcc58ec0b43d58878548} 
-virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::add\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{bool}]{embedded}{, }\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_ab26f4cfc8b7bd3d2e5e0728162042ea9} 
+virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::add\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{long}]{embedded\+Type}{, }\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -93,7 +91,7 @@ Add a new RSS URL to the list.
 \begin{DoxyParams}{Parameters}
 {\em url} & The RSS feed URL \\
 \hline
-{\em embedded} & Whether items from this feed should be marked as embedded \\
+{\em embedded\+Type} & Whether items from this feed should be marked as embedded \\
 \hline
 {\em discord\+Channel\+Id} & Optional Discord channel ID associated with this feed \\
 \hline
@@ -103,7 +101,7 @@ true on success, otherwise false
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a27e3979a7d81f8b7a309461f2d4a8b68}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a32d89fbd378bb4beadb3ce87ef683fc1}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_af993b4985d7d70f9b23e641a347af2f3}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!getItemCount@{getItemCount}}
 \index{getItemCount@{getItemCount}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
@@ -122,28 +120,6 @@ size\+\_\+t
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a03d9fb244b937285a8b57d1c3d681ef6}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
-\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_ab48f5dd0482ec2883bff9e4291e5d691}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!getItemCountMatchingEmbedded@{getItemCountMatchingEmbedded}}
-\index{getItemCountMatchingEmbedded@{getItemCountMatchingEmbedded}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
-\doxysubsubsection{\texorpdfstring{getItemCountMatchingEmbedded()}{getItemCountMatchingEmbedded()}}
-{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_ab48f5dd0482ec2883bff9e4291e5d691} 
-virtual size\+\_\+t dotnamecpp\+::rss\+::\+IRss\+Service\+::get\+Item\+Count\+Matching\+Embedded (\begin{DoxyParamCaption}\item[{bool}]{embedded}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [pure virtual]}}
-
-
-
-Get the total number of items matching the embedded flag. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em embedded} & Whether to match embedded items \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-size\+\_\+t 
-\end{DoxyReturn}
-
-
-Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaf4027ab3775c4174fea7c1647635286}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
-
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a9406e7e0b635a11fdff9c9c3345084f1}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!getRandomItem@{getRandomItem}}
 \index{getRandomItem@{getRandomItem}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
 \doxysubsubsection{\texorpdfstring{getRandomItem()}{getRandomItem()}}
@@ -160,28 +136,6 @@ Get a random RSS item from the feed buffer.
 
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aca0ba13d4a29203c10adf306920632f4}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
-
-\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a591471575f17b596689d27a3a107d044}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!getRandomItemMatchingEmbedded@{getRandomItemMatchingEmbedded}}
-\index{getRandomItemMatchingEmbedded@{getRandomItemMatchingEmbedded}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
-\doxysubsubsection{\texorpdfstring{getRandomItemMatchingEmbedded()}{getRandomItemMatchingEmbedded()}}
-{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a591471575f17b596689d27a3a107d044} 
-virtual \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}} dotnamecpp\+::rss\+::\+IRss\+Service\+::get\+Random\+Item\+Matching\+Embedded (\begin{DoxyParamCaption}\item[{bool}]{embedded}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [pure virtual]}}
-
-
-
-Get a random RSS item matching the embedded flag. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em embedded} & Whether to match embedded items \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-\doxylink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem} 
-\end{DoxyReturn}
-
-
-Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_aaea4cb356ec1cbbb0459a31c58b40c7c}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a250e20f8765c25a7e4a8cef3fa13e088}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!Initialize@{Initialize}}
 \index{Initialize@{Initialize}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
@@ -200,6 +154,28 @@ bool Returns true on success, false on failure
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a5a02da7f6aeeca7bdce38080836dd676}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
+\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a8a0db56df9dbdb4e552d77c5fdc8aa42}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!listChannelUrlsAsString@{listChannelUrlsAsString}}
+\index{listChannelUrlsAsString@{listChannelUrlsAsString}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
+\doxysubsubsection{\texorpdfstring{listChannelUrlsAsString()}{listChannelUrlsAsString()}}
+{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a8a0db56df9dbdb4e552d77c5fdc8aa42} 
+virtual std\+::string dotnamecpp\+::rss\+::\+IRss\+Service\+::list\+Channel\+Urls\+As\+String (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [pure virtual]}}
+
+
+
+List all stored RSS URLs for a specific Discord channel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em discord\+Channel\+Id} & The Discord channel ID to filter URLs \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string A formatted string listing all RSS URLs for the specified channel 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a8788d9df1063b52d921457ac0e348bc3}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
+
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a5faa2a922fcd6d9996aedc71f36e4552}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!listUrlsAsString@{listUrlsAsString}}
 \index{listUrlsAsString@{listUrlsAsString}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
 \doxysubsubsection{\texorpdfstring{listUrlsAsString()}{listUrlsAsString()}}
@@ -217,11 +193,11 @@ std\+::string A formatted string listing all RSS URLs
 
 Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_af81ee0debcf70c8e879fa5a1934815e8}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
-\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!modUrl@{modUrl}}
+\Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_a9b0a01853f1504a58f63d3603fa3a27c}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!modUrl@{modUrl}}
 \index{modUrl@{modUrl}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}
 \doxysubsubsection{\texorpdfstring{modUrl()}{modUrl()}}
-{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f} 
-virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::mod\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{bool}]{embedded}{, }\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily \label{classdotnamecpp_1_1rss_1_1IRssService_a9b0a01853f1504a58f63d3603fa3a27c} 
+virtual bool dotnamecpp\+::rss\+::\+IRss\+Service\+::mod\+Url (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{url}{, }\item[{long}]{embedded\+Type}{, }\item[{uint64\+\_\+t}]{discord\+Channel\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -231,7 +207,7 @@ Modify an existing RSS URL in the list.
 \begin{DoxyParams}{Parameters}
 {\em url} & The RSS feed URL \\
 \hline
-{\em embedded} & Whether items from this feed should be marked as embedded \\
+{\em embedded\+Type} & Whether items from this feed should be marked as embedded \\
 \hline
 {\em discord\+Channel\+Id} & Optional Discord channel ID associated with this feed \\
 \hline
@@ -241,7 +217,7 @@ true on success, otherwise false
 \end{DoxyReturn}
 
 
-Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a9484e21d6d887ce165dd7274f3cd1515}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
+Implemented in \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1RssManager_a1399fe7933ea2bf9dc56f06f922c51ec}{dotnamecpp\+::rss\+::\+Rss\+Manager}}.
 
 \Hypertarget{classdotnamecpp_1_1rss_1_1IRssService_ac9fc9b2b5b01dc129c504bc99ecf9dae}\index{dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}!refetchRssFeeds@{refetchRssFeeds}}
 \index{refetchRssFeeds@{refetchRssFeeds}!dotnamecpp::rss::IRssService@{dotnamecpp::rss::IRssService}}

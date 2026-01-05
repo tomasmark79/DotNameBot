@@ -98,22 +98,24 @@ $(function(){initNavTree('structdotnamecpp_1_1rss_1_1RSSItem.html','','structdot
 </div><!--header-->
 <div class="contents">
 
-<p>Represents an item from a RSS feed along with its metadata.  
+<p>Represents a single RSS item.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="RSSItem_8hpp_source.html">RSSItem.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for dotnamecpp::rss::RSSItem:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structdotnamecpp_1_1rss_1_1RSSItem__coll__graph.svg" width="192" height="352"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="structdotnamecpp_1_1rss_1_1RSSItem__coll__graph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aeb94586f1cc8bd06bee978ebf4b7580f" id="r_aeb94586f1cc8bd06bee978ebf4b7580f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb94586f1cc8bd06bee978ebf4b7580f">RSSItem</a> ()</td></tr>
-<tr class="memitem:a2d00f19d642d60d961cc2417c2e11e2e" id="r_a2d00f19d642d60d961cc2417c2e11e2e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d00f19d642d60d961cc2417c2e11e2e">RSSItem</a> (std::string &amp;t, std::string &amp;u, std::string &amp;d, std::string &amp;date, bool e, uint64_t dChId)</td></tr>
+<tr class="memitem:a8367f2a37e9457842b630643c776a162" id="r_a8367f2a37e9457842b630643c776a162"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8367f2a37e9457842b630643c776a162">RSSItem</a> (std::string &amp;<a class="el" href="#a8f26da3cf08a7ab6902e9d2480ccb498">title</a>, std::string &amp;<a class="el" href="#ae5e6ec690398e29fc14d7e33fa3b0344">url</a>, std::string &amp;<a class="el" href="#afd96c097141533d193b2d3990e452ecf">description</a>, <a class="el" href="structdotnamecpp_1_1rss_1_1RSSMedia.html">RSSMedia</a> &amp;<a class="el" href="#ab79bc5c9d554586637154e10d808cf77">rssMedia</a>, std::string &amp;<a class="el" href="#abc99edf93d61d76a59affcfa23f6159c">pubDate</a>, <a class="el" href="namespacedotnamecpp_1_1rss.html#ad5cd4b20e38bc0acbc1c639e8af5277c">EmbeddedType</a> <a class="el" href="#a1497f78e108827d0139f4ea21a7f124a">embeddedType</a>, uint64_t <a class="el" href="#adc831ab9507fe8755f8c977818e2f121">discordChannelId</a>)</td></tr>
 <tr class="memitem:ae54b2021a4af544d7b76b5d8db9a83ed" id="r_ae54b2021a4af544d7b76b5d8db9a83ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae54b2021a4af544d7b76b5d8db9a83ed">generateHash</a> ()</td></tr>
 <tr class="memitem:a93a7f6f71bda783aa9620def68166548" id="r_a93a7f6f71bda783aa9620def68166548"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93a7f6f71bda783aa9620def68166548">toMarkdownLink</a> () const</td></tr>
+<tr class="memitem:aebffa2820fcc2a90dede483018f28376" id="r_aebffa2820fcc2a90dede483018f28376"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebffa2820fcc2a90dede483018f28376">toDebug</a> () const</td></tr>
+<tr class="memitem:aa4af5efb0c4247b540262b676418178f" id="r_aa4af5efb0c4247b540262b676418178f"><td class="memItemLeft" align="right" valign="top">dpp::embed&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4af5efb0c4247b540262b676418178f">toEmbed</a> () const</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -122,11 +124,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:afd96c097141533d193b2d3990e452ecf" id="r_afd96c097141533d193b2d3990e452ecf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd96c097141533d193b2d3990e452ecf">description</a></td></tr>
 <tr class="memitem:abc99edf93d61d76a59affcfa23f6159c" id="r_abc99edf93d61d76a59affcfa23f6159c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc99edf93d61d76a59affcfa23f6159c">pubDate</a></td></tr>
 <tr class="memitem:ae8ea6bcf5851d087a56bdcf6110f3608" id="r_ae8ea6bcf5851d087a56bdcf6110f3608"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8ea6bcf5851d087a56bdcf6110f3608">hash</a></td></tr>
-<tr class="memitem:abc83456781c5cfbf4c5cf81778bbdaea" id="r_abc83456781c5cfbf4c5cf81778bbdaea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc83456781c5cfbf4c5cf81778bbdaea">embedded</a></td></tr>
+<tr class="memitem:ab79bc5c9d554586637154e10d808cf77" id="r_ab79bc5c9d554586637154e10d808cf77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdotnamecpp_1_1rss_1_1RSSMedia.html">RSSMedia</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab79bc5c9d554586637154e10d808cf77">rssMedia</a></td></tr>
+<tr class="memitem:a1497f78e108827d0139f4ea21a7f124a" id="r_a1497f78e108827d0139f4ea21a7f124a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedotnamecpp_1_1rss.html#ad5cd4b20e38bc0acbc1c639e8af5277c">EmbeddedType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1497f78e108827d0139f4ea21a7f124a">embeddedType</a></td></tr>
 <tr class="memitem:adc831ab9507fe8755f8c977818e2f121" id="r_adc831ab9507fe8755f8c977818e2f121"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc831ab9507fe8755f8c977818e2f121">discordChannelId</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents an item from a RSS feed along with its metadata. </p>
+<div class="textblock"><p>Represents a single RSS item. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aeb94586f1cc8bd06bee978ebf4b7580f" name="aeb94586f1cc8bd06bee978ebf4b7580f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeb94586f1cc8bd06bee978ebf4b7580f">&#9670;&#160;</a></span>RSSItem() <span class="overload">[1/2]</span></h2>
@@ -153,48 +156,61 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d00f19d642d60d961cc2417c2e11e2e" name="a2d00f19d642d60d961cc2417c2e11e2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d00f19d642d60d961cc2417c2e11e2e">&#9670;&#160;</a></span>RSSItem() <span class="overload">[2/2]</span></h2>
+<a id="a8367f2a37e9457842b630643c776a162" name="a8367f2a37e9457842b630643c776a162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8367f2a37e9457842b630643c776a162">&#9670;&#160;</a></span>RSSItem() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">dotnamecpp::rss::RSSItem::RSSItem </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>title</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>d</em></span>, </td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>description</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>date</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structdotnamecpp_1_1rss_1_1RSSMedia.html">RSSMedia</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rssMedia</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+          <td class="paramtype">std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>pubDate</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>dChId</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacedotnamecpp_1_1rss.html#ad5cd4b20e38bc0acbc1c639e8af5277c">EmbeddedType</a></td>          <td class="paramname"><span class="paramname"><em>embeddedType</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>discordChannelId</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structdotnamecpp_1_1rss_1_1RSSItem_a2d00f19d642d60d961cc2417c2e11e2e_cgraph.svg" width="420" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structdotnamecpp_1_1rss_1_1RSSItem_a8367f2a37e9457842b630643c776a162_cgraph.svg" width="420" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -227,6 +243,56 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structdotnamecpp_1_1rss_1_1RSSItem_ae54b2021a4af544d7b76b5d8db9a83ed_icgraph.svg" width="420" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
+
+</div>
+</div>
+<a id="aebffa2820fcc2a90dede483018f28376" name="aebffa2820fcc2a90dede483018f28376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebffa2820fcc2a90dede483018f28376">&#9670;&#160;</a></span>toDebug()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string dotnamecpp::rss::RSSItem::toDebug </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa4af5efb0c4247b540262b676418178f" name="aa4af5efb0c4247b540262b676418178f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4af5efb0c4247b540262b676418178f">&#9670;&#160;</a></span>toEmbed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dpp::embed dotnamecpp::rss::RSSItem::toEmbed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -284,14 +350,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="abc83456781c5cfbf4c5cf81778bbdaea" name="abc83456781c5cfbf4c5cf81778bbdaea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc83456781c5cfbf4c5cf81778bbdaea">&#9670;&#160;</a></span>embedded</h2>
+<a id="a1497f78e108827d0139f4ea21a7f124a" name="a1497f78e108827d0139f4ea21a7f124a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1497f78e108827d0139f4ea21a7f124a">&#9670;&#160;</a></span>embeddedType</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dotnamecpp::rss::RSSItem::embedded</td>
+          <td class="memname"><a class="el" href="namespacedotnamecpp_1_1rss.html#ad5cd4b20e38bc0acbc1c639e8af5277c">EmbeddedType</a> dotnamecpp::rss::RSSItem::embeddedType</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -326,6 +392,20 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="ab79bc5c9d554586637154e10d808cf77" name="ab79bc5c9d554586637154e10d808cf77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab79bc5c9d554586637154e10d808cf77">&#9670;&#160;</a></span>rssMedia</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structdotnamecpp_1_1rss_1_1RSSMedia.html">RSSMedia</a> dotnamecpp::rss::RSSItem::rssMedia</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8f26da3cf08a7ab6902e9d2480ccb498" name="a8f26da3cf08a7ab6902e9d2480ccb498"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8f26da3cf08a7ab6902e9d2480ccb498">&#9670;&#160;</a></span>title</h2>
 
@@ -354,9 +434,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/Rss/<a class="el" href="RSSItem_8hpp_source.html">RSSItem.hpp</a></li>
-<li>src/Rss/<a class="el" href="RSSItem_8cpp.html">RSSItem.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

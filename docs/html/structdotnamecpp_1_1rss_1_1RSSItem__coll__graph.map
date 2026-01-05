@@ -1,3 +1,5 @@
 <map id="dotnamecpp::rss::RSSItem" name="dotnamecpp::rss::RSSItem">
-<area shape="rect" id="Node000001" title="Represents an item from a RSS feed along with its metadata." alt="" coords="5,5,186,347"/>
+<area shape="rect" id="Node000001" title="Represents a single RSS item." alt="" coords="5,184,285,616"/>
+<area shape="rect" id="Node000002" href="$structdotnamecpp_1_1rss_1_1RSSMedia.html" title="Represents an media content from a RSS feed item." alt="" coords="56,5,235,112"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,112,148,167,143,167,143,112"/>
 </map>

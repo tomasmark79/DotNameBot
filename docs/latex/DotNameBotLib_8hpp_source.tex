@@ -6,67 +6,48 @@
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <DotNameBotLib/version.h>}\ \textcolor{comment}{//\ cmake\ configuration\ will\ generate\ this\ file}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{UtilsFactory_8hpp}{Utils/UtilsFactory.hpp}}>}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <atomic>}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <filesystem>}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <memory>}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <EmojiesLib/EmojiesLib.hpp>}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{Orchestrator_8hpp}{Orchestrator/Orchestrator.hpp}}>}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{IRssService_8hpp}{Rss/IRssService.hpp}}>}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ServiceContainer_8hpp}{ServiceContainer/ServiceContainer.hpp}}>}}
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1v1}{dotnamecpp::v1}}\ \{}
-\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \{}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}(std::shared\_ptr<logging::ILogger>\ logger,}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager);}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a32b01a22a5f71db61c86bec25efc232f}{\string~DotNameBotLib}}();}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ab374c3465be88ad1b20cadc305d717ee}{DotNameBotLib}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&other)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a6b63d7f6b34fc161b9eb7ac490871584}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&other)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a1f5dcbe232a7e66a327641490a35cbcf}{DotNameBotLib}}(\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&\&other)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a16323839bbe707a325febf0a29583248}{operator=}}(\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ae52e0d55f95c209a522a006a93a84df9}{DotNameBotLib}}\ \&\&other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <EmojiModuleLib/EmojiModuleLib.hpp>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{Orchestrator_8hpp}{Orchestrator/Orchestrator.hpp}}>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{IRssService_8hpp}{Rss/IRssService.hpp}}>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ServiceContainer_8hpp}{ServiceContainer/ServiceContainer.hpp}}>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1v1}{dotnamecpp::v1}}\ \{}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacedotnamecpp_1_1utils}{dotnamecpp::utils}};}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structdotnamecpp_1_1utils_1_1UtilsFactory_1_1ApplicationContext}{UtilsFactory::ApplicationContext}}\ \&context);}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a32b01a22a5f71db61c86bec25efc232f}{\string~DotNameBotLib}}();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ab374c3465be88ad1b20cadc305d717ee}{DotNameBotLib}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a6b63d7f6b34fc161b9eb7ac490871584}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a1f5dcbe232a7e66a327641490a35cbcf}{DotNameBotLib}}(\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&\&other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a16323839bbe707a325febf0a29583248}{operator=}}(\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a63804da7fabebf5d7a06691687a8ec0d}{DotNameBotLib}}\ \&\&other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a815e934c0126c1b5f89b46011bfd22b3}{startOrchestration}}();}
+\DoxyCodeLine{00028\ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a75fc7d3239bac6259001f867b46816d1}{isInitialized}}()\ const\ noexcept;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ private:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isInitialized\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *libName\_\ =\ \textcolor{stringliteral}{"{}DotNameBotLib\ v"{}}\ DOTNAMEBOTLIB\_VERSION;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ std::shared\_ptr<dotnamecpp::logging::ILogger>\ logger\_;}
+\DoxyCodeLine{00035\ \ \ \ \ std::shared\_ptr<dotnamecpp::assets::IAssetManager>\ assetManager\_;}
+\DoxyCodeLine{00036\ \ \ \ \ std::shared\_ptr<dotnamecpp::utils::ICustomStringsLoader>\ customStrings\_;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ std::unique\_ptr<ServiceContainer>\ services\_;}
+\DoxyCodeLine{00039\ \ \ \ \ std::unique\_ptr<Orchestrator<ILifeCycle>>\ botOrchestrator\_;}
+\DoxyCodeLine{00040\ \ \ \ \ std::shared\_ptr<dotnamecpp::rss::IRssService>\ rssService\_;}
+\DoxyCodeLine{00041\ \ \ \ \ std::shared\_ptr<dotnamecpp::v1::EmojiModuleLib>\ emojiModuleLib\_;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ std::atomic<bool>\ isOrchestrating\_\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00044\ \ \ \ \ std::thread\ orchestrationThread\_;}
+\DoxyCodeLine{00045\ \ \ \};}
 \DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ ============================================================================}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Main\ API}}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ ============================================================================}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_abc0f7ffd4ef59f4d7f685917d2be3914}{run}}(\textcolor{keywordtype}{int}\ durationSeconds\ =\ 0);}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ad845d5f4be2b9eb49099a89c784a2554}{stop}}();}
-\DoxyCodeLine{00071\ }
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ ============================================================================}}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Query\ Methods}}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ ============================================================================}}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00082\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a75fc7d3239bac6259001f867b46816d1}{isInitialized}}()\ const\ noexcept;}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00090\ \ \ \ \ [[nodiscard]]}
-\DoxyCodeLine{00091\ \ \ \ \ const\ std::filesystem::path\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_ab68e0404a5a6e9d8ab37b5e276a3d305}{getAssetsPath}}()\ const\ noexcept;}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{classServiceContainer}{ServiceContainer}}\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a1a291f6a6400a3cd1e88f14343c64084}{getServices}}()\ noexcept;}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{classOrchestrator}{Orchestrator}}<\mbox{\hyperlink{classILifeCycle}{ILifeCycle}}>\ \&\mbox{\hyperlink{classdotnamecpp_1_1v1_1_1DotNameBotLib_a2a23b105d66905c1a4dbbb1dd0ae0ebc}{getOrchestrator}}()\ noexcept;}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ private:}
-\DoxyCodeLine{00113\ \ \ \ \ const\ std::\textcolor{keywordtype}{string}\ libName\_\ =\ \textcolor{stringliteral}{"{}DotNameBotLib\ v."{}}\ DOTNAMEBOTLIB\_VERSION;}
-\DoxyCodeLine{00114\ \ \ \ \ std::shared\_ptr<\mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}::\mbox{\hyperlink{namespacedotnamecpp_1_1logging}{logging}}::ILogger>\ logger\_;}
-\DoxyCodeLine{00115\ \ \ \ \ std::shared\_ptr<\mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}::\mbox{\hyperlink{namespacedotnamecpp_1_1assets}{assets}}::IAssetManager>\ assetManager\_;}
-\DoxyCodeLine{00116\ \ \ \ \ std::filesystem::path\ assetsPath\_;}
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ isInitialized\_\ =\ false;}
-\DoxyCodeLine{00118\ \ \ \ \ std::atomic<\textcolor{keywordtype}{bool}>\ shouldStop\_\{\textcolor{keyword}{false}\};}
-\DoxyCodeLine{00119\ \ \ \ \ std::atomic<bool>\ isRunning\_\{\textcolor{keyword}{false}\};}
-\DoxyCodeLine{00120\ \ \ \ \ std::unique\_ptr<ServiceContainer>\ services\_;}
-\DoxyCodeLine{00121\ \ \ \ \ std::unique\_ptr<Orchestrator<ILifeCycle>>\ botOrchestrator\_;}
-\DoxyCodeLine{00122\ \ \ \ \ std::shared\_ptr<dotnamecpp::rss::IRssService>\ rssService\_;}
-\DoxyCodeLine{00123\ \ \ \ \ std::shared\_ptr<dotname::EmojiesLib>\ emojiesLib\_;}
-\DoxyCodeLine{00124\ \ \ \};}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::v1}}
+\DoxyCodeLine{00047\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::v1}}
 
 \end{DoxyCode}

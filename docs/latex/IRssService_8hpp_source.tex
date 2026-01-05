@@ -23,21 +23,19 @@
 \DoxyCodeLine{00038\ }
 \DoxyCodeLine{00044\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a5faa2a922fcd6d9996aedc71f36e4552}{listUrlsAsString}}()\ =\ 0;}
 \DoxyCodeLine{00045\ }
-\DoxyCodeLine{00051\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9406e7e0b635a11fdff9c9c3345084f1}{getRandomItem}}()\ =\ 0;}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00059\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a591471575f17b596689d27a3a107d044}{getRandomItemMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ std::string\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a8a0db56df9dbdb4e552d77c5fdc8aa42}{listChannelUrlsAsString}}(uint64\_t\ discordChannelId)\ =\ 0;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00059\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{RSSItem}}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9406e7e0b635a11fdff9c9c3345084f1}{getRandomItem}}()\ =\ 0;}
 \DoxyCodeLine{00060\ }
 \DoxyCodeLine{00066\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_af993b4985d7d70f9b23e641a347af2f3}{getItemCount}}()\ \textcolor{keyword}{const}\ =\ 0;}
 \DoxyCodeLine{00067\ }
-\DoxyCodeLine{00074\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ab48f5dd0482ec2883bff9e4291e5d691}{getItemCountMatchingEmbedded}}(\textcolor{keywordtype}{bool}\ embedded)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a59636f4ea502dcc58ec0b43d58878548}{addUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId)\ =\ 0;}
-\DoxyCodeLine{00085\ }
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9fbc3525ab5c9d46ed5d097da40c143f}{modUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{bool}\ embedded,\ uint64\_t\ discordChannelId)\ =\ 0;}
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad}{remUrl}}(\textcolor{keyword}{const}\ std::string\ \&url)\ =\ 0;}
-\DoxyCodeLine{00103\ \ \ \};}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_ab26f4cfc8b7bd3d2e5e0728162042ea9}{addUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{long}\ embeddedType,\ uint64\_t\ discordChannelId)\ =\ 0;}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a9b0a01853f1504a58f63d3603fa3a27c}{modUrl}}(\textcolor{keyword}{const}\ std::string\ \&url,\ \textcolor{keywordtype}{long}\ embeddedType,\ uint64\_t\ discordChannelId)\ =\ 0;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classdotnamecpp_1_1rss_1_1IRssService_a755763e4366f71421e2f0c6756dfd3ad}{remUrl}}(\textcolor{keyword}{const}\ std::string\ \&url)\ =\ 0;}
+\DoxyCodeLine{00095\ \ \ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \}\ \textcolor{comment}{//\ namespace\ dotnamecpp::rss}}
 
 \end{DoxyCode}

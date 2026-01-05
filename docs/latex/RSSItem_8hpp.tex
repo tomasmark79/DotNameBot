@@ -1,12 +1,15 @@
 \doxysection{src/\+Rss/\+RSSItem.hpp File Reference}
 \hypertarget{RSSItem_8hpp}{}\label{RSSItem_8hpp}\index{src/Rss/RSSItem.hpp@{src/Rss/RSSItem.hpp}}
+{\ttfamily \#include $<$Rss/\+RSSMedia.\+hpp$>$}\newline
 {\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$dpp/dpp.\+h$>$}\newline
 {\ttfamily \#include $<$string$>$}\newline
-Include dependency graph for RSSItem.\+hpp\+:\nopagebreak
+Include dependency graph for RSSItem.\+hpp\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=193pt]{RSSItem_8hpp__incl}
+\includegraphics[width=350pt]{RSSItem_8hpp__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\+:
@@ -21,7 +24,7 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structdotnamecpp_1_1rss_1_1RSSItem}{dotnamecpp\+::rss\+::\+RSSItem}}
-\begin{DoxyCompactList}\small\item\em Represents an item from a RSS feed along with its metadata. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Represents a single RSS item. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -29,3 +32,11 @@ namespace \mbox{\hyperlink{namespacedotnamecpp}{dotnamecpp}}
 \item 
 namespace \mbox{\hyperlink{namespacedotnamecpp_1_1rss}{dotnamecpp\+::rss}}
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespacedotnamecpp_1_1rss_ad5cd4b20e38bc0acbc1c639e8af5277c}{dotnamecpp\+::rss\+::\+Embedded\+Type}} \{ \mbox{\hyperlink{namespacedotnamecpp_1_1rss_ad5cd4b20e38bc0acbc1c639e8af5277ca60689c51ee51b31771dbb3b17940a177}{dotnamecpp\+::rss\+::\+EMBEDDED\+\_\+\+NONE}} = 0
+, \mbox{\hyperlink{namespacedotnamecpp_1_1rss_ad5cd4b20e38bc0acbc1c639e8af5277ca68d213b39571296c691e2b5f8bebb745}{dotnamecpp\+::rss\+::\+EMBEDDED\+\_\+\+AS\+\_\+\+MARKDOWN}} = 1
+, \mbox{\hyperlink{namespacedotnamecpp_1_1rss_ad5cd4b20e38bc0acbc1c639e8af5277ca18ab42fc4e684a5115a124f6d78c3f79}{dotnamecpp\+::rss\+::\+EMBEDDED\+\_\+\+AS\+\_\+\+ADVANCED}} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration for the types of embedding for RSS items. \end{DoxyCompactList}\end{DoxyCompactItemize}

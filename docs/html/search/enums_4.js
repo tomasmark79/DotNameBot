@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['platform_0',['Platform',['../namespacedotnamecpp_1_1utils.html#adc87d22083ac63618f63c881286f96f8',1,'dotnamecpp::utils']]]
+  ['optiontype_0',['OptionType',['../SlashCommand_8hpp.html#aedd2c94bc55186fc0ddb4369af2c5d92',1,'SlashCommand.hpp']]]
 ];

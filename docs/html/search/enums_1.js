@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jsonerrorcode_0',['JsonErrorCode',['../namespacedotnamecpp_1_1utils.html#aea22063b35ff66feb70a5f21ac136cdf',1,'dotnamecpp::utils']]]
+  ['fileerrorcode_0',['FileErrorCode',['../namespacedotnamecpp_1_1utils.html#a83c62c0f3ca5d2558b4c6aa4f610db1d',1,'dotnamecpp::utils']]]
 ];

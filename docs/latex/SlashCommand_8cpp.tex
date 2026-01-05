@@ -24,35 +24,3 @@ const std\+::vector$<$ \mbox{\hyperlink{classSlashCommand}{Slash\+Command}} $>$ 
 {\footnotesize\ttfamily \label{SlashCommand_8cpp_a03b9530a9a62ceb933e6fdf4523925a7} 
 const std\+::vector$<$\mbox{\hyperlink{classSlashCommand}{Slash\+Command}}$>$ commands\+\_\+}
 
-{\bfseries Initial value\+:}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{=\ \{}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}ping"{}},\ \textcolor{stringliteral}{"{}get\ pong"{}},\ \textcolor{stringliteral}{"{}simple"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}help"{}},\ \textcolor{stringliteral}{"{}get\ help"{}},\ \textcolor{stringliteral}{"{}simple"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}emoji"{}},\ \textcolor{stringliteral}{"{}get\ emoji"{}},\ \textcolor{stringliteral}{"{}simple"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}addurl"{}},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}add\ another\ RSS/ATOM\ feed\ URL"{}},}
-\DoxyCodeLine{\ \ \ \ \ \{\{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{OptionType::String}},\ \textcolor{stringliteral}{"{}url"{}},\ \textcolor{stringliteral}{"{}URL\ of\ the\ RSS/ATOM\ feed"{}},\ \textcolor{keyword}{true},\ \{\},\ \{\},\ \{\}\},}
-\DoxyCodeLine{\ \ \ \ \ \ \{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}{OptionType::Bool}},\ \textcolor{stringliteral}{"{}embedded"{}},\ \textcolor{stringliteral}{"{}Whether\ the\ feed\ should\ be\ embedded"{}},\ \textcolor{keyword}{false},\ \{\},\ \{\},\ \{\}\}\},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}modurl"{}},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}modify\ an\ existing\ RSS/ATOM\ feed\ URL"{}},}
-\DoxyCodeLine{\ \ \ \ \ \{\{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{OptionType::String}},\ \textcolor{stringliteral}{"{}url"{}},\ \textcolor{stringliteral}{"{}Existing\ URL\ of\ the\ RSS/ATOM\ feed"{}},\ \textcolor{keyword}{true},\ \{\},\ \{\},\ \{\}\},}
-\DoxyCodeLine{\ \ \ \ \ \ \{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92ac26f15e86e3de4c398a8273272aba034}{OptionType::Bool}},\ \textcolor{stringliteral}{"{}embedded"{}},\ \textcolor{stringliteral}{"{}Whether\ the\ feed\ should\ be\ embedded"{}},\ \textcolor{keyword}{false},\ \{\},\ \{\},\ \{\}\}\},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}remurl"{}},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}remove\ an\ existing\ RSS/ATOM\ feed\ URL"{}},}
-\DoxyCodeLine{\ \ \ \ \ \{\{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{OptionType::String}},\ \textcolor{stringliteral}{"{}url"{}},\ \textcolor{stringliteral}{"{}Existing\ URL\ of\ the\ RSS/ATOM\ feed"{}},\ \textcolor{keyword}{true},\ \{\},\ \{\},\ \{\}\}\},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}refetch"{}},\ \textcolor{stringliteral}{"{}refetch\ RSS/ATOM\ feeds"{}},\ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}listurls"{}},\ \textcolor{stringliteral}{"{}get\ list\ of\ RSS/ATOM\ feed\ URLs"{}},\ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}getrandomfeed"{}},\ \textcolor{stringliteral}{"{}get\ random\ RSS/ATOM\ feed\ item"{}},\ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}gettotalfeeds"{}},\ \textcolor{stringliteral}{"{}get\ count\ of\ RSS/ATOM\ feed\ items"{}},\ \textcolor{stringliteral}{"{}rss"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}uptime"{}},\ \textcolor{stringliteral}{"{}get\ bot\ uptime"{}},\ \textcolor{stringliteral}{"{}botself"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}stopbot"{}},\ \textcolor{stringliteral}{"{}stop\ the\ bot"{}},\ \textcolor{stringliteral}{"{}botself"{}}\},}
-\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}setstatus"{}},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}set\ bot\ status\ message"{}},}
-\DoxyCodeLine{\ \ \ \ \ \{\{\mbox{\hyperlink{SlashCommand_8hpp_aedd2c94bc55186fc0ddb4369af2c5d92a27118326006d3829667a400ad23d5d98}{OptionType::String}},\ \textcolor{stringliteral}{"{}message"{}},\ \textcolor{stringliteral}{"{}The\ status\ message"{}},\ \textcolor{keyword}{true},\ \{\},\ \{\},\ \{\}\}\},}
-\DoxyCodeLine{\ \ \ \ \ \textcolor{stringliteral}{"{}botself"{}}\}\}}
-
-\end{DoxyCode}

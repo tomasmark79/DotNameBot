@@ -21,6 +21,7 @@ var annotated_dup =
         [ "RSSFeed", "structdotnamecpp_1_1rss_1_1RSSFeed.html", "structdotnamecpp_1_1rss_1_1RSSFeed" ],
         [ "RSSItem", "structdotnamecpp_1_1rss_1_1RSSItem.html", "structdotnamecpp_1_1rss_1_1RSSItem" ],
         [ "RssManager", "classdotnamecpp_1_1rss_1_1RssManager.html", "classdotnamecpp_1_1rss_1_1RssManager" ],
+        [ "RSSMedia", "structdotnamecpp_1_1rss_1_1RSSMedia.html", "structdotnamecpp_1_1rss_1_1RSSMedia" ],
         [ "RSSUrl", "structdotnamecpp_1_1rss_1_1RSSUrl.html", "structdotnamecpp_1_1rss_1_1RSSUrl" ]
       ] ],
       [ "utils", "namespacedotnamecpp_1_1utils.html", [
