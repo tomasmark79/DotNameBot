@@ -1,7 +1,9 @@
 # Nix cross-compilation shell for Windows (MinGW)
 # Usage: nix develop ./nix#windows
 
-{ pkgs ? import <nixpkgs> {} }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 
 let
   mingwPkgs = pkgs.pkgsCross.mingwW64;
@@ -9,31 +11,36 @@ in
 
 pkgs.mkShell {
   name = "project-windows-cross";
-  
-  buildInputs = with pkgs; [
-    # Build tools (native)
-    meson
-    ninja
-    pkg-config
-    
-    # MinGW cross-compiler
-    pkgs.pkgsCross.mingwW64.stdenv.cc
-    
-    # MinGW pkg-config
-    pkgs.pkgsCross.mingwW64.buildPackages.pkg-config
-    
-    # Cross-compiled Windows dependencies
-    mingwPkgs.windows.pthreads
-    
-    # Wine for testing
-    wine64
-  ] ++ (with mingwPkgs; [
-    # These will be cross-compiled for Windows
-    fmt
-    nlohmann_json
-    cxxopts
-  ]);
-  
+
+  buildInputs =
+    with pkgs;
+    [
+      # Build tools (native)
+      meson
+      ninja
+      pkg-config
+
+      # MinGW cross-compiler
+      pkgs.pkgsCross.mingwW64.stdenv.cc
+
+      # MinGW pkg-config
+      pkgs.pkgsCross.mingwW64.buildPackages.pkg-config
+
+      # Cross-compiled Windows dependencies
+      mingwPkgs.windows.pthreads
+
+      # Wine for testing
+      wine64
+    ]
+    ++ (with mingwPkgs; [
+      # These will be cross-compiled for Windows
+      fmt
+      nlohmann_json
+      cxxopts
+
+      # Discord bot dependencies not available for MinGW:
+    ]);
+
   shellHook = ''
     app_name=$(grep -m1 -E "project\(['\"][^'\"]+['\"]" "$PWD/meson.build" 2>/dev/null | sed -E "s/.*project\(['\"]([^'\"]+)['\"].*/\1/")
     if [ -z "$app_name" ]; then app_name="Project"; fi
