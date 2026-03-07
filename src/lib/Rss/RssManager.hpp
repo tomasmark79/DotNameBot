@@ -1,0 +1,177 @@
+#pragma once
+
+#include <Rss/IRssService.hpp>
+#include <Rss/RSSFeed.hpp>
+#include <Rss/RSSItem.hpp>
+#include <Rss/RSSMedia.hpp>
+#include <Rss/RSSUrl.hpp>
+
+#include <Utils/UtilsFactory.hpp>
+
+#include <cstdint>
+#include <filesystem>
+#include <nlohmann/json.hpp>
+#include <random>
+#include <string>
+#include <tinyxml2.h>
+#include <unordered_set>
+#include <vector>
+
+namespace dotnamebot::rss {
+
+  class RssManager : public IRssService {
+
+  public:
+    RssManager(std::shared_ptr<dotnamebot::logging::ILogger> logger,
+               std::shared_ptr<dotnamebot::assets::IAssetManager> assetManager);
+
+    ~RssManager() override;
+
+    // Public interface implementations
+    bool Initialize() override;
+    int refetchRssFeeds() override;
+    bool addUrl(const std::string &url, long embeddedType, uint64_t discordChannelId = 0) override;
+    bool modUrl(const std::string &url, long embeddedType, uint64_t discordChannelId = 0) override;
+    bool remUrl(const std::string &url) override;
+    [[nodiscard]] std::string listUrlsAsString() override;
+    [[nodiscard]] std::string listChannelUrlsAsString(uint64_t discordChannelId) override;
+    [[nodiscard]] RSSItem getRandomItem() override;
+    [[nodiscard]] size_t getItemCount() const override { return feed_.items.size(); }
+
+  private:
+    // Private helpers
+    /**
+     * @brief Fetches the source of a URL
+     *
+     * @param url The URL to fetch
+     * @param embeddedType Whether the items should be marked as embedded
+     * @param discordChannelId The Discord channel ID associated with the feed
+     * @return int Returns added items count on success, -1 on failure
+     */
+    int fetchUrlSource(const std::string &url, long embeddedType = 0,
+                       uint64_t discordChannelId = 0);
+
+    /**
+     * @brief Get the Item As Markdown object
+     *
+     * @param item The RSS item to convert to Markdown
+     * @return std::string
+     */
+    static std::string getItemAsMarkdown(const RSSItem &item);
+
+    /**
+     * @brief Clears the feed buffer by removing all items.
+     *
+     */
+    void clearFeedBuffer();
+
+    /**
+     * @brief CURL write callback function
+     *
+     * @param contents Pointer to the delivered data
+     * @param size Size of each data element
+     * @param nmemb Number of data elements
+     * @param userp Pointer to the user data (string buffer)
+     * @return size_t
+     */
+    static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
+
+    /**
+     * @brief Checks if a file has changed since the last check.
+     *
+     * @param path
+     * @param lastModified
+     * @return true if the file has changed, otherwise false
+     */
+    static bool hasFileChanged(const std::filesystem::path &path,
+                               std::filesystem::file_time_type &lastModified);
+
+    /**
+     * @brief Checks if the RSS URLs or seen hashes files have changed and reloads them if
+     * necessary.
+     *
+     * @return 1 if either URLs or hashes files have changed, otherwise 0
+     */
+    bool hasFilesChanged();
+
+    /**
+     * @brief Load RSS URLs from the JSON file
+     *
+     * @return true on success, false on failure
+     */
+    bool loadUrls();
+
+    /**
+     * @brief Load seen hashes from the JSON file
+     *
+     * @return true on success, false on failure
+     */
+    bool loadSeenHashes();
+
+    /**
+     * @brief Save RSS URLs to the JSON file
+     *
+     * @return true on success, false on failure
+     */
+    bool saveUrls();
+
+    /**
+     * @brief
+     *
+     * @param hash
+     * @return bool
+     */
+    bool saveSeenHash(const std::string &hash);
+
+    /**
+     * @brief Save all seen hashes to the JSON file
+     *
+     * @return bool
+     */
+    bool saveAllSeenHashes();
+
+    /**
+     * @brief Parses RSS feed XML data into an RSSFeed object
+     *
+     * @param xmlData The raw XML data of the RSS feed
+     * @param embeddedType Whether the items should be marked as embedded
+     * @param discordChannelId The Discord channel ID associated with the feed
+     * @param totalDuplicateItems Reference to an integer to count duplicate items
+     * @return RSSFeed The parsed RSS feed
+     */
+    RSSFeed parseRSS(const std::string &xmlData, long embeddedType, uint64_t discordChannelId,
+                     int &totalDuplicateItems);
+
+    /**
+     * @brief Downloads the RSS feed data from the given URL
+     *
+     * @param url The URL of the RSS feed to download
+     * @return std::string The raw XML data of the RSS feed
+     */
+    std::string downloadFeed(const std::string &url);
+
+    /**
+     * @brief Decodes HTML entities in a string
+     *
+     * @param str The input string containing HTML entities
+     * @return std::string The decoded string
+     */
+    static std::string decodeHtmlEntities(const std::string &str);
+
+    // Data members
+    bool isInitialized_{false};
+
+    std::filesystem::path urlsPath_;
+    std::filesystem::file_time_type urlsLastModified_;
+
+    std::filesystem::path hashesPath_;
+    std::filesystem::file_time_type hashesLastModified_;
+
+    std::mt19937 rng_;
+    std::shared_ptr<dotnamebot::logging::ILogger> logger_;
+    std::shared_ptr<dotnamebot::assets::IAssetManager> assetManager_;
+    RSSFeed feed_;
+    std::vector<RSSUrl> urls_;
+    std::unordered_set<std::string> seenHashes_;
+  };
+} // namespace dotnamebot::rss

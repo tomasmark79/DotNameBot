@@ -1,0 +1,48 @@
+#include "EmojiModuleLib.hpp"
+
+namespace dotnamebot::v1 {
+
+  EmojiModuleLib::EmojiModuleLib(const UtilsFactory::ApplicationContext &context)
+      : logger_(context.logger ? context.logger
+                               : std::make_shared<dotnamebot::logging::NullLogger>()),
+        assetManager_(context.assetManager) {
+
+    if (!assetManager_ || !assetManager_->validate()) {
+      logger_->errorStream() << "Invalid or missing asset manager";
+      return;
+    }
+
+    emoji_ = std::make_unique<dotnamebot::emoji::Emoji>(context);
+    emoji_->emojiChainTest<false>();
+    logger_->infoStream() << "Static emoji: " << emoji_->getEmoji()
+                          << ", Random emoji: " << emoji_->getRandomEmoji();
+
+    logger_->infoStream() << libName_ << " initialized ...";
+    isInitialized_ = true;
+  }
+
+  EmojiModuleLib::~EmojiModuleLib() {
+    if (isInitialized_) {
+      logger_->infoStream() << libName_ << " ... destructed";
+    } else {
+      logger_->infoStream() << libName_ << " ... (not initialized) destructed";
+    }
+  }
+
+  bool EmojiModuleLib::isInitialized() const noexcept { return isInitialized_; }
+
+  const std::shared_ptr<dotnamebot::assets::IAssetManager> &
+      EmojiModuleLib::getAssetManager() const noexcept {
+    return assetManager_;
+  }
+
+  std::string EmojiModuleLib::getRandomEmoji() const { return emoji_->getRandomEmoji(); }
+  std::string EmojiModuleLib::getEmoji() const { return emoji_->getEmoji(); }
+  std::string EmojiModuleLib::getEmoji(char32_t *code, size_t totalCodePoints) const {
+    return emoji_->getEmoji(code, totalCodePoints);
+  }
+  std::string EmojiModuleLib::getEmoji(int32_t *code, size_t totalCodePoints) const {
+    return emoji_->getEmoji(code, totalCodePoints);
+  }
+
+} // namespace dotnamebot::v1

@@ -1,0 +1,217 @@
+DotNameBot
+========
+
+[![CI](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml/badge.svg)](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml)
+
+<p align="center">
+  <img src="assets/DotNameBotLogo.svg"  alt="DotNameBot Logo" width="40%">
+</p>
+
+
+Implemented features
+--------------------
+- discord bot implementation
+  - with advanced RSS/ATOM support
+
+Overview
+--------
+
+Project template for a C++ application and library, set up with Meson/Nix tooling, tests, documentation, and packaging.
+
+Highlights:
+
+- Modular layout (app + library)
+- CI-ready
+- Cross-build targets (aarch64, Windows, WASM)
+
+Repository layout
+-----------------
+
+- include/                Public library headers
+- src/app/                Application sources
+- src/lib/                Library implementation
+- tests/                  Unit tests
+- assets/                 Runtime assets
+- scripts/                Build and tooling scripts
+
+Requirements
+------------
+
+- Nix (recommended) or a C++20 toolchain + Meson + Ninja
+- Optional: doxygen + graphviz for docs
+
+Quick start (Nix)
+-----------------
+
+If you use `direnv`:
+
+```bash
+direnv allow
+```
+
+Build (native, release):
+
+```bash
+make build
+```
+
+Run tests (native, debug build first):
+
+```bash
+make test
+```
+
+Clone helper
+------------
+
+See: [scripts/clonedotnamebot.sh](scripts/clonedotnamebot.sh)
+
+Template rename
+---------------
+
+```bash
+# Usage: scripts/rename.sh <NewName> [NewLibName] [NewNamespace]
+./scripts/rename.sh MyApp MyAppLib myapp
+```
+
+Build and test
+--------------
+
+```bash
+make build        # Native release build
+make debug        # Native debug build
+make test         # Run tests
+make format       # clang-format on sources
+make check        # clang-tidy (native debug builddir)
+```
+
+Cross builds
+------------
+
+```bash
+make cross-aarch64
+make cross-windows
+make cross-wasm
+```
+
+Packaging
+---------
+
+```bash
+make package-native
+make package-aarch64
+make package-windows
+make package-wasm
+```
+
+Nix package
+-----------
+
+Build the project as a proper Nix package (reproducible, isolated, Nix store output):
+
+```bash
+make nix-build        # shortcut for: nix build ./nix#DotNameBot
+```
+
+The result is available as a symlink `./result` pointing into the Nix store:
+
+```
+result/bin/DotNameBot
+result/lib/libDotNameBotLib.*
+result/include/DotNameBotLib/
+```
+
+Nix shell GC pinning
+--------------------
+
+By default, `nix-collect-garbage` can remove cross-compilation toolchains
+(aarch64, Windows, WASM) from the Nix store, forcing a full re-download on
+the next build. Pin all dev shells as GC roots to prevent this:
+
+```bash
+make pin-shells       # run once after cloning, and after 'nix flake update'
+```
+
+This creates symlinks `build/.gcroot-shell-{default,aarch64,windows,wasm}`
+that act as GC roots – as long as they exist, the garbage collector will
+never remove the referenced store paths.
+
+> **Note:** The WASM shell uses a pinned nixpkgs commit (for Emscripten
+> compatibility) and may take longer to download on the very first run.
+
+Documentation
+-------------
+
+- Online docs: <https://tomasmark79.github.io/DotNameBot/html/index.html>
+- Generate locally:
+
+```bash
+make doxygen
+```
+
+Output: `docs/html/index.html`
+
+VS Code tasks
+-------------
+
+<p align="center">
+ <a href="./assets/screen-desktop.png">
+  <img src="./assets/screen-desktop.png" alt="Desktop screenshot" width="65%">
+ </a>
+</p>
+
+Workspace tasks are defined in [.vscode/tasks.json](.vscode/tasks.json).
+
+How to run:
+
+- Use `Terminal: Run Task` (or `Tasks: Run Task`) and pick one of the tasks below.
+
+Common tasks:
+
+- `Direct Build (native debug)` (default build task)
+- `Project Build Tasks` (interactive picker: Build/Configure/Test/Package + arch + buildtype)
+- `clang-format`
+- `clang-tidy`
+- `Launch Application (native)` / `Launch Application (native release)`
+- `Launch Emscripten Server` / `Launch Emscripten Server (release)`
+
+Optional keybindings:
+
+- A suggested keybinding setup is provided in [.vscode/keybindings.json](.vscode/keybindings.json).
+- Copy it into your user keybindings file (Linux default: `~/.config/Code/User/keybindings.json`).
+
+GitHub Codespaces
+-----------------
+
+<p align="center">
+ <a href="./assets/screen-codespace.png">
+  <img src="./assets/screen-codespace.png" alt="Codespace screenshot" width="65%">
+ </a>
+</p>
+
+This repo is Codespaces-ready via a devcontainer using Nix.
+
+- Ensure the devcontainer is used: [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json)
+- After the container is created, the post-create step prefetches the Nix dev shell.
+- Build + test as usual:
+  - `make debug`
+  - `make test`
+
+Notes:
+
+- WebAssembly dev server uses port `6931` (auto-forwarded by the devcontainer).
+- Native builds can work without Nix if you install Meson/Ninja + a C++20 toolchain, but cross builds require Nix.
+
+Configure Meson options
+-----------------------
+
+Example (debug builddir):
+
+```bash
+meson configure build/builddir-debug -Dbuild_tests=enabled
+```
+
+License
+-------
+
+MIT
