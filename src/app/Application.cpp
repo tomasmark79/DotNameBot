@@ -1,5 +1,5 @@
 #include <DiscordBot/DiscordBot.hpp>
-#include <DotNameBotLib/DotNameBotLib.hpp>
+//#include <DotNameBotLib/DotNameBotLib.hpp>
 #include <EmojiModuleLib/EmojiModuleLib.hpp>
 #include <ILifeCycle/ILifeCycle.hpp>
 #include <Orchestrator/Orchestrator.hpp>
