@@ -89,7 +89,7 @@ namespace dotnamebot::discordbot {
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
         cluster_ptr->set_presence(
-            dpp::presence(dpp::ps_online, dpp::at_competing, "born at " + time_str + " UTC+2"));
+            dpp::presence(dpp::ps_online, dpp::at_competing, "born: " + time_str));
       });
 
       on_slashcommand_handle_ = cluster_->on_slashcommand(
