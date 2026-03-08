@@ -27,12 +27,18 @@ using namespace dotnamebot::logging;
 using namespace dotnamebot::assets;
 
 // ---------------------------------------------------------------------------
-// Parameter type
+// Parameter types
 // ---------------------------------------------------------------------------
 
 struct FeedTestParam {
   std::string description; ///< used as test display name
   std::string url;
+};
+
+struct FeedImageTestParam {
+  std::string description;
+  std::string url;
+  bool expectImage; ///< true → at least one item must have non-empty rssMedia.url
 };
 
 // ---------------------------------------------------------------------------
@@ -127,6 +133,79 @@ INSTANTIATE_TEST_SUITE_P(
         FeedTestParam{"dw_rdf",                   "https://rss.dw.com/rdf/rss-en-all"}
     ),
     [](const ::testing::TestParamInfo<FeedTestParam> &info) {
+        return info.param.description;
+    }
+);
+// clang-format on
+
+// ---------------------------------------------------------------------------
+// Image extraction tests — verifies rssMedia.url is non-empty for feeds
+// where images are embedded inside <content> (not directly in <summary>)
+// ---------------------------------------------------------------------------
+
+class RssFeedImageTest : public ::testing::TestWithParam<FeedImageTestParam> {
+protected:
+  void SetUp() override {
+    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                  std::chrono::high_resolution_clock::now().time_since_epoch())
+                  .count();
+    testDir_ = std::filesystem::temp_directory_path() / ("rss_img_test_" + std::to_string(ns));
+    std::filesystem::create_directories(testDir_);
+    std::ofstream(testDir_ / "rssUrls.json") << "[]";
+    std::ofstream(testDir_ / "seenHashes.json") << "[]";
+
+    auto logger = std::make_shared<ConsoleLogger>();
+    logger->setLevel(Level::LOG_WARNING);
+    auto assetManager = std::make_shared<MockAssetManager>(testDir_);
+    manager_ = std::make_shared<RssManager>(logger, assetManager);
+  }
+
+  void TearDown() override {
+    manager_.reset();
+    if (std::filesystem::exists(testDir_)) {
+      std::filesystem::remove_all(testDir_);
+    }
+  }
+
+  std::filesystem::path testDir_;
+  std::shared_ptr<RssManager> manager_;
+};
+
+TEST_P(RssFeedImageTest, ItemsHaveMediaUrl) {
+  const auto &param = GetParam();
+
+  ASSERT_TRUE(manager_->addUrl(param.url, 2 /*EMBEDDED_AS_ADVANCED*/, 0));
+  ASSERT_GT(manager_->refetchRssFeeds(), 0) << "No items fetched from: " << param.url;
+
+  // Drain all items and check that at least one has an image (when expected)
+  bool foundImage = false;
+  while (manager_->getItemCount() > 0) {
+    RSSItem item = manager_->getRandomItem();
+    if (!item.rssMedia.url.empty()) {
+      foundImage = true;
+      break;
+    }
+  }
+
+  if (param.expectImage) {
+    EXPECT_TRUE(foundImage) << "No item with rssMedia.url found for: " << param.url;
+  }
+}
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    ImageFeeds,
+    RssFeedImageTest,
+    ::testing::Values(
+        // Atom: images only in <content>, not in <summary>
+        FeedImageTestParam{"muzikantiakapely_cz", "https://muzikantiakapely.cz/feed/atom",  true},
+        FeedImageTestParam{"sampler_cz",          "https://sampler.cz/feed/atom",           true},
+        FeedImageTestParam{"hitzone_cz",          "https://hitzone.cz/feed/atom",           true},
+        // RSS 2.0: images via <media:content> or <enclosure>
+        FeedImageTestParam{"root_cz",             "https://www.root.cz/rss/clanky",         true},
+        FeedImageTestParam{"novinky_cz",          "https://www.novinky.cz/rss",             true}
+    ),
+    [](const ::testing::TestParamInfo<FeedImageTestParam> &info) {
         return info.param.description;
     }
 );

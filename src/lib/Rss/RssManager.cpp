@@ -391,22 +391,33 @@ namespace dotnamebot::rss {
           }
         }
         // Parse summary or content, strip HTML tags and extract image
-        {
-          const tinyxml2::XMLElement *descEl = item->FirstChildElement("summary");
-          if (descEl == nullptr) {
-            descEl = item->FirstChildElement("content");
+        // Helper lambda to get raw text of an XML element (handles CDATA)
+        auto getRawText = [](const tinyxml2::XMLElement *el) -> std::string {
+          if (el == nullptr) {
+            return {};
           }
+          const char *text = el->GetText();
+          if (text != nullptr) {
+            return text;
+          }
+          const auto *textNode = el->FirstChild();
+          if ((textNode != nullptr) && (textNode->ToText() != nullptr) &&
+              (textNode->Value() != nullptr)) {
+            return textNode->Value();
+          }
+          return {};
+        };
+
+        {
+          // Use <summary> for description text; fall back to <content> if missing
+          const tinyxml2::XMLElement *descEl = item->FirstChildElement("summary");
+          const tinyxml2::XMLElement *contentEl = item->FirstChildElement("content");
+          if (descEl == nullptr) {
+            descEl = contentEl;
+          }
+
           if (descEl != nullptr) {
-            std::string descValue;
-            const char *text = descEl->GetText();
-            if (text != nullptr) {
-              descValue = text;
-            } else {
-              const auto *textNode = descEl->FirstChild();
-              if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
-                descValue = (textNode->Value() != nullptr) ? textNode->Value() : "";
-              }
-            }
+            std::string descValue = getRawText(descEl);
 
             if (!descValue.empty()) {
               // Decode HTML entities first
@@ -431,6 +442,20 @@ namespace dotnamebot::rss {
               }
 
               rssItem.description = descValue;
+            }
+          }
+
+          // If no image found yet, also scan <content> (e.g. when description came from <summary>)
+          if (rssItem.rssMedia.url.empty() && contentEl != nullptr && contentEl != descEl) {
+            std::string contentValue = getRawText(contentEl);
+            if (!contentValue.empty()) {
+              contentValue = decodeHtmlEntities(contentValue);
+              std::smatch imgMatch;
+              std::regex imgRegex(R"(<img[^>]+src=["']([^"']+)["'][^>]*>)");
+              if (std::regex_search(contentValue, imgMatch, imgRegex) && imgMatch.size() > 1) {
+                rssItem.rssMedia.url = imgMatch[1].str();
+                rssItem.rssMedia.type = "image/";
+              }
             }
           }
         }
