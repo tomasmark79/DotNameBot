@@ -356,16 +356,83 @@ namespace dotnamebot::rss {
       if (isAtom) {
         // Atom
         if (auto *titleEl = item->FirstChildElement("title")) {
-          rssItem.title = (titleEl->GetText() != nullptr) ? titleEl->GetText() : "";
+          const char *text = titleEl->GetText();
+          if (text != nullptr) {
+            rssItem.title = text;
+          } else {
+            // Fallback: get text from child node (handles CDATA)
+            auto *textNode = titleEl->FirstChild();
+            if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+              rssItem.title = (textNode->Value() != nullptr) ? textNode->Value() : "";
+            }
+          }
+          // Strip any residual HTML tags from title (e.g. type="html")
+          std::regex htmlTagRegexTitle("<[^>]*>");
+          rssItem.title = std::regex_replace(rssItem.title, htmlTagRegexTitle, "");
+          rssItem.title = decodeHtmlEntities(rssItem.title);
         }
-        if (auto *linkEl = item->FirstChildElement("link")) {
-          const char *href = linkEl->Attribute("href");
-          rssItem.url = (href != nullptr) ? href : "";
+        // Prefer link with rel="alternate"; fall back to first link with href
+        {
+          const tinyxml2::XMLElement *chosenLinkEl = nullptr;
+          for (auto *linkEl = item->FirstChildElement("link"); linkEl != nullptr;
+               linkEl = linkEl->NextSiblingElement("link")) {
+            const char *rel = linkEl->Attribute("rel");
+            if (rel != nullptr && std::string(rel) == "alternate") {
+              chosenLinkEl = linkEl;
+              break;
+            }
+            if (chosenLinkEl == nullptr && linkEl->Attribute("href") != nullptr) {
+              chosenLinkEl = linkEl; // first link with href as fallback
+            }
+          }
+          if (chosenLinkEl != nullptr) {
+            const char *href = chosenLinkEl->Attribute("href");
+            rssItem.url = (href != nullptr) ? href : "";
+          }
         }
-        if (auto *summaryEl = item->FirstChildElement("summary")) {
-          rssItem.description = (summaryEl->GetText() != nullptr) ? summaryEl->GetText() : "";
-        } else if (auto *contentEl = item->FirstChildElement("content")) {
-          rssItem.description = (contentEl->GetText() != nullptr) ? contentEl->GetText() : "";
+        // Parse summary or content, strip HTML tags and extract image
+        {
+          const tinyxml2::XMLElement *descEl = item->FirstChildElement("summary");
+          if (descEl == nullptr) {
+            descEl = item->FirstChildElement("content");
+          }
+          if (descEl != nullptr) {
+            std::string descValue;
+            const char *text = descEl->GetText();
+            if (text != nullptr) {
+              descValue = text;
+            } else {
+              const auto *textNode = descEl->FirstChild();
+              if ((textNode != nullptr) && (textNode->ToText() != nullptr)) {
+                descValue = (textNode->Value() != nullptr) ? textNode->Value() : "";
+              }
+            }
+
+            if (!descValue.empty()) {
+              // Decode HTML entities first
+              descValue = decodeHtmlEntities(descValue);
+
+              // Extract image if present
+              std::smatch imgMatch;
+              std::regex imgRegex(R"(<img[^>]+src=["']([^"']+)["'][^>]*>)");
+              if (std::regex_search(descValue, imgMatch, imgRegex) && imgMatch.size() > 1) {
+                rssItem.rssMedia.url = imgMatch[1].str();
+                rssItem.rssMedia.type = "image/";
+              }
+
+              // Remove all HTML tags
+              std::regex htmlTagRegex("<[^>]*>");
+              descValue = std::regex_replace(descValue, htmlTagRegex, "");
+
+              // Trim whitespace
+              descValue.erase(0, descValue.find_first_not_of(" \t\n\r"));
+              if (!descValue.empty()) {
+                descValue.erase(descValue.find_last_not_of(" \t\n\r") + 1);
+              }
+
+              rssItem.description = descValue;
+            }
+          }
         }
 
         // <image>
