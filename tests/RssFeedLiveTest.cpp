@@ -17,13 +17,10 @@
 #include "../src/lib/Rss/RssManager.hpp"
 #include "../src/lib/Utils/Logger/ConsoleLogger.hpp"
 #include "MockAssetManager.hpp"
-
-#include <chrono>
 #include <filesystem>
-#include <fstream>
 #include <gtest/gtest.h>
 #include <memory>
-#include <string>meson test --suite live
+#include <string>
 
 using namespace dotnamebot::rss;
 using namespace dotnamebot::logging;
@@ -49,8 +46,7 @@ protected:
     auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
                   std::chrono::high_resolution_clock::now().time_since_epoch())
                   .count();
-    testDir_ =
-        std::filesystem::temp_directory_path() / ("rss_live_test_" + std::to_string(ns));
+    testDir_ = std::filesystem::temp_directory_path() / ("rss_live_test_" + std::to_string(ns));
     std::filesystem::create_directories(testDir_);
 
     // Pre-create empty JSON files so RssManager does not inject its default URL
