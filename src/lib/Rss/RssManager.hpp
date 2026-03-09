@@ -158,6 +158,16 @@ namespace dotnamebot::rss {
      */
     static std::string decodeHtmlEntities(const std::string &str);
 
+    /**
+     * @brief Converts XML data from its declared encoding to UTF-8.
+     *        If the XML declaration specifies a non-UTF-8 encoding (e.g. windows-1250),
+     *        iconv is used to transcode the bytes and the declaration is updated to UTF-8.
+     *
+     * @param xmlData Raw XML bytes as downloaded
+     * @return std::string UTF-8 encoded XML string
+     */
+    std::string convertToUtf8(const std::string &xmlData) const;
+
     // Data members
     bool isInitialized_{false};
 

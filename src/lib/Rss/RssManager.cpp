@@ -1,8 +1,10 @@
 
 #include "RssManager.hpp"
 
+#include <algorithm>
 #include <curl/curl.h>
 #include <fstream>
+#include <iconv.h>
 #include <random>
 #include <regex>
 #include <string>
@@ -618,6 +620,8 @@ namespace dotnamebot::rss {
       return -1;
     }
 
+    xmlData = convertToUtf8(xmlData);
+
     int totalDuplicateItems = 0;
     RSSFeed newFeed = parseRSS(xmlData, embeddedType, discordChannelId, totalDuplicateItems);
 
@@ -704,6 +708,59 @@ namespace dotnamebot::rss {
 
   std::string RssManager::getItemAsMarkdown(const RSSItem &item) { return item.toMarkdownLink(); }
   void RssManager::clearFeedBuffer() { feed_.clear(); }
+
+  std::string RssManager::convertToUtf8(const std::string &xmlData) const {
+    // Extract encoding from XML declaration, e.g. <?xml version="1.0" encoding="windows-1250" ?>
+    std::regex encodingRegex(R"(encoding\s*=\s*["']([^"']+)["'])", std::regex::icase);
+    std::smatch match;
+    if (!std::regex_search(xmlData, match, encodingRegex)) {
+      return xmlData; // No encoding declaration — assume UTF-8
+    }
+
+    std::string declaredEncoding = match[1].str();
+
+    // Normalise to upper-case for comparison
+    std::string upperEncoding = declaredEncoding;
+    std::transform(upperEncoding.begin(), upperEncoding.end(), upperEncoding.begin(), ::toupper);
+
+    if (upperEncoding == "UTF-8" || upperEncoding == "UTF8" || upperEncoding == "US-ASCII"
+        || upperEncoding == "ASCII") {
+      return xmlData; // Already UTF-8 compatible, nothing to do
+    }
+
+    // Use iconv to transcode to UTF-8
+    iconv_t cd = iconv_open("UTF-8", declaredEncoding.c_str());
+    if (cd == (iconv_t)-1) {
+      logger_->warningStream() << "convertToUtf8: iconv_open failed for encoding '"
+                               << declaredEncoding << "' — returning raw data";
+      return xmlData;
+    }
+
+    // Allocate output buffer (UTF-8 is at most 4 bytes per character)
+    std::string output(xmlData.size() * 4, '\0');
+    const char *inPtr = xmlData.data();
+    size_t inLeft = xmlData.size();
+    char *outPtr = output.data();
+    size_t outLeft = output.size();
+
+    size_t rc = iconv(cd, const_cast<char **>(&inPtr), &inLeft, &outPtr, &outLeft);
+    iconv_close(cd);
+
+    if (rc == (size_t)-1) {
+      logger_->warningStream() << "convertToUtf8: iconv conversion failed for encoding '"
+                               << declaredEncoding << "' — returning raw data";
+      return xmlData;
+    }
+
+    output.resize(output.size() - outLeft);
+
+    // Update the encoding declaration so tinyxml2 treats the data as UTF-8
+    std::regex replaceEncoding(R"(encoding\s*=\s*["'][^"']+["'])", std::regex::icase);
+    output = std::regex_replace(output, replaceEncoding, "encoding=\"UTF-8\"");
+
+    logger_->infoStream() << "convertToUtf8: transcoded from '" << declaredEncoding << "' to UTF-8";
+    return output;
+  }
 
   std::string RssManager::decodeHtmlEntities(const std::string &str) {
     std::string result = str;
