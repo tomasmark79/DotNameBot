@@ -206,7 +206,6 @@ namespace dotnamebot::discordbot {
         }
         if (cmd_name == "btcusd") {
           event.thinking();
-          // std::string price = cryptoUtils_->getCurrentBtcUsdPrice();
           std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
           if (!price.empty()) {
             event.edit_response("Current BTC/USD price: " + price);
