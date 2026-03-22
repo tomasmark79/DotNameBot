@@ -204,6 +204,16 @@ namespace dotnamebot::discordbot {
           event.thinking();
           event.edit_response(emojiModuleLib_->getRandomEmoji());
         }
+        if (cmd_name == "btcusd") {
+          event.thinking();
+          // std::string price = cryptoUtils_->getCurrentBtcUsdPrice();
+          std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
+          if (!price.empty()) {
+            event.edit_response("Current BTC/USD price: " + price);
+          } else {
+            event.edit_response("Failed to fetch BTC/USD price.");
+          }
+        }
       } else if (handler_type == "rss") {
         if (cmd_name == "refetch") {
           event.thinking();

@@ -723,8 +723,8 @@ namespace dotnamebot::rss {
     std::string upperEncoding = declaredEncoding;
     std::transform(upperEncoding.begin(), upperEncoding.end(), upperEncoding.begin(), ::toupper);
 
-    if (upperEncoding == "UTF-8" || upperEncoding == "UTF8" || upperEncoding == "US-ASCII"
-        || upperEncoding == "ASCII") {
+    if (upperEncoding == "UTF-8" || upperEncoding == "UTF8" || upperEncoding == "US-ASCII" ||
+        upperEncoding == "ASCII") {
       return xmlData; // Already UTF-8 compatible, nothing to do
     }
 
