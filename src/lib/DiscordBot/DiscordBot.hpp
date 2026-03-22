@@ -15,6 +15,7 @@
 #include <memory>
 #include <string>
 
+#include <Crypto/CryptoUtils.hpp>
 #include <EmojiModuleLib/EmojiModuleLib.hpp>
 
 namespace dotnamebot::discordbot {

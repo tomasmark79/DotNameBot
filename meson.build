@@ -107,6 +107,8 @@ lib_sources = [
   'src/lib/DiscordBot/DiscordBot.cpp',
   # RSS
   'src/lib/Rss/RssManager.cpp',
+  # Crypto
+  'src/lib/Crypto/CryptoUtils.cpp',
   # Slash commands
   'src/lib/SlashCommand/SlashCommand.cpp',
 ]
