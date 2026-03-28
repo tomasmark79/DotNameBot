@@ -23,8 +23,10 @@ namespace dotnamebot::discordbot {
 
   constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
   constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
+  constexpr dpp::snowflake RENAME_CHANNEL_ID = 1479759351605366926;
   constexpr int FETCH_INTERVAL_SECONDS = 3600; // 1 hour
   constexpr int PUT_INTERVAL_SECONDS = 30;
+  constexpr int RENAME_INTERVAL_SECONDS = 300; // 5 minutes
 
   class DiscordBot : public ILifeCycle {
   public:
@@ -106,6 +108,14 @@ namespace dotnamebot::discordbot {
     bool fetchFeedsTimer();
 
     /**
+     * @brief Rename channel timer — renames a fixed channel every hour using NameGen
+     *
+     * @return true
+     * @return false
+     */
+    bool renameChannelTimer();
+
+    /**
      * @brief Split a Discord message if it exceeds the maximum length
      *
      * @param message
@@ -156,6 +166,7 @@ namespace dotnamebot::discordbot {
     std::vector<std::thread> threads_;
     std::atomic<bool> isPRFTRunning_{true};
     std::atomic<bool> isFFTRunning_{true};
+    std::atomic<bool> isRNTRunning_{true};
 
     std::condition_variable cv_;
     std::mutex cvMutex_;

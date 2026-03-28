@@ -1,4 +1,6 @@
 #include "DiscordBot.hpp"
+#include <algorithm>
+#include <cctype>
 #include <chrono>
 #include <cstdint>
 
@@ -106,6 +108,11 @@ namespace dotnamebot::discordbot {
         logger_->error("Failed to start fetch feeds timer.");
       }
 
+      // Start the periodic channel rename timer
+      if (!renameChannelTimer()) {
+        logger_->error("Failed to start channel rename timer.");
+      }
+
       return true;
 
     } catch (const std::exception &e) {
@@ -145,6 +152,7 @@ namespace dotnamebot::discordbot {
     // Signal to stop user timers
     isPRFTRunning_.store(false);
     isFFTRunning_.store(false);
+    isRNTRunning_.store(false);
     cv_.notify_all();
     for (auto &thread : threads_) {
       if (thread.joinable()) {
@@ -624,6 +632,46 @@ namespace dotnamebot::discordbot {
                      [this]() { return !isFFTRunning_.load(); });
 
       } // while isRunningTimer_
+    });
+    return true;
+  }
+
+  bool DiscordBot::renameChannelTimer() {
+    threads_.emplace_back([this]() -> void {
+      isRNTRunning_.store(true);
+
+      while (isRNTRunning_.load()) {
+        if (nameGen_) {
+          std::string newName = nameGen_->generate();
+          if (!newName.empty()) {
+            // Replace spaces with hyphens for Discord channel name rules
+            std::replace(newName.begin(), newName.end(), ' ', '-');
+            // Convert to lowercase
+            std::transform(newName.begin(), newName.end(), newName.begin(),
+                           [](unsigned char c) { return std::tolower(c); });
+
+            auto *cluster_ptr = cluster_.get();
+            auto logger_copy = logger_;
+            dpp::channel ch;
+            ch.id = RENAME_CHANNEL_ID;
+            ch.name = newName;
+            cluster_ptr->channel_edit(
+                ch, [logger_copy, newName](const dpp::confirmation_callback_t &callback) {
+              if (callback.is_error()) {
+                logger_copy->error("Failed to rename channel: " + callback.get_error().message);
+              } else {
+                logger_copy->info("Channel renamed to: " + newName);
+              }
+            });
+          }
+        }
+
+        // Interruptible sleep
+        std::unique_lock<std::mutex> lock(cvMutex_);
+        cv_.wait_for(lock, std::chrono::seconds(RENAME_INTERVAL_SECONDS),
+                     [this]() { return !isRNTRunning_.load(); });
+
+      } // while isRNTRunning_
     });
     return true;
   }
