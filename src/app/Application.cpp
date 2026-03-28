@@ -1,7 +1,8 @@
 #include <DiscordBot/DiscordBot.hpp>
-//#include <DotNameBotLib/DotNameBotLib.hpp>
+// #include <DotNameBotLib/DotNameBotLib.hpp>
 #include <EmojiModuleLib/EmojiModuleLib.hpp>
 #include <ILifeCycle/ILifeCycle.hpp>
+#include <NameGen/NameGen.hpp>
 #include <Orchestrator/Orchestrator.hpp>
 #include <Rss/IRssService.hpp>
 #include <Rss/RssManager.hpp>
@@ -72,6 +73,10 @@ int main(int argc, char **argv) {
     // RssManager (registered as IRssService interface)
     auto rssManager = std::make_shared<dotnamebot::rss::RssManager>(ctx.logger, ctx.assetManager);
     services.registerService<dotnamebot::rss::IRssService>(rssManager);
+
+    // NameGen
+    auto nameGen = std::make_shared<dotnamebot::namegen::NameGen>(ctx.logger, ctx.assetManager);
+    services.registerService<dotnamebot::namegen::NameGen>(nameGen);
 
     ctx.logger->infoStream() << "Services registered: " << services.getServiceCount();
 

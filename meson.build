@@ -109,6 +109,8 @@ lib_sources = [
   'src/lib/Rss/RssManager.cpp',
   # Crypto
   'src/lib/Crypto/CryptoUtils.cpp',
+  # NameGen
+  'src/lib/NameGen/NameGen.cpp',
   # Slash commands
   'src/lib/SlashCommand/SlashCommand.cpp',
 ]

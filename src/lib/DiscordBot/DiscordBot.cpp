@@ -9,7 +9,8 @@ namespace dotnamebot::discordbot {
         assetManager_(services.getService<dotnamebot::assets::IAssetManager>()),
         customStrings_(services.getService<dotnamebot::utils::ICustomStringsLoader>()),
         emojiModuleLib_(services.getService<dotnamebot::v1::EmojiModuleLib>()),
-        rssService_(services.getService<dotnamebot::rss::IRssService>()) {
+        rssService_(services.getService<dotnamebot::rss::IRssService>()),
+        nameGen_(services.getService<dotnamebot::namegen::NameGen>()) {
 
     if (!logger_) {
       throw std::runtime_error("DiscordBot requires a logger");
@@ -211,6 +212,15 @@ namespace dotnamebot::discordbot {
             event.edit_response("Current BTC/USD price: " + price);
           } else {
             event.edit_response("Failed to fetch BTC/USD price.");
+          }
+        }
+        if (cmd_name == "namegen") {
+          event.thinking();
+          std::string name = nameGen_->generate();
+          if (!name.empty()) {
+            event.edit_response(name);
+          } else {
+            event.edit_response("Failed to generate name.");
           }
         }
       } else if (handler_type == "rss") {

@@ -17,6 +17,7 @@
 
 #include <Crypto/CryptoUtils.hpp>
 #include <EmojiModuleLib/EmojiModuleLib.hpp>
+#include <NameGen/NameGen.hpp>
 
 namespace dotnamebot::discordbot {
 
@@ -167,6 +168,7 @@ namespace dotnamebot::discordbot {
     std::shared_ptr<dotnamebot::utils::ICustomStringsLoader> customStrings_;
     std::shared_ptr<dotnamebot::v1::EmojiModuleLib> emojiModuleLib_;
     std::shared_ptr<dotnamebot::rss::IRssService> rssService_;
+    std::shared_ptr<dotnamebot::namegen::NameGen> nameGen_;
 
     std::function<void()> onStopRequested_;
 

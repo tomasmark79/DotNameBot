@@ -7,6 +7,7 @@ const std::vector<SlashCommand> commands_ = {
     {"help", "get help", "simple"},
     {"emoji", "get emoji", "simple"},
     {"btcusd", "get current BTC/USD price", "simple"},
+    {"namegen", "generate a random name", "simple"},
     {"addurl",
      "add another RSS/ATOM feed URL",
      {{.type = OptionType::String,
