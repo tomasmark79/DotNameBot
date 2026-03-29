@@ -113,6 +113,11 @@ namespace dotnamebot::discordbot {
         logger_->error("Failed to start channel rename timer.");
       }
 
+      // Start the periodic BTC price status timer
+      if (!btcPriceStatusTimer()) {
+        logger_->error("Failed to start BTC price status timer.");
+      }
+
       return true;
 
     } catch (const std::exception &e) {
@@ -153,6 +158,7 @@ namespace dotnamebot::discordbot {
     isPRFTRunning_.store(false);
     isFFTRunning_.store(false);
     isRNTRunning_.store(false);
+    isBPSTRunning_.store(false);
     cv_.notify_all();
     for (auto &thread : threads_) {
       if (thread.joinable()) {
@@ -672,6 +678,37 @@ namespace dotnamebot::discordbot {
                      [this]() { return !isRNTRunning_.load(); });
 
       } // while isRNTRunning_
+    });
+    return true;
+  }
+
+  bool DiscordBot::btcPriceStatusTimer() {
+    threads_.emplace_back([this]() -> void {
+      isBPSTRunning_.store(true);
+
+      while (isBPSTRunning_.load()) {
+        std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
+        if (!price.empty()) {
+          // Trim to 2 decimal places for a cleaner status string
+          auto dotPos = price.find('.');
+          if (dotPos != std::string::npos && price.size() > dotPos + 3) {
+            price = price.substr(0, dotPos + 3);
+          }
+          auto *cluster_ptr = cluster_.get();
+          auto logger_copy = logger_;
+          cluster_ptr->set_presence(
+              dpp::presence(dpp::ps_online, dpp::at_watching, "BTC $" + price));
+          logger_copy->info("BTC price status updated: $" + price);
+        } else {
+          logger_->warning("BTC price status update failed: empty response");
+        }
+
+        // Interruptible sleep
+        std::unique_lock<std::mutex> lock(cvMutex_);
+        cv_.wait_for(lock, std::chrono::seconds(BTCPRICE_INTERVAL_SECONDS),
+                     [this]() { return !isBPSTRunning_.load(); });
+
+      } // while isBPSTRunning_
     });
     return true;
   }

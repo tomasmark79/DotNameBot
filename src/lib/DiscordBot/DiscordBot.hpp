@@ -26,7 +26,8 @@ namespace dotnamebot::discordbot {
   constexpr dpp::snowflake RENAME_CHANNEL_ID = 1479759351605366926;
   constexpr int FETCH_INTERVAL_SECONDS = 3600; // 1 hour
   constexpr int PUT_INTERVAL_SECONDS = 30;
-  constexpr int RENAME_INTERVAL_SECONDS = 300; // 5 minutes
+  constexpr int RENAME_INTERVAL_SECONDS = 300;  // 5 minutes
+  constexpr int BTCPRICE_INTERVAL_SECONDS = 300; // 5 minutes
 
   class DiscordBot : public ILifeCycle {
   public:
@@ -116,6 +117,14 @@ namespace dotnamebot::discordbot {
     bool renameChannelTimer();
 
     /**
+     * @brief BTC price status timer — updates bot presence with current BTC/USD price every 15 minutes
+     *
+     * @return true
+     * @return false
+     */
+    bool btcPriceStatusTimer();
+
+    /**
      * @brief Split a Discord message if it exceeds the maximum length
      *
      * @param message
@@ -167,6 +176,7 @@ namespace dotnamebot::discordbot {
     std::atomic<bool> isPRFTRunning_{true};
     std::atomic<bool> isFFTRunning_{true};
     std::atomic<bool> isRNTRunning_{true};
+    std::atomic<bool> isBPSTRunning_{true};
 
     std::condition_variable cv_;
     std::mutex cvMutex_;
