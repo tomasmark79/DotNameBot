@@ -21,7 +21,16 @@ namespace dotnamebot::crypto {
      */
     static std::string getCurrentEthUsdPrice();
 
+    /**
+     * @brief Returns trend direction from the last two completed hourly Klines candles.
+     * @param symbol   Binance symbol, e.g. "BTCUSDT"
+     * @param interval Kline interval, e.g. "1h"
+     * @return  1 if price is rising, -1 if falling, 0 on flat or error.
+     */
+    static int getKlinesTrend(const char *symbol, const char *interval = "1h");
+
   private:
+    static std::string httpGet(const char *url);
     static std::string fetchUsdPrice(const char *url);
     static size_t writeCallback(void *contents, size_t size, size_t nmemb, std::string *output);
   };

@@ -12,6 +12,7 @@
 #include <Utils/UtilsFactory.hpp>
 
 #include <atomic>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -28,6 +29,18 @@ namespace dotnamebot::discordbot {
   constexpr int PUT_INTERVAL_SECONDS = 30;
   constexpr int RENAME_INTERVAL_SECONDS = 300;  // 5 minutes
   constexpr int BTCPRICE_INTERVAL_SECONDS = 300; // 5 minutes
+
+  // ── BTC trend detection algorithm ───────────────────────────────────────────
+  // EMA    — dual exponential moving average (short vs. long), stateful in RAM
+  // Klines — Binance hourly klines API, fully stateless
+  enum class BtcTrendMethod : uint8_t { EMA, Klines };
+  constexpr BtcTrendMethod BTC_TREND_METHOD = BtcTrendMethod::EMA;
+
+  // EMA periods (only used when BTC_TREND_METHOD == BtcTrendMethod::EMA)
+  // At a 5-minute poll interval: EMA_SHORT ~ 15 min, EMA_LONG ~ 60 min
+  constexpr int EMA_SHORT_PERIOD = 3;
+  constexpr int EMA_LONG_PERIOD  = 12;
+  // ────────────────────────────────────────────────────────────────────────────
 
   class DiscordBot : public ILifeCycle {
   public:

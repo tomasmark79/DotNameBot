@@ -12,7 +12,7 @@ namespace dotnamebot::crypto {
     return size * nmemb;
   }
 
-  std::string CryptoUtils::fetchUsdPrice(const char *url) {
+  std::string CryptoUtils::httpGet(const char *url) {
     std::string buffer;
     CURL *curl = curl_easy_init();
     if (curl == nullptr) {
@@ -29,15 +29,20 @@ namespace dotnamebot::crypto {
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5L);
     curl_easy_setopt(curl, CURLOPT_USERAGENT, "DotNameBot/1.0");
 
-    CURLcode res = curl_easy_perform(curl);
+    const CURLcode res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK) {
       return {};
     }
+    return buffer;
+  }
 
+  std::string CryptoUtils::fetchUsdPrice(const char *url) {
+    const std::string body = httpGet(url);
+    if (body.empty()) return {};
     try {
-      auto jsonResponse = nlohmann::json::parse(buffer);
+      auto jsonResponse = nlohmann::json::parse(body);
       return jsonResponse.at("price").get<std::string>();
     } catch (const nlohmann::json::exception &) {
       return {};
@@ -52,6 +57,26 @@ namespace dotnamebot::crypto {
   std::string CryptoUtils::getCurrentEthUsdPrice() {
     constexpr const char *kUrl = "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT";
     return fetchUsdPrice(kUrl);
+  }
+
+  int CryptoUtils::getKlinesTrend(const char *symbol, const char *interval) {
+    const std::string url = std::string("https://api.binance.com/api/v3/klines?symbol=")
+                            + symbol + "&interval=" + interval + "&limit=2";
+    const std::string body = httpGet(url.c_str());
+    if (body.empty()) return 0;
+    try {
+      // Each kline: [openTime, open, high, low, close, ...]
+      // Index 4 is the close price as a string.
+      const auto j = nlohmann::json::parse(body);
+      if (j.size() < 2) return 0;
+      const double close0 = std::stod(j[0][4].get<std::string>());
+      const double close1 = std::stod(j[1][4].get<std::string>());
+      if (close1 > close0) return 1;
+      if (close1 < close0) return -1;
+      return 0;
+    } catch (...) {
+      return 0;
+    }
   }
 
 } // namespace dotnamebot::crypto

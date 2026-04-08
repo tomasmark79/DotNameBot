@@ -694,7 +694,13 @@ namespace dotnamebot::discordbot {
   bool DiscordBot::btcPriceStatusTimer() {
     threads_.emplace_back([this]() -> void {
       isBPSTRunning_.store(true);
-      double lastBtcPrice = 0.0;
+
+      // EMA state — only active when BTC_TREND_METHOD == BtcTrendMethod::EMA
+      double emaShort     = 0.0;
+      double emaLong      = 0.0;
+      bool emaInitialized = false;
+      constexpr double kShort = 2.0 / (EMA_SHORT_PERIOD + 1);
+      constexpr double kLong  = 2.0 / (EMA_LONG_PERIOD  + 1);
 
       while (isBPSTRunning_.load()) {
         std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
@@ -705,15 +711,31 @@ namespace dotnamebot::discordbot {
             price = price.substr(0, dotPos + 3);
           }
 
-          // Determine trend arrow compared to previous price
-          double currentBtcPrice = 0.0;
-          try { currentBtcPrice = std::stod(price); } catch (...) {}
+          double currentPrice = 0.0;
+          try { currentPrice = std::stod(price); } catch (...) {}
+
           std::string arrow;
-          if (lastBtcPrice > 0.0) {
-            if (currentBtcPrice > lastBtcPrice)      arrow = " \u25B2"; // ▲
-            else if (currentBtcPrice < lastBtcPrice) arrow = " \u25BC"; // ▼
+
+          if constexpr (BTC_TREND_METHOD == BtcTrendMethod::EMA) {
+            // Dual EMA: short (fast) vs. long (slow)
+            if (currentPrice > 0.0) {
+              if (!emaInitialized) {
+                emaShort = currentPrice;
+                emaLong  = currentPrice;
+                emaInitialized = true;
+              } else {
+                emaShort = currentPrice * kShort + emaShort * (1.0 - kShort);
+                emaLong  = currentPrice * kLong  + emaLong  * (1.0 - kLong);
+                if (emaShort > emaLong)      arrow = " \u25B2"; // ▲
+                else if (emaShort < emaLong) arrow = " \u25BC"; // ▼
+              }
+            }
+          } else if constexpr (BTC_TREND_METHOD == BtcTrendMethod::Klines) {
+            // Stateless: compare last two completed hourly klines from Binance API
+            const int trend = dotnamebot::crypto::CryptoUtils::getKlinesTrend("BTCUSDT", "1h");
+            if      (trend > 0) arrow = " \u25B2"; // ▲
+            else if (trend < 0) arrow = " \u25BC"; // ▼
           }
-          if (currentBtcPrice > 0.0) lastBtcPrice = currentBtcPrice;
 
           auto *cluster_ptr = cluster_.get();
           auto logger_copy = logger_;
