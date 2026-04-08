@@ -12,16 +12,14 @@ namespace dotnamebot::crypto {
     return size * nmemb;
   }
 
-  std::string CryptoUtils::getCurrentBtcUsdPrice() {
-    constexpr const char *kUrl = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
-
+  std::string CryptoUtils::fetchUsdPrice(const char *url) {
     std::string buffer;
     CURL *curl = curl_easy_init();
     if (curl == nullptr) {
       return {};
     }
 
-    curl_easy_setopt(curl, CURLOPT_URL, kUrl);
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, CryptoUtils::writeCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -44,6 +42,16 @@ namespace dotnamebot::crypto {
     } catch (const nlohmann::json::exception &) {
       return {};
     }
+  }
+
+  std::string CryptoUtils::getCurrentBtcUsdPrice() {
+    constexpr const char *kUrl = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
+    return fetchUsdPrice(kUrl);
+  }
+
+  std::string CryptoUtils::getCurrentEthUsdPrice() {
+    constexpr const char *kUrl = "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT";
+    return fetchUsdPrice(kUrl);
   }
 
 } // namespace dotnamebot::crypto

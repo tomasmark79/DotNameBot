@@ -228,6 +228,15 @@ namespace dotnamebot::discordbot {
             event.edit_response("Failed to fetch BTC/USD price.");
           }
         }
+        if (cmd_name == "ethusd") {
+          event.thinking();
+          std::string price = dotnamebot::crypto::CryptoUtils::getCurrentEthUsdPrice();
+          if (!price.empty()) {
+            event.edit_response("Current ETH/USD price: " + price);
+          } else {
+            event.edit_response("Failed to fetch ETH/USD price.");
+          }
+        }
         if (cmd_name == "namegen") {
           event.thinking();
           std::string name = nameGen_->generate();
@@ -685,6 +694,7 @@ namespace dotnamebot::discordbot {
   bool DiscordBot::btcPriceStatusTimer() {
     threads_.emplace_back([this]() -> void {
       isBPSTRunning_.store(true);
+      double lastBtcPrice = 0.0;
 
       while (isBPSTRunning_.load()) {
         std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
@@ -694,11 +704,22 @@ namespace dotnamebot::discordbot {
           if (dotPos != std::string::npos && price.size() > dotPos + 3) {
             price = price.substr(0, dotPos + 3);
           }
+
+          // Determine trend arrow compared to previous price
+          double currentBtcPrice = 0.0;
+          try { currentBtcPrice = std::stod(price); } catch (...) {}
+          std::string arrow;
+          if (lastBtcPrice > 0.0) {
+            if (currentBtcPrice > lastBtcPrice)      arrow = " \u25B2"; // ▲
+            else if (currentBtcPrice < lastBtcPrice) arrow = " \u25BC"; // ▼
+          }
+          if (currentBtcPrice > 0.0) lastBtcPrice = currentBtcPrice;
+
           auto *cluster_ptr = cluster_.get();
           auto logger_copy = logger_;
           cluster_ptr->set_presence(
-              dpp::presence(dpp::ps_online, dpp::at_watching, "BTC $" + price));
-          logger_copy->info("BTC price status updated: $" + price);
+              dpp::presence(dpp::ps_online, dpp::at_watching, "BTC $" + price + arrow));
+          logger_copy->info("BTC price status updated: $" + price + arrow);
         } else {
           logger_->warning("BTC price status update failed: empty response");
         }
