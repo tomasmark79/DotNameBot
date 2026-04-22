@@ -92,7 +92,7 @@ namespace dotnamebot::discordbot {
         oss << std::put_time(&tm_now, "%d.%m.%Y %H:%M:%S");
         std::string time_str = oss.str();
         cluster_ptr->set_presence(
-            dpp::presence(dpp::ps_online, dpp::at_competing, "born: " + time_str));
+            dpp::presence(dpp::ps_online, dpp::at_competing, "loaded: " + time_str));
       });
 
       on_slashcommand_handle_ = cluster_->on_slashcommand(
@@ -114,9 +114,9 @@ namespace dotnamebot::discordbot {
       }
 
       // Start the periodic BTC price status timer
-      if (!btcPriceStatusTimer()) {
-        logger_->error("Failed to start BTC price status timer.");
-      }
+      // if (!btcPriceStatusTimer()) {
+      //   logger_->error("Failed to start BTC price status timer.");
+      // }
 
       return true;
 
@@ -696,11 +696,11 @@ namespace dotnamebot::discordbot {
       isBPSTRunning_.store(true);
 
       // EMA state — only active when BTC_TREND_METHOD == BtcTrendMethod::EMA
-      double emaShort     = 0.0;
-      double emaLong      = 0.0;
+      double emaShort = 0.0;
+      double emaLong = 0.0;
       bool emaInitialized = false;
       constexpr double kShort = 2.0 / (EMA_SHORT_PERIOD + 1);
-      constexpr double kLong  = 2.0 / (EMA_LONG_PERIOD  + 1);
+      constexpr double kLong = 2.0 / (EMA_LONG_PERIOD + 1);
 
       while (isBPSTRunning_.load()) {
         std::string price = dotnamebot::crypto::CryptoUtils::getCurrentBtcUsdPrice();
@@ -712,7 +712,10 @@ namespace dotnamebot::discordbot {
           }
 
           double currentPrice = 0.0;
-          try { currentPrice = std::stod(price); } catch (...) {}
+          try {
+            currentPrice = std::stod(price);
+          } catch (...) {
+          }
 
           std::string arrow;
 
@@ -721,20 +724,24 @@ namespace dotnamebot::discordbot {
             if (currentPrice > 0.0) {
               if (!emaInitialized) {
                 emaShort = currentPrice;
-                emaLong  = currentPrice;
+                emaLong = currentPrice;
                 emaInitialized = true;
               } else {
                 emaShort = currentPrice * kShort + emaShort * (1.0 - kShort);
-                emaLong  = currentPrice * kLong  + emaLong  * (1.0 - kLong);
-                if (emaShort > emaLong)      arrow = " \u25B2"; // ▲
-                else if (emaShort < emaLong) arrow = " \u25BC"; // ▼
+                emaLong = currentPrice * kLong + emaLong * (1.0 - kLong);
+                if (emaShort > emaLong)
+                  arrow = " \u25B2"; // ▲
+                else if (emaShort < emaLong)
+                  arrow = " \u25BC"; // ▼
               }
             }
           } else if constexpr (BTC_TREND_METHOD == BtcTrendMethod::Klines) {
             // Stateless: compare last two completed hourly klines from Binance API
             const int trend = dotnamebot::crypto::CryptoUtils::getKlinesTrend("BTCUSDT", "1h");
-            if      (trend > 0) arrow = " \u25B2"; // ▲
-            else if (trend < 0) arrow = " \u25BC"; // ▼
+            if (trend > 0)
+              arrow = " \u25B2"; // ▲
+            else if (trend < 0)
+              arrow = " \u25BC"; // ▼
           }
 
           auto *cluster_ptr = cluster_.get();
