@@ -635,8 +635,12 @@ namespace dotnamebot::discordbot {
 
         int itemsFetched = rssService_->refetchRssFeeds();
         if (itemsFetched >= 0) {
+          size_t itemCount = rssService_->getItemCount();
           logger_->info("Periodic RSS fetch completed. Total items in buffer: " +
-                        std::to_string(rssService_->getItemCount()));
+                        std::to_string(itemCount));
+          auto *cluster_ptr = cluster_.get();
+          cluster_ptr->set_presence(
+              dpp::presence(dpp::ps_online, dpp::at_watching, "rss queue: " + std::to_string(itemCount)));
         } else {
           logger_->error("Periodic RSS fetch failed.");
         }
