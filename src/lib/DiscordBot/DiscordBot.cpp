@@ -58,9 +58,10 @@ namespace dotnamebot::discordbot {
         }
       });
 
-      on_ready_handle_ = cluster_->on_ready([logger = logger_, rss = rssService_,
-                                             emj = emojiModuleLib_, commands = commands_,
-                                             cluster_ptr = cluster_.get()](const dpp::ready_t &) {
+      on_ready_handle_ = cluster_->on_ready(
+          [logger = logger_, rss = rssService_, emj = emojiModuleLib_, commands = commands_,
+           cluster_ptr = cluster_.get(), isReady = &isReady_](const dpp::ready_t &) {
+        isReady->store(true);
         logger->info("Bot is ready! Logged in as: " + cluster_ptr->me.username);
         logger->info("Bot ID: " + std::to_string(cluster_ptr->me.id));
 
@@ -550,8 +551,8 @@ namespace dotnamebot::discordbot {
     // Capture cluster raw pointer and logger to avoid capturing `this` in the
     // callbacks that may outlive the DiscordBot object.
     auto *cluster_ptr = cluster_.get();
-    cluster_ptr->message_create(msg, [cluster_ptr, logger = logger_,
-                                      onComplete](const dpp::confirmation_callback_t &callback) {
+    cluster_ptr->message_create(
+        msg, [logger = logger_, onComplete](const dpp::confirmation_callback_t &callback) {
       if (callback.is_error()) {
         logger->error("Failed to create message: " + callback.get_error().message);
         if (onComplete) {
@@ -559,23 +560,27 @@ namespace dotnamebot::discordbot {
         }
         return;
       }
-      const auto &createdMessage = callback.get<dpp::message>();
-      cluster_ptr->message_crosspost(
-          createdMessage.id, createdMessage.channel_id,
-          [logger, onComplete](const dpp::confirmation_callback_t &crosspostCallback) {
-        if (crosspostCallback.is_error()) {
-          logger->errorStream() << "Failed to crosspost message: "
-                                << crosspostCallback.get_error().message;
-          if (onComplete) {
-            onComplete(false);
-          }
-          return;
-        }
-        logger->infoStream() << "Message crossposted successfully.";
-        if (onComplete) {
-          onComplete(true);
-        }
-      });
+      // const auto &createdMessage = callback.get<dpp::message>();
+      // cluster_ptr->message_crosspost(
+      //     createdMessage.id, createdMessage.channel_id,
+      //     [logger, onComplete](const dpp::confirmation_callback_t &crosspostCallback) {
+      //   if (crosspostCallback.is_error()) {
+      //     logger->errorStream() << "Failed to crosspost message: "
+      //                           << crosspostCallback.get_error().message;
+      //     if (onComplete) {
+      //       onComplete(false);
+      //     }
+      //     return;
+      //   }
+      //   logger->infoStream() << "Message crossposted successfully.";
+      //   if (onComplete) {
+      //     onComplete(true);
+      //   }
+      // });
+      logger->infoStream() << "Message sent successfully (crosspost disabled).";
+      if (onComplete) {
+        onComplete(true);
+      }
     });
   }
 
@@ -589,6 +594,11 @@ namespace dotnamebot::discordbot {
         std::unique_lock<std::mutex> lock(cvMutex_);
         cv_.wait_for(lock, std::chrono::seconds(PUT_INTERVAL_SECONDS),
                      [this]() { return !isPRFTRunning_.load(); });
+
+        if (!isReady_.load()) {
+          logger_->warning("Bot not ready, skipping RSS message delivery.");
+          continue;
+        }
 
         dotnamebot::rss::RSSItem item = rssService_->getRandomItem();
         if (item.title.empty()) {
@@ -639,8 +649,8 @@ namespace dotnamebot::discordbot {
           logger_->info("Periodic RSS fetch completed. Total items in buffer: " +
                         std::to_string(itemCount));
           auto *cluster_ptr = cluster_.get();
-          cluster_ptr->set_presence(
-              dpp::presence(dpp::ps_online, dpp::at_watching, "rss queue: " + std::to_string(itemCount)));
+          cluster_ptr->set_presence(dpp::presence(dpp::ps_online, dpp::at_watching,
+                                                  "last fetch: " + std::to_string(itemCount)));
         } else {
           logger_->error("Periodic RSS fetch failed.");
         }

@@ -60,8 +60,8 @@ namespace dotnamebot::crypto {
   }
 
   int CryptoUtils::getKlinesTrend(const char *symbol, const char *interval) {
-    const std::string url = std::string("https://api.binance.com/api/v3/klines?symbol=")
-                            + symbol + "&interval=" + interval + "&limit=2";
+    const std::string url = std::string("https://api.binance.com/api/v3/klines?symbol=") + symbol +
+                            "&interval=" + interval + "&limit=2";
     const std::string body = httpGet(url.c_str());
     if (body.empty()) return 0;
     try {

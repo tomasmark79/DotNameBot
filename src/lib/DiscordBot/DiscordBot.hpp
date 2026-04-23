@@ -25,9 +25,9 @@ namespace dotnamebot::discordbot {
   constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
   constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
   constexpr dpp::snowflake RENAME_CHANNEL_ID = 1479759351605366926;
-  constexpr int FETCH_INTERVAL_SECONDS = 3600; // 1 hour
+  constexpr int FETCH_INTERVAL_SECONDS = 3600;   // 1 hour
   constexpr int PUT_INTERVAL_SECONDS = 30;
-  constexpr int RENAME_INTERVAL_SECONDS = 300;  // 5 minutes
+  constexpr int RENAME_INTERVAL_SECONDS = 300;   // 5 minutes
   constexpr int BTCPRICE_INTERVAL_SECONDS = 300; // 5 minutes
 
   // ── BTC trend detection algorithm ───────────────────────────────────────────
@@ -39,7 +39,7 @@ namespace dotnamebot::discordbot {
   // EMA periods (only used when BTC_TREND_METHOD == BtcTrendMethod::EMA)
   // At a 5-minute poll interval: EMA_SHORT ~ 15 min, EMA_LONG ~ 60 min
   constexpr int EMA_SHORT_PERIOD = 3;
-  constexpr int EMA_LONG_PERIOD  = 12;
+  constexpr int EMA_LONG_PERIOD = 12;
   // ────────────────────────────────────────────────────────────────────────────
 
   class DiscordBot : public ILifeCycle {
@@ -130,7 +130,8 @@ namespace dotnamebot::discordbot {
     bool renameChannelTimer();
 
     /**
-     * @brief BTC price status timer — updates bot presence with current BTC/USD price every 15 minutes
+     * @brief BTC price status timer — updates bot presence with current BTC/USD price every 15
+     * minutes
      *
      * @return true
      * @return false
@@ -187,6 +188,7 @@ namespace dotnamebot::discordbot {
 
     std::vector<std::thread> threads_;
     std::atomic<bool> isPRFTRunning_{true};
+    std::atomic<bool> isReady_{false};
     std::atomic<bool> isFFTRunning_{true};
     std::atomic<bool> isRNTRunning_{true};
     std::atomic<bool> isBPSTRunning_{true};
