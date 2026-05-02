@@ -25,10 +25,10 @@ namespace dotnamebot::discordbot {
   constexpr static const int MAX_DISCORD_MESSAGE_LENGTH = 2000;
   constexpr dpp::snowflake LOG_CHANNEL_ID = 1454003952533242010;
   constexpr dpp::snowflake RENAME_CHANNEL_ID = 1479759351605366926;
-  constexpr int FETCH_INTERVAL_SECONDS = 3600;   // 1 hour
+  constexpr int FETCH_INTERVAL_SECONDS = 3600;      // 1 hour
   constexpr int PUT_INTERVAL_SECONDS = 30;
-  constexpr int RENAME_INTERVAL_SECONDS = 300;   // 5 minutes
-  constexpr int BTCPRICE_INTERVAL_SECONDS = 300; // 5 minutes
+  constexpr int RENAME_INTERVAL_SECONDS = 3600 * 2; // 2 hours
+  constexpr int BTCPRICE_INTERVAL_SECONDS = 300;    // 5 minutes
 
   // ── BTC trend detection algorithm ───────────────────────────────────────────
   // EMA    — dual exponential moving average (short vs. long), stateful in RAM
