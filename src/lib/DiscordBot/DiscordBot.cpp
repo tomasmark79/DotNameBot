@@ -6,6 +6,16 @@
 
 namespace dotnamebot::discordbot {
 
+  namespace {
+
+    dotnamebot::rss::RSSItem normalizeRssItemForDiscord(dotnamebot::rss::RSSItem item) {
+      item.title = dotnamebot::rss::RssManager::decodeHtmlEntities(item.title);
+      item.description = dotnamebot::rss::RssManager::decodeHtmlEntities(item.description);
+      return item;
+    }
+
+  } // namespace
+
   DiscordBot::DiscordBot(ServiceContainer &services)
       : logger_(services.getService<dotnamebot::logging::ILogger>()),
         assetManager_(services.getService<dotnamebot::assets::IAssetManager>()),
@@ -298,7 +308,7 @@ namespace dotnamebot::discordbot {
         if (cmd_name == "getrandomfeed") {
           event.thinking(true);
 
-          dotnamebot::rss::RSSItem item = rssService_->getRandomItem();
+          dotnamebot::rss::RSSItem item = normalizeRssItemForDiscord(rssService_->getRandomItem());
           if (item.title.empty()) {
             const std::string NoItemsMsg = "No RSS items available at the moment.";
             logger_->info(NoItemsMsg);
@@ -600,7 +610,7 @@ namespace dotnamebot::discordbot {
           continue;
         }
 
-        dotnamebot::rss::RSSItem item = rssService_->getRandomItem();
+        dotnamebot::rss::RSSItem item = normalizeRssItemForDiscord(rssService_->getRandomItem());
         if (item.title.empty()) {
           logger_->info("No RSS items available at the moment.");
           continue;
