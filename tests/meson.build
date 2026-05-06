@@ -4,6 +4,7 @@ test_sources = [
   'AssetManagerTest.cpp',
   'ConsoleLoggerTest.cpp',
   'FileReaderTest.cpp',
+  'RssManagerTest.cpp',
 ]
 
 foreach test_source : test_sources

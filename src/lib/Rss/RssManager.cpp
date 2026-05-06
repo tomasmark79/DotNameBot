@@ -496,6 +496,9 @@ namespace dotnamebot::rss {
               rssItem.title = (textNode->Value() != nullptr) ? textNode->Value() : "";
             }
           }
+          std::regex htmlTagRegexTitle("<[^>]*>");
+          rssItem.title = std::regex_replace(rssItem.title, htmlTagRegexTitle, "");
+          rssItem.title = decodeHtmlEntities(rssItem.title);
         }
         if (auto *linkEl = item->FirstChildElement("link")) {
           rssItem.url = (linkEl->GetText() != nullptr) ? linkEl->GetText() : "";
@@ -790,62 +793,76 @@ namespace dotnamebot::rss {
   std::string RssManager::decodeHtmlEntities(const std::string &str) {
     std::string result = str;
 
-    // Decode numeric character references: &#353; (decimal) and &#x0161; (hexadecimal)
-    std::regex numericEntityRegex(R"(&#(?:([0-9]+)|x([0-9a-fA-F]+));)");
-    std::smatch match;
-    std::string::const_iterator searchStart(result.cbegin());
-    std::string decodedResult;
+    // Some feeds nest entities (for example &amp;#353;), so decode until stable.
+    bool changed = false;
+    do {
+      changed = false;
 
-    while (std::regex_search(searchStart, result.cend(), match, numericEntityRegex)) {
-      // Append text before the match
-      decodedResult.append(match.prefix().first, match.prefix().second);
+      // Decode numeric character references: &#353; (decimal) and &#x0161; (hexadecimal)
+      std::regex numericEntityRegex(R"(&#(?:([0-9]+)|[xX]([0-9a-fA-F]+));)");
+      std::smatch match;
+      std::string::const_iterator searchStart(result.cbegin());
+      std::string decodedResult;
 
-      uint32_t codePoint = 0;
-      if (match[1].matched) {
-        // Decimal entity: &#353;
-        codePoint = static_cast<uint32_t>(std::stoul(match[1].str()));
-      } else if (match[2].matched) {
-        // Hexadecimal entity: &#x0161;
-        codePoint = static_cast<uint32_t>(std::stoul(match[2].str(), nullptr, 16));
+      while (std::regex_search(searchStart, result.cend(), match, numericEntityRegex)) {
+        changed = true;
+
+        // Append text before the match
+        decodedResult.append(match.prefix().first, match.prefix().second);
+
+        uint32_t codePoint = 0;
+        if (match[1].matched) {
+          // Decimal entity: &#353;
+          codePoint = static_cast<uint32_t>(std::stoul(match[1].str()));
+        } else if (match[2].matched) {
+          // Hexadecimal entity: &#x0161;
+          codePoint = static_cast<uint32_t>(std::stoul(match[2].str(), nullptr, 16));
+        }
+
+        // Convert to UTF-8 and append
+        if (codePoint <= 0x10FFFF) {
+          decodedResult += codePointToUtf8(codePoint);
+        }
+
+        searchStart = match.suffix().first;
       }
 
-      // Convert to UTF-8 and append
-      if (codePoint <= 0x10FFFF) {
-        decodedResult += codePointToUtf8(codePoint);
+      if (changed) {
+        decodedResult.append(searchStart, result.cend());
+        result = decodedResult;
       }
 
-      searchStart = match.suffix().first;
-    }
-    // Append remaining text after last match
-    decodedResult.append(searchStart, result.cend());
-    result = decodedResult;
-
-    // Decode named HTML entities
-    size_t pos = 0;
-    while ((pos = result.find("&lt;", pos)) != std::string::npos) {
-      result.replace(pos, 4, "<");
-      pos += 1;
-    }
-    pos = 0;
-    while ((pos = result.find("&gt;", pos)) != std::string::npos) {
-      result.replace(pos, 4, ">");
-      pos += 1;
-    }
-    pos = 0;
-    while ((pos = result.find("&amp;", pos)) != std::string::npos) {
-      result.replace(pos, 5, "&");
-      pos += 1;
-    }
-    pos = 0;
-    while ((pos = result.find("&quot;", pos)) != std::string::npos) {
-      result.replace(pos, 6, "\"");
-      pos += 1;
-    }
-    pos = 0;
-    while ((pos = result.find("&apos;", pos)) != std::string::npos) {
-      result.replace(pos, 6, "'");
-      pos += 1;
-    }
+      size_t pos = 0;
+      while ((pos = result.find("&lt;", pos)) != std::string::npos) {
+        result.replace(pos, 4, "<");
+        pos += 1;
+        changed = true;
+      }
+      pos = 0;
+      while ((pos = result.find("&gt;", pos)) != std::string::npos) {
+        result.replace(pos, 4, ">");
+        pos += 1;
+        changed = true;
+      }
+      pos = 0;
+      while ((pos = result.find("&amp;", pos)) != std::string::npos) {
+        result.replace(pos, 5, "&");
+        pos += 1;
+        changed = true;
+      }
+      pos = 0;
+      while ((pos = result.find("&quot;", pos)) != std::string::npos) {
+        result.replace(pos, 6, "\"");
+        pos += 1;
+        changed = true;
+      }
+      pos = 0;
+      while ((pos = result.find("&apos;", pos)) != std::string::npos) {
+        result.replace(pos, 6, "'");
+        pos += 1;
+        changed = true;
+      }
+    } while (changed);
 
     return result;
   }

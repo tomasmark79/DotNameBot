@@ -38,6 +38,14 @@ namespace dotnamebot::rss {
     [[nodiscard]] RSSItem getRandomItem() override;
     [[nodiscard]] size_t getItemCount() const override { return feed_.items.size(); }
 
+    /**
+     * @brief Decodes HTML entities in a string
+     *
+     * @param str The input string containing HTML entities
+     * @return std::string The decoded string
+     */
+    static std::string decodeHtmlEntities(const std::string &str);
+
   private:
     // Private helpers
     /**
@@ -149,14 +157,6 @@ namespace dotnamebot::rss {
      * @return std::string The raw XML data of the RSS feed
      */
     std::string downloadFeed(const std::string &url);
-
-    /**
-     * @brief Decodes HTML entities in a string
-     *
-     * @param str The input string containing HTML entities
-     * @return std::string The decoded string
-     */
-    static std::string decodeHtmlEntities(const std::string &str);
 
     /**
      * @brief Converts XML data from its declared encoding to UTF-8.
