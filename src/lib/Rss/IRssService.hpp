@@ -92,6 +92,14 @@ namespace dotnamebot::rss {
      * @return true on success, otherwise false
      */
     virtual bool remUrl(const std::string &url) = 0;
+
+    /**
+     * @brief Generate an HTML feed file from the current item buffer
+     *
+     * @param outputPath Path where the HTML file will be written
+     * @return true on success, false on failure
+     */
+    virtual bool generateHtmlFeed() = 0;
   };
 
 } // namespace dotnamebot::rss

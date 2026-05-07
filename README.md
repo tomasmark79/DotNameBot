@@ -7,32 +7,46 @@ DotNameBot
   <img src="assets/DotNameBotLogo.svg"  alt="DotNameBot Logo" width="40%">
 </p>
 
+A self-hosted Discord bot written in C++20. Aggregates RSS/ATOM feeds, tracks crypto prices, renames channels, and publishes a self-contained HTML feed page.
 
-Implemented features
---------------------
-- discord bot implementation
-  - with advanced RSS/ATOM support
-
-Overview
+Features
 --------
 
-Project template for a C++ application and library, set up with Meson/Nix tooling, tests, documentation, and packaging.
+**RSS/ATOM aggregation**
+- Fetches and deduplicates items across runs (SHA-256 hashes persisted in `seenHashes.json`)
+- Supports RSS 2.0 and ATOM feeds; decodes HTML entities and transcodes non-UTF-8 feeds (iconv)
+- Per-channel feed filtering — each Discord channel sees only its own subscribed feeds
+- Configurable feed labels; falls back to domain name when no label is set
 
-Highlights:
+**Slash commands**
 
-- Modular layout (app + library)
-- CI-ready
-- Cross-build targets (aarch64, Windows, WASM)
+| Command | Description |
+|---|---|
+| `/rss_add` | Subscribe a feed URL to a channel |
+| `/rss_remove` | Unsubscribe a feed URL |
+| `/rss_list` | List feeds for the current channel |
+| `/rand` | Post a random item from the feed buffer |
+| `/rename_channel` | Trigger an immediate channel rename |
+| `/btcprice` | Show current BTC/USD price |
+| `/ethprice` | Show current ETH/USD price |
+
+**Background timers**
+- RSS refetch every hour; posts new items automatically
+- Channel rename every 2 hours (random adjective + noun from asset files)
+- BTC/ETH price in bot presence every 5 minutes, with EMA trend detection (short=3, long=12 periods)
+
+**HTML feed output**
+- After each RSS fetch a self-contained `feeder.html` is written next to the data files (`assets/`)
+- Light theme, fixed sidebar with per-source navigation and item counts
+- Items sorted newest-first per section; previous file backed up with a timestamp suffix
 
 Repository layout
 -----------------
 
-- include/                Public library headers
-- src/app/                Application sources
-- src/lib/                Library implementation
-- tests/                  Unit tests
-- assets/                 Runtime assets
-- scripts/                Build and tooling scripts
+- `src/app/`     Application entry point and lifecycle wiring
+- `src/lib/`     Bot logic (DiscordBot, RssManager, HtmlFeedWriter, Crypto, Utils…)
+- `tests/`       Google Test unit and live-feed tests
+- `assets/`      Runtime data files (feed URLs, seen hashes, emoji list, word lists)
 
 Requirements
 ------------
@@ -59,19 +73,6 @@ Run tests (native, debug build first):
 
 ```bash
 make test
-```
-
-Clone helper
-------------
-
-See: [scripts/clonedotnamebot.sh](scripts/clonedotnamebot.sh)
-
-Template rename
----------------
-
-```bash
-# Usage: scripts/rename.sh <NewName> [NewLibName] [NewNamespace]
-./scripts/rename.sh MyApp MyAppLib myapp
 ```
 
 Build and test

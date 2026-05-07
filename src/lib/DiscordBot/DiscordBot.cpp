@@ -651,6 +651,7 @@ namespace dotnamebot::discordbot {
           auto *cluster_ptr = cluster_.get();
           cluster_ptr->set_presence(dpp::presence(dpp::ps_online, dpp::at_watching,
                                                   "last fetch: " + std::to_string(itemCount)));
+          rssService_->generateHtmlFeed();
         } else {
           logger_->error("Periodic RSS fetch failed.");
         }

@@ -107,6 +107,7 @@ lib_sources = [
   'src/lib/DiscordBot/DiscordBot.cpp',
   # RSS
   'src/lib/Rss/RssManager.cpp',
+  'src/lib/Rss/HtmlFeedWriter.cpp',
   # Crypto
   'src/lib/Crypto/CryptoUtils.cpp',
   # NameGen

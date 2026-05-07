@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Rss/HtmlFeedWriter.hpp>
 #include <Rss/IRssService.hpp>
 #include <Rss/RSSFeed.hpp>
 #include <Rss/RSSItem.hpp>
@@ -37,6 +38,8 @@ namespace dotnamebot::rss {
     [[nodiscard]] std::string listChannelUrlsAsString(uint64_t discordChannelId) override;
     [[nodiscard]] RSSItem getRandomItem() override;
     [[nodiscard]] size_t getItemCount() const override { return feed_.items.size(); }
+
+    bool generateHtmlFeed() override;
 
     /**
      * @brief Decodes HTML entities in a string

@@ -10,6 +10,19 @@
 #include <string>
 #include <utility>
 
+static std::string extractDomain(const std::string &url) {
+  std::string s = url;
+  auto pos = s.find("://");
+  if (pos != std::string::npos) {
+    s = s.substr(pos + 3);
+  }
+  pos = s.find('/');
+  if (pos != std::string::npos) {
+    s = s.substr(0, pos);
+  }
+  return s;
+}
+
 namespace dotnamebot::rss {
 
   RssManager::RssManager(std::shared_ptr<dotnamebot::logging::ILogger> logger,
@@ -124,9 +137,13 @@ namespace dotnamebot::rss {
   bool RssManager::saveUrls() {
     nlohmann::json jsonData = nlohmann::json::array();
     for (const auto &url : urls_) {
-      jsonData.push_back({{"url", url.url},
-                          {"embeddedType", url.embeddedType},
-                          {"discordChannelId", url.discordChannelId}});
+      nlohmann::json entry = {{"url", url.url},
+                              {"embeddedType", url.embeddedType},
+                              {"discordChannelId", url.discordChannelId}};
+      if (!url.label.empty()) {
+        entry["label"] = url.label;
+      }
+      jsonData.push_back(entry);
     }
     std::ofstream file(urlsPath_);
     if (!file.is_open()) {
@@ -178,7 +195,11 @@ namespace dotnamebot::rss {
         if (item.contains("discordChannelId") && !item["discordChannelId"].is_null()) {
           discordChannelId = item["discordChannelId"].get<uint64_t>();
         }
-        urls_.emplace_back(url, embedded, discordChannelId);
+        std::string label;
+        if (item.contains("label") && item["label"].is_string()) {
+          label = item["label"].get<std::string>();
+        }
+        urls_.emplace_back(url, embedded, discordChannelId, label);
       } else if (item.is_string()) {
         // Backwards compatibility - treat strings as non-embedded
         urls_.emplace_back(item.get<std::string>(), 0);
@@ -628,8 +649,21 @@ namespace dotnamebot::rss {
     int totalDuplicateItems = 0;
     RSSFeed newFeed = parseRSS(xmlData, embeddedType, discordChannelId, totalDuplicateItems);
 
+    // Resolve label for this feed source
+    std::string feedLabel;
+    for (const auto &rssUrl : urls_) {
+      if (rssUrl.url == url) {
+        feedLabel = rssUrl.label.empty() ? extractDomain(url) : rssUrl.label;
+        break;
+      }
+    }
+    if (feedLabel.empty()) {
+      feedLabel = extractDomain(url);
+    }
+
     int addedItems = 0;
-    for (const auto &item : newFeed.items) {
+    for (auto item : newFeed.items) {
+      item.feedLabel = feedLabel;
       feed_.addItem(item);
       addedItems++;
     }
@@ -707,6 +741,19 @@ namespace dotnamebot::rss {
   size_t RssManager::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     ((std::string *)userp)->append((char *)contents, size * nmemb);
     return size * nmemb;
+  }
+
+  bool RssManager::generateHtmlFeed() {
+    const auto outputPath = assetManager_->getAssetsPath() / "feeder.html";
+
+    if (!HtmlFeedWriter::write(feed_.items, outputPath)) {
+      logger_->errorStream() << "HtmlFeedWriter failed to write: " << outputPath
+                             << " — check permissions";
+      return false;
+    }
+    logger_->infoStream() << "HTML feed written: " << outputPath << " (" << feed_.items.size()
+                          << " items)";
+    return true;
   }
 
   std::string RssManager::getItemAsMarkdown(const RSSItem &item) { return item.toMarkdownLink(); }

@@ -22,6 +22,7 @@ namespace dotnamebot::rss {
     std::string description;
     std::string pubDate;
     std::string hash;
+    std::string feedLabel;
     RSSMedia rssMedia;
     EmbeddedType embeddedType;
     uint64_t discordChannelId;
