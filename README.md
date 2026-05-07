@@ -1,7 +1,7 @@
 DotNameBot
 ========
 
-[![CI](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml/badge.svg)](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml)
+<!-- [![CI](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml/badge.svg)](https://github.com/tomasmark79/DotNameBot/actions/workflows/ci.yml) -->
 
 <p align="center">
   <img src="assets/DotNameBotLogo.svg"  alt="DotNameBot Logo" width="40%">
